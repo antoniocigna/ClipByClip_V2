@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="description" content="Clip By CLip - A tool to practice language comprehension by playing video/audio a clip at time with/without subtitles">
+      <meta name="license"     content="license MIT: you can share and modify the software, but you must include the license file">
+	  <meta name="author" 	   content="Antonio Cigna">
+      <meta name="date"        content="2021-2022">
+      <meta name="keywords"    content="ClipByClip, language, learning, tool, comprehension, clip, subtitle, srt, html, css, javascript">
+      <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	   
+      <title>ClipByClip - Antonio Cigna 2021-2022</title>
+	  
+      <link  href="../cbc_common/cbc_0_style.css" rel="stylesheet">
+	  <style>
+	  	.msg {  /* used only to be selected by classname*/ }
+      </style>
+   </head>
+   <body style="border:0px solid red; margin:auto;text-align:center;">
+      <div id="id_div10" class="divPage" style="display:block;  border:0px solid blue;">
+         <div id="id_div00" class="divPage" style="display: block;border:0px solid green;">
+            <div id="id_h0" style="margin:auto; text-align:center;width:100%;">
+               <h1 id="id_h1">Clip By Clip<br><span id="m700" class="msg"> A tool to  <br>improve foreign language comprehension</span><br>
+                  <span id="id_h11" style="font-size:0.5em;">Antonio Cigna 2021-2022</span>
+               </h1>
+            </div>
+            <div id="id_div00_2">
+               <span id="m701" class="msg"> Create yourself an html file with which you can play a video or audio file in clips, 
+               <br> each one with original and translated subtitles on demand
+               </span>
+               <br>
+			   <button  class="button" onclick="h1_hide_show('id_whatneed')" style="font-size:0.4em;">
+					<span id="m702" class="msg">per saperne di più</span>
+			   </button>  
+               <div id="id_whatneed" style="display:none;width:100%;height:50%;resize:both; overflow: hidden;"></div>
+            </div>
+            <br><br>
+            <span id="m152" class="msg"> Press the button below to choose the Video or Audio file <br> but be careful: after you have chosen the folder, 
+            <br> before selecting the file, <br> copy the full path of it  (eg. C:\antonio\video\english\)  
+            <br> (you will need it shortly to paste it where you will be prompted to enter the path)
+            </span>
+            <button id="butFvideoZ" style="display:block;text-align:center;" class="button" 
+					onclick="document.getElementById(&quot;id_file1video1&quot;).click();">
+					<span id="m154" class="msg"> Choose the file</span>      
+            </button> 
+            <input id="id_file1video1" type="file" style="display:none;font-size:1.2rem;width:100%;" 
+				onchange="{fun_video3(this );}">   
+            <br>
+            <div id="id_scelta_fatta" style="display:none;">
+               <div id="id_scelta1" style="backgroundColor:white; color:black;">
+                  <span id="id_videoname" style="color:blue;"></span><br>
+                  <span id="id_videotype"></span><br>
+                  <span id="id_videosize"></span>&nbsp; &nbsp; &nbsp; 
+                  <span id="id_videoerror" style="display:none; font-weight:bold; color:red;"></span>					 
+               </div>
+               <br>
+               <div id="id_scelta2">
+                  <div id="m153" class="msg"> Confirm or make a new choice</div>
+                  <button class="button" onclick="{						
+                     document.getElementById('id_videoname2').innerHTML = document.getElementById('id_videoname').innerHTML;							
+                     document.getElementById('id_div00').style.display  = 'none'; 		
+                     document.getElementById('id_div13A').style.display = 'block';
+                     }">						
+                  <span id="m155" class="msg"> Confirm</span>						
+                  </button> 
+               </div>
+            </div>
+         </div>
+         <!--   end div00 -->
+		 
+         <div id="id_div13A" class="divPage" style="display: none;border:0px solid red;margin:auto;text-align:center;">
+            <div id="idf1">
+               <span id="m156" class="msg"> File Name</span><br>
+               <span id="id_videoname2" style="backgroundColor:white; color:blue;"></span>
+            </div>
+            <div id="id_video00_folder">
+               <b><span id="m875" class="msg" style="display:none; font-size:2.0rem;"> Video/Audio Folder</span></b>
+               <br>
+               <span id="m157" class="msg" style="font-size:0.8rem;"> paste here below the path to the selected file</span>               
+               <input type="text" id="id_vid_folder" style="font-size:1.5rem; text-align:center; width:92%;background-color:lightgrey;" value="">
+            </div>
+            <br>
+            <div id="butfold1">
+               <button class="button" onclick="{
+                  h1_get_folder( document.getElementById('id_vid_folder')) ; 
+                  document.getElementById('id_post_title').style.display = 'block'; 
+                  }"> 
+               <span id="m158" class="msg"> Confirm</span>	
+               </button> 
+               <div id="id_msg_viderr"></div>
+            </div>
+            <div id="id_post_title" style="display:none">
+               <div id="id_title1">
+                  <label for="out_title"><b><span id="m161" class="msg"> Write the title</span></b></label><br> <br> 
+                  <input id="out_title" type="text" style="font-size:1.2rem;  height:2.0rem; text-align:center; width:80%;">      
+               </div>
+               <p id="id_msg13A" style="font-size:1.3rem;"></p>
+               <div class="divVideo">
+                  <video id="id_video1" controls="" onloadedmetadata="onloaded_fun(this,0.30)" style="margin:auto;width:50%"> 
+                  </video>
+                  <br>
+               </div>
+               <br>
+               <button class="button" id="butFcont2" onclick="get_title(); confirm_subtitle_type('srt') ">
+					<span id="m159" class="msg"> Confirm</span>	
+			   </button> 
+            </div>
+         </div>
+         <!--  fine div13A -->
+		 
+         <div id="id_div15" class="divPage" style="display: none;">
+            <h2 id="id_title15">TITLE</h2>
+            <div id="id_videocopy" class="divVideo"></div>
+            <br>
+            <h2><span id="m162"  class="msg"> Where the subtitles are located</span></h2>
+            <table style="text-align:left;margin:auto;font-size:1.2rem;">
+               <script>function onradio_tdcs(this1) {
+                  document.getElementById("clsub1x").style.backgroundColor= null;
+                  document.getElementById("clsub2x").style.backgroundColor= null;
+                  document.getElementById("clsub3x").style.backgroundColor= null;
+                  if (this1.checked) { 
+                  document.getElementById( this1.id + "x" ).style.backgroundColor= "yellow";
+                  document.getElementById( "id_subtitle_type" ).innerHTML = this1.value; 
+                  }	
+                  }					
+                   
+               </script> 
+               <tbody>
+                  <tr>
+                     <td class="tdcs"><input type="radio" id="clsub1" name="type_clip" value="no" oninput="onradio_tdcs(this)"></td>
+                     <td class="tdcs" id="clsub1x">
+						<label for="clsub1" id="m163" class="msg"> they do not exist</label>
+					 </td>
+                  </tr>
+                  <tr>
+                     <td class="tdcs"><input type="radio" id="clsub2" name="type_clip" value="hard" onclick="onradio_tdcs(this)"></td>
+                     <td class="tdcs" id="clsub2x">
+						<label for="clsub2" id="m164" class="msg"> they are hardcoded inside the video</label>
+					 </td>
+                  </tr>
+                  <tr>
+                     <td class="tdcs"><input type="radio" id="clsub3" name="type_clip" value="srt" onclick="onradio_tdcs(this)"></td>
+                     <td class="tdcs" id="clsub3x">
+						<label for="clsub3" id="m165"  class="msg"> they are on separate files (<b>srt</b> or <b>vtt</b> type)</label>
+					 </td>
+                  </tr>
+               </tbody>
+            </table>
+            <br><br> 
+            <div id="id_subtitle_type" style="display:none">srt</div>
+            <button class="button" id="butFcont3" onclick="confirm_subtitle_type( document.getElementById('id_subtitle_type').innerHTML )">
+            <span id="m160" class="msg"> Confirm</span></button> 
+         </div>
+         <!--  fine div15 -->
+		 
+         <!--  ===============================================================================  -->
+		 
+         <div id="id_div16" class="divPage" style="display: none;">
+            <h2 id="id_title16">TITLE</h2>
+            <table id="id_table16">
+               <tbody>
+                  <tr>
+                     <th style="width: 50%;" id="m704"  class="msg"> Source Language Subtitles</th>
+                     <th style="width: 50%;" id="m705"  class="msg"> Translated Subtitles</th>
+                  </tr>
+                  <tr>
+                     <td id="id_up_filetesto1">
+                        <input id="filetesto1" type="file" onchange="h1_fileRead(this,'txt_pagOrig')">                                      
+                     </td>
+                     <td>
+                        <input id="filetesto2" type="file" onchange="h1_fileRead(this,'txt_pagTrad')">
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="width: 50%;">
+                        <textarea style="display:block;border: 0;" id="txt_pagOrig" rows="20" cols="120"></textarea>
+                     </td>
+                     <td>
+                        <textarea style="display:block;border: 0;" id="txt_pagTrad" rows="20" cols="120">                     </textarea>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            <br><br>
+            <span id="m867_868" class="msg">Specifica i file sottotitoli da utilizzare e quindi clicca qui sotto per scaricare
+            i file da usare per riprodurre il file video/audio</span>                       
+            <br><br>
+            <div id="id_msg16_err" class="c_error"></div>
+            <button id="match1" class="button" onclick="h1_join_orig_trad(1)" style="width:20rem;">
+            <span id="m706" class="msg"> make subtitles and write new file</span>
+            </button>
+            <div id="id_msg16" style="display:none;height:3rem; font-size:2rem;text-align:center;">nome file scritto</div>
+            <br><br>
+         </div>
+		 
+         <div id="id_div16_down1" class="divPage" style="display: none;">
+            <h2 id="id_h_dwn1"><span id="m138" class="msg"> Download</span></h2>
+            <div style="text-align:center;" id="m139" class="msg"> Two files will be downloaded in the system download folder. 
+               <br> Press the button here below to download the first file (it contains all the subtitles)
+            </div>
+            <button class="button" onclick="fun_script_file_download()" style="width:20rem;">
+				<span id="m140" class="msg">Download script file</span>
+			</button>          
+         </div>
+		 
+         <!--  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+         <div id="id_div16_down2" class="divPage" style="display: none;">
+            <h2 id="id_h_dwn2"><span id="m141"  class="msg"> Download html file</span></h2>
+            <div style="text-align:center;" id="m142" class="msg"> After the previous download has been completed, press the button below. <br><br>Immediately after, the newly built application is ready for use.
+               <br><br>It can be re-run as many times as you want<br> by clicking on the CBC_1 _..... html file 
+               <br> The two files (script and html) can be moved to any other folder, but they must always stay together. <br> <br>
+            </div>
+            <button class="button" onclick="fun_html_file_download()" style="width:20rem;">
+				<span id="m143" class="msg">Download the html file</span>
+			</button>      
+         </div>
+       
+         <!--  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  -->
+		 
+         <div id="id_div17" class="divPage" style="display: none;">
+            <div id="id_msg17"><span id="144">end of building</span></div>
+         </div>
+         <!-- end div17 -->     
+         <br>
+      </div>
+      <!---  end id_div10 -->
+	  
+      <div id="id_div20buffer" class="divPage back_color_body w100 h100 " style="display:none;margin:0;"></div>
+  
+      <div id="id_msg_depot" style="display:none">
+		 <span id="id_language">en</span>
+		 <span id="ma18" style="display: block;">You must move the downloaded file from download folder to the <b>ClipByClip/PLAYER</b> folder</span>  
+	     <span id="ma20">title is missing</span>      
+		 <span id="ma21">the source language subtitle file  has not been read yet or it is empty</span>  
+         <span id="ma52">can't be played</span>    
+		 <span id="ma30">seconds no dialog</span>                  
+         <span id="mb22">xxxxxxxxxxxxxxxxxxxxxx   mb22  Select another Video or Audio file in the <b> ClipByClip/VideoAudio</b> folder</span>    
+         <span id="mb23">xxxxxxxxxxxxxxxxxxxxxx   mb23  Select another Video or Audio file in the <b> ClipByClip/VideoAudio</b> folder</span>  
+		 <span id="mb50">Error <br>the file is neither video nor audio</span>               
+		 <span id="mb62">the file to be executed</span>        
+		 <span id="mb64">is not a text</span>                                                            
+         <span id="mb65">is not a text file</span>                   
+		 <span id="mb67">select the subtitles files and then click here below to build</span>
+         <span id="mb68">select the subtitles files and then click here below to build</span> 
+		 <span id="mb71">hard coded inside the video file</span>               
+		 <span id="mb74">The folder or file name may be incorrect or the file may be unreadable</span>  
+		 <span id="mb75">in the folder</span>     	
+		 <span id="ma89">If the 2 files have been downloaded, press OK to exit</span>	 		
+      </div>
+      <div id="id_script_lev2" style="display:none">
+      </div>
+    
+	  <script src="../cbc_common/cbc_MESSAGES.msg"        ></script>
+	  <script>
+         function custom_message_change(txt1) {
+         return txt1; 
+         }         
+      </script>	
+      <script src="../cbc_common/cbc_MESSAGE_manager.jstxt"  onload="messageMain('A')"></script> 
+	  
+      <script src="../cbc_builder/cbc_1_builder_3_lev2_html_model.jsHTML" defer ></script> 
+      <script src="../cbc_builder/cbc_1_builder_main_script.jstxt"        defer ></script>   
+   </body>
+</html>

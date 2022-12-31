@@ -1,0 +1,1620 @@
+"use strict";
+/*  
+ClipByClip: A tool to practice language comprehension
+Antonio Cigna 2021/2022
+license MIT: you can share and modify the software, but you must include the license file 
+*/ 
+/* jshint strict: true */
+/* jshint esversion: 6 */
+/* jshint undef: true, unused: true */	 
+//---------------------------------------------------------
+
+/**
+Resolving The Problem
+Instead of using the backslash as an escape sequence, specify the literal character by placing it in square brackets, for example, use
+Regex r = new Regex("[(]HelloWorld[)]");
+instead of
+Regex r = new Regex("\(HelloWorld\)");
+which generates the Invalid escape sequence error.
+**/
+
+//const regexpUPE = /\p{Letter}+/gu;   // regex to separate word   // esversion 9  
+
+
+
+
+//--------------------------
+let cbc_LOCALSTOR_key = "";
+//  the LS_... variables here after have their values stored in window.localStorage so that they can be retrieved in the next sessions 
+//  all this value are put in a list and saved in one variable the name of which contains the title of the page (each page has its own values)  
+let LS_subWord_beg_delta  = 0; 
+let LS_subWord_end_delta  = 0;
+//-------------------------------------------------------------
+	
+
+
+var	list_ix_line=[];
+
+var numWordIxElab= -1; 
+
+var oneFiveZeros = 100000;
+var twoFiveZeros = 200000;
+var ele_orig_line1 = document.getElementById("id_orig_line1");
+var ele_tran_line1 = document.getElementById("id_tran_line1");
+var ele_time_video = document.getElementById("id_time_video");
+var PLAYCLIP_FROM_TIME, PLAYCLIP_FROM_LINE, PLAYCLIP_TO_TIME, PLAYCLIP_TO_LINE;
+var runningButton;
+var MAX_ixClip = 999999;
+var isPlaying = false;
+
+
+
+
+var delaytime = 0;
+var SW_CLIP_ENDED = false;
+
+var line_inprow_orig_from = [0];
+var line_inprow_orig_to1 = [0];
+var line_inprow_orig_text = [""];
+var line_inprow_orig_tran_ix = [0];
+
+var line_inprow_tran_from = [0];
+
+var line_inprow_tran_to1 = [0];
+var line_inprow_tran_text = [""];
+
+
+var sw_reset_storage = false;
+
+//getUrlData2word();
+
+
+//--------------------------------------------------
+
+
+
+var sw_show_clip_num = true;
+var numOrig = 0;
+var numTran = 0;
+//-------------
+
+
+
+//document.getElementById("id_dragSub").style.width = ele_td_video.offsetWidth + "px";
+
+var video_native_height;
+var video_native_width;
+
+
+
+var runningButton = false; // if true action following PlayNext... or Repeat buttons  is running, otherwise it's a standard run   
+
+
+
+
+
+
+var ele_dummyRadio = document.getElementById("id_dummyRadio"); 
+var ele_lastRadio  = document.getElementById("id_dummyRadio");
+var lastRadioIx =0; 
+
+var lastRadioNext_g=0;
+var list_ix_line=[];
+var oneword = "";
+//----------------------------------------------------------------
+
+
+
+
+var PLAYCLIP_FROM_TIME = 0;
+var PLAYCLIP_TO_TIME = 0;
+var PLAYCLIP_FROM_LINE = 0;
+var PLAYCLIP_TO_LINE = 0;
+var CLIP_ENDTIME_PLUS = 0;
+var SW_CLIP_ENDED = false;
+//--------------------------------------------------------
+  
+var subtitles_beg_delta_time;
+   
+var vid;
+var MAX999;
+var sw_HARD_subtitle;
+var path1;
+var sayNODIALOG = "-NODIA-";
+var sayNODIALOG_low = sayNODIALOG.toLowerCase();
+var path1;
+var f1;
+var f2;
+var f3;
+var barra;
+
+var ele_time_video;
+
+
+var isPlaying;
+var sw_sub_onfile;
+var sw_sub_orig = false;
+var sw_sub_tran = false;
+var sw_no_subtitle = false; // no subtitles ( neither inside the video, neither in any file apart
+
+var LIMIT_MIN_TIME_CLIP;
+
+var MAX_ixClip = MAX999;
+
+
+
+
+let ele_video_speed = document.getElementById("id_setSpeedy"); 
+
+
+
+var inp_row_orig = [];
+var inp_row_tran = [];
+
+var str_line_num_str = document.getElementById("id_line_num_str").innerHTML;  
+
+let parm_subDeltaTime = 0; 
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+cbc_LOCALSTOR_key = "ClipByClip_word_" + encodeURI( document.title );	
+
+getUrlData2word();
+
+fun_initial_from_localStorage_values();
+
+
+//-----------------------------------------------------------------
+function onclick_display(this1) {
+    if (this1.style.display == "none") {
+        this1.style.display = "block";
+    } else {
+        this1.style.display = "none";
+    }
+
+}
+//---------------------------------------
+
+
+//========================================
+function onloaded_fun() {
+   
+   
+
+    vid = document.getElementById("myVideo");
+    // Assign an ontimeupdate event to the video element, and execute a function if the current playback position has changed
+    vid.ontimeupdate = function() {
+        if (runningButton == false) {
+            PLAYCLIP_TO_TIME = vid.duration;
+            PLAYCLIP_TO_LINE = MAX_ixClip;
+        }
+        updateVideoTime22();
+    };
+
+    isPlaying = false;
+
+    // On video playing toggle values
+    vid.onplaying = function() {
+        //console.log("vid.onplaying ==> isPlaying = true");
+        isPlaying = true;
+    };
+
+    // On video pause toggle values
+    vid.onpause = function() {
+        isPlaying = false;
+        runningButton = false;
+        //ele_subOrigSilentH.style.display = "none";
+        //ele_playNext_msg.innerHTML = "";
+    };
+
+    //-------------------------------------
+
+
+    player_beginning();
+
+} // end of  onloaded_fun()
+
+//--------------------------------------------------------------	
+
+
+//-------------------------------------------------------
+
+function running_video_secs_clip22(time_secs) {
+    //
+    // called by: updateVideoTime()    (vid.current, 0)
+    //
+    // the purpose is to: display time lines below the video screen, display from/to times, update LAST_... variables, get the subtitle lines
+    var hhmmss;
+
+    /*
+    this function as all the others is not called in continuous time, but in discrete time, 
+    	so seldom the end time of the clip is exactily matched with time_secs in the argument, 
+    	to try to solve this problem 
+    	the time in the argument (time_secs) clip is checked if it stays nearby after the end time of the clip    
+    */
+
+    //if (( CLIP_ENDTIME_PLUS < PLAYCLIP_TO_TIME ) || ( CLIP_ENDTIME_MINUS < PLAYCLIP_FROM_TIME)) { getEndTimeNearby(); }
+
+    if (time_secs > CLIP_ENDTIME_PLUS) {
+        SW_CLIP_ENDED = false;
+        vid.currentTime = PLAYCLIP_TO_TIME; // force the wanted end time otherwise the next clip will loose some time 
+        pauseVid();
+        return;
+    }
+    if (time_secs >= PLAYCLIP_TO_TIME) {
+        // if playing is after the end of the clip, it doesn't stop, but plays this last piece and will stop at the next cicle  
+        if (SW_CLIP_ENDED) {
+            SW_CLIP_ENDED = false;
+            vid.currentTime = PLAYCLIP_TO_TIME; // force the wanted end time otherwise the next clip will loose some time 
+            pauseVid();
+            return;
+        }
+        SW_CLIP_ENDED = true;
+    }
+    //--------------------------
+    var timeNext = time_secs;
+    if (time_secs > vid.duration) {
+        timeNext = PLAYCLIP_TO_TIME;
+    }
+    //ele_playNext_from_secs.innerHTML  = timeNext;   // video update
+
+    hhmmss = N_secs_to_hhmmssmmm(timeNext);
+    //ele_playNextVa_from_hhmmss.value = hhmmss; 
+    //oninput_playNextTime_hhmmss(); 
+
+    var msg = "";
+    msg += hhmmss.substr(0, 8) + " = " + timeNext.toFixed(1) + " ";
+
+
+    ele_time_video.innerHTML = msg; // time line bEwlow the video 
+
+    //---------------------
+
+} //  end of running_video_secs_clip()
+
+//-------------------------------------------------------
+
+
+
+//-------------------------------------------------------------------
+
+function updateVideoTime22() {
+
+    running_video_secs_clip22(vid.currentTime, 0);
+
+
+} // end of fun_playNext_LineClip() 
+
+//---------------------------------
+function playFromTo22() {
+	
+    var ix             = PLAYCLIP_FROM_LINE;
+    PLAYCLIP_TO_LINE   = ix;
+    PLAYCLIP_FROM_TIME = LS_subWord_beg_delta + line_inprow_orig_from[ix];
+    PLAYCLIP_TO_TIME   = LS_subWord_end_delta + line_inprow_orig_to1[ix];
+	
+	console.log("playFromTo22() " + " PLAYCLIP_TO_LINE=" + PLAYCLIP_TO_LINE + 
+		" PLAYCLIP_FROM_TIME=" + PLAYCLIP_FROM_TIME + " " +  N_secs_to_hhmmssmmm(PLAYCLIP_FROM_TIME)+ 
+			" PLAYCLIP_TO_TIME=" + PLAYCLIP_TO_TIME + " " +  N_secs_to_hhmmssmmm(PLAYCLIP_TO_TIME) +
+			" " + line_inprow_orig_text[ix] );
+	
+
+    CLIP_ENDTIME_PLUS  = PLAYCLIP_TO_TIME + delaytime;
+
+
+    try {
+        vid.currentTime = parseFloat(PLAYCLIP_FROM_TIME);
+    } catch (e1) {
+		console.log("vid.currentTime=" + vid.currentTime  + "   vid.duration=" + vid.duration);
+		console.log("error in plaFromTo22() " + e1 ); 
+        return;
+    }
+	
+
+    playVid();
+
+} //end of playFromTo()
+
+//-----------------------------------------------
+//----------------------------------------------
+
+function funFontColor( str0) {
+	var str1 = "" + str0;  
+	if (str1 == "") { return str1; } 
+	var j1=-1;
+	for(var x1=0; x1 < 10; x1++) {
+		j1 = str1.indexOf("<font ");
+		if (j1 < 0) { return str1; }  	
+		if (str1.indexOf("</font>",j1) < 0) { return str1; }
+		var j2= str1.indexOf(">",j1);
+		if (j2 < 0) { return;} 
+		str1 = str1.substring(0,j1) + "&nbsp;&nbsp;&nbsp;<i>" +  str1.substring(j2+1);
+		str1 = str1.replace("</font>", "</i>&nbsp;&nbsp;&nbsp;");
+	}
+	return str1; 	
+}
+//---------------------------
+function cleanLine( txt0 ) {
+	// I'm sorry<font color="#E5E5E5"> Val I'm frightfully tired but</font>
+	//I&apos;m sorry&lt;font color=&quot;#E5E5E5&quot;&gt; Val I&apos;m frightfully tired but&lt;/font&gt;<br>
+	var txt1 = txt0.trim().toLowerCase();
+	txt1 = txt1.replaceAll("&lt;","<").replaceAll("&gt;",">").replaceAll("&apos;","'").replaceAll("&quot;",'"'); 
+	
+	var j1=-1;
+	for(var x1=0; x1 < txt1.length; x1++) {
+		j1 = txt1.indexOf("<font ");
+		if (j1 < 0) { break; }  	
+		if (txt1.indexOf("</font>",j1) < 0) { return txt1; }
+		var j2= txt1.indexOf(">",j1);
+		if (j2 < 0) { break;} 
+		txt1 = txt1.substring(0,j1) +  txt1.substring(j2+1);
+		txt1 = txt1.replace("</font>", "");
+	}	
+	
+	return txt1; 
+} 
+//--------------------
+
+
+
+
+
+//-----
+function paroleElab() {
+  
+	//console.log("XXXXXXXXX  function paroleElab xxxxxxxxxxxxxxx");
+	
+	var parole = [];
+
+    
+
+    //------------------------------------------
+    // crea lista  parole associate al numero riga  
+
+    //---------------------
+    // crea lista  parole associate al numero riga  
+    
+	var i,  txt1; 
+	 
+	
+    for (i = 0; i < line_inprow_orig_text.length; i++) {
+
+        txt1 = cleanLine(line_inprow_orig_text[i]);  
+		
+	
+		var n2x = (oneFiveZeros + i);
+	
+
+		if (txt1.indexOf(sayNODIALOG_low) >= 0) {
+			continue; 
+		}
+        //var word1 = txt1.match(regexpUPE);
+		var word1 = wordsFromLine( txt1 ); 
+		
+        if (word1 == null) {
+            continue;
+        }
+		
+		//console.log("paroleElab 1XXXX  i=" + i +  " txt1=" + txt1 + " ==>" + word1) 	
+		
+		
+        //var n2x = (oneFiveZeros + i);
+
+     
+
+        for (var j = 0; j < word1.length; j++) {
+            parole.push(word1[j] + "=" + n2x);
+        }
+    }
+	
+    //----------------------------------
+
+
+    parole.sort(); // parole in ordine alfabetico 
+	
+    parole.push("9999999999");
+    var prewrd = "";
+    var numrighe = "";
+    var numsingle = 0;
+    var tot_numrighe = 0;
+    var max_numrighe = 0;
+    var num_num;
+    var list_parole = [];
+	var line1; 
+    //----------------------------	
+    //   crea una lista di parole ognuna con la lista di tutte le righe in cui appare 
+    for (i = 0; i < parole.length; i++) {
+        var wrd = parole[i].split("=");
+        var parola = wrd[0];
+        var nriga = wrd[1];
+        if ((parola.substr(0, 1) >= "0") && (parola.substr(0, 1) <= "9")) {
+            continue;
+        }
+		//console.log("paroleElab 2XXXX parola i=" + i + " " + parole[i] ); 
+        if (parola != prewrd) {
+            if ((prewrd != "apos") && (prewrd != "") && (prewrd != "quot")) {
+                numsingle += 1;
+                var numrigheS = numrighe.trim().split(" ");
+                numrigheS.sort();
+                num_num = numrigheS.length;
+                max_numrighe = Math.max(max_numrighe, num_num);
+                tot_numrighe += num_num;
+                var key1 = (twoFiveZeros - num_num);
+                var strnum = "";
+                for (var vv1 = 0; vv1 < num_num; vv1++) {
+                    strnum += (numrigheS[vv1] - oneFiveZeros) + " ";
+                }
+
+                line1 = "<>" + key1 + "<>" + prewrd + "<>" + num_num + "<>" + strnum;
+
+                list_parole.push(line1);
+				
+				//var z1 = list_parole.length -1; console.log("paroleElab 2zz1 list_parole[" + z1 +" ]= " + i + " " + list_parole[z1] +"( da prewrd=" + prewrd + " numerighe=" + numrighe ); 
+				
+            }
+            prewrd = parola;
+            numrighe = "";
+        }
+        numrighe += nriga + " ";
+    }
+    //-----------------------------
+    list_parole.sort(); // sort delle parole in ordine inverso del numero di righe (prima quelle più usate) 
+    //--------------------------
+
+    //console.log(list_parole.length);
+    var numprog1 = 0;
+    var tot_num_parole = parole.length;
+    var percSingle = 0;
+    numsingle = list_parole.length;
+
+    var numwords;
+
+    var word_button = "";
+    //	'<div style="display: flex;  flex-wrap: wrap;justify-content: center; text-align: center; width:90%; margin:auto; text-align:center;border:1px solid red;"> \n';
+    word_button += '<table class="word_table"> \n';
+    //----------------------------------------------
+    // crea una riga button per ogni parola  
+
+
+    var dec_step = 10,
+        p_percround = 0,
+        percround = 0;
+
+    var MIN_NUM_WORDS = 50;
+
+    var tdtag1 =
+        '<td   style="display: flex;  flex-wrap: wrap;justify-content: center; text-align: center; border:1px solid black;padding:0;margin:0;"> \n';
+    var tdtag2 = '<td style="width:10%; font-size:0.7em; border:1px solid black;padding:0;margin:0;">';
+    word_button += '<tr> \n';
+    word_button += tdtag1;
+
+var lineperc="";
+var percX=0;
+
+    for (var i2 = 0; i2 < list_parole.length; i2++) {
+        numwords = i2 + 1;
+        line1 = list_parole[i2];
+		
+		//console.log("paroleElab 3XXXX list_parole i2=" + i + " numwords=" + numwords + " " + line1 ); 
+		
+        var col1 = line1.split("<>");
+        var numx = col1[3].split("<>");
+        num_num = parseInt(numx[0]);
+        numprog1 += num_num;
+        var perc2 = Math.round(numprog1 * 100 / tot_num_parole);
+        percSingle = Math.round((i2 + 1) * 100 / numsingle);
+
+ 
+		 
+		 var butt2 = '  <button class="tooltip" onclick="funParola(this)" ' +
+			'>' + col1[2] +
+            '<span style="display:none;">' + numwords + ":" +
+            num_num + ":" + percSingle + ":" + perc2 + ":" +
+            col1[4] +
+            '</span> ' +			
+			'<span class="tooltiptext"> ' + num_num + ' righe</span>' +		
+            '</button>   \n';
+			
+		 //word_button += butt1;  	
+		 word_button += butt2;  
+	
+			
+		if (percSingle > 49) { 
+			dec_step = 999;  
+		} else {
+			if (p_percround > 79) { 
+				dec_step = 2; 
+			} else { 
+				if (p_percround > 60) { dec_step = 5; }
+			}
+		}
+		
+		lineperc = document.getElementById("m502").innerHTML;  // $numwords$ parole ($percSingle$%) formano il $percX$% del testo
+		
+        percround = dec_step * Math.floor(perc2 / dec_step);
+        if (percround > p_percround) {
+            if (numwords >= MIN_NUM_WORDS) {
+				percX = percround;
+				if (percX > 98) { percX = ( numprog1 * 100 / tot_num_parole).toFixed(2); } 
+                //console.log( numwords + " parole (" + percSingle + ") formano il " + percX + " del testo" );  
+				
+				lineperc = lineperc.replace("$numwords$", numwords).replace("$percSingle$",percSingle).replace("$percX$",percX);  
+				
+                word_button += '</td>' + tdtag2 + lineperc + ' </td> \n ' +
+                    '</tr> \n' +
+                    '<tr> \n' + tdtag1;
+            }
+            p_percround = percround;
+        }
+
+    }
+	lineperc = lineperc.replace("$numwords$", numwords).replace("$percSingle$",percSingle).replace("$percX$",percX);  
+    percround = 100;
+    word_button += tdtag2 + numwords + " parole (" + percSingle + "%) formano il " + percround + "% del testo" +
+        ' </td> \n ';
+    word_button += '</tr> \n';
+    word_button += '</table   > \n';
+
+    //console.log("\n==================================\n" +  word_button + "\n==============================\n")
+
+    //console.log("max num x parola=" + max_numrighe);
+    //console.log("media=" + (tot_numrighe / numsingle).toFixed(0));
+    //console.log("tot num =" + tot_numrighe);
+
+    document.getElementById("list_buttwords").innerHTML = word_button;
+
+  
+ 
+
+} // fine paroleElab
+
+
+
+//-----------------------------------------
+function replace_quotation_and_ampersand(text1) {
+    // see remove_quotation ... in bulder folder
+
+    return text1.replaceAll("&amp;", "&").
+    replaceAll("&lt;", "<").
+    replaceAll("&gt;", ">").
+    replaceAll('&quot;', '"').
+    replaceAll('&apos;', "'").
+    replaceAll('&grave;', "`").
+    replaceAll('&Backslash;', "\\");
+
+}
+
+//----------------------------------
+
+function fun_boldWord(word1,line1) { 
+	
+	var lineOut = line1.replaceAll( word1, "<b>" + word1 + "</b>" ); 
+	return lineOut; 
+	
+ } // end of un_boldWord()  
+ 
+//-----------------------------------	
+/**	
+function TOGLIfun_boldWord(word1,line1) {	 
+	
+	var oneword_lower  = word1.toLowerCase(); 
+	var str_lower = line1.toLowerCase(); 
+	var lineOut = line1;  	
+	var matche2 = str_lower.matchAll(regexpUPE);
+	var delta=0;
+	for (const match of matche2) {
+		if (match != oneword_lower) { continue; }  
+		var L1 =  match.index; 
+		var len =  match[0].length; 
+		var L2 = L1 + len; 
+		//console.log("match " + match + " L1=" + L1 + " len=" + len + " L2="+L2)
+		L1+=delta;
+		L2+=delta;
+		lineOut = lineOut.substring(0,L1) + "<b>" + lineOut.substring(L1,L2) + "</b>" + lineOut.substring(L2); 
+		delta += 7;
+		//console.log(lineOut); 
+	}
+	return lineOut; 
+ } // end of TOGLIfun_boldWord()  
+ **/
+//-----------------------------------
+function funParola(this1) {
+	
+	if (numWordIxElab < 0) {
+		//document.getElementById("trbut1").style.display = "table-row";
+		document.getElementById("trbut2").style.display = "table-row";
+		document.getElementById("trbut3").style.display = "table-row";
+	}
+	ele_orig_line1.style.display ="none"; 
+	ele_tran_line1.style.display ="none"; 
+	
+	numWordIxElab=0; 
+    var str1 = this1.innerHTML;
+	
+	//console.log("funParola (" + str1 +")" );
+	
+    var i0, i1, i2;
+    var str2 = "";
+    
+    var string_list_ix_line = "";
+    
+
+    i0 = str1.indexOf("<span");
+    if (i0 < 0) {
+        return;
+    }
+    i1 = str1.indexOf(">");
+    i2 = str1.indexOf("<", i1);
+    if (i2 <= i1) {
+        return;
+    }
+    str2 = str1.substring(i1 + 1, i2);
+    var str2X = str2.split(":");
+
+    string_list_ix_line = str2X[4];
+	//console.log("anto string_list_ix_line="  +  string_list_ix_line); 
+	
+	var wordRadio1 ='<label class="labelWordNum">' ;
+	var wordRadio2 ='<input type="radio" name="radioWord"  style="opacity: 0;" onclick="choose_1_row(§this§)"></label> \n' ; 
+	
+	var radioW_str = ''  ; 
+
+    oneword = str1.substring(0, i0);
+	
+
+    str1 = "<b>" + oneword + "</b>";
+
+    str1 = str1.replace(":none", "block");
+    document.getElementById("id_oneWord").innerHTML = str1;
+    document.getElementById("id_but_to_play").style.display = "block";
+
+    //ele_orig_line1.style.display = "none";
+    //ele_tran_line1.style.display = "none";
+
+    list_ix_line = string_list_ix_line.trim().split(" ");
+    var ix;
+  
+
+    PLAYCLIP_FROM_LINE = 0;
+	
+	var g2=0; 
+	var len1 = list_ix_line.length;
+	
+	var lastIx = list_ix_line[len1-1] ;
+	
+	//console.log("list_ix_line.length=" + len1 + " lastIx=" +lastIx+ "  line_inprow_orig_from length = " + line_inprow_orig_from.length);
+	
+	
+	if (lastIx >= line_inprow_orig_from.length) {
+		console.log("list_ix_line contains ix (" + lastIx+") >=  length of line_inprow_orig_from (" + line_inprow_orig_from.length +")"  );
+		var lenF = line_inprow_orig_from.length; 
+		var f1=0; 
+		for(f1=0; f1 < len1; f1++) {
+			if (list_ix_line[f1] >= lenF) { break;}
+		} 
+		list_ix_line = list_ix_line.slice(0, f1);
+		len1 = list_ix_line.length;
+		console.log("list_ix_line has been cut off,  length=" + len1); 
+	}	
+	var first_parm; 
+	//-------------------------------------------
+    for (var g = 0; g < len1; g++) {
+        ix = list_ix_line[g];
+		
+		g2 = g+1;
+		if (g >= len1) {g2 = 0; }  
+		
+		//radioW_str += wordRadio1 + "&nbsp;&nbsp;&nbsp;" + ix + wordRadio2 ;  
+		var newArg= "this," + ix + "," + g + "," + g2 ;  
+		
+		var ixstr1 = ix; 
+		var lenix = ixstr1.length;		
+		if (lenix < 4) {
+			var spc1 = "            ".substring(0, Math.ceil( (5 - lenix)/2) );
+			ixstr1 = (spc1 + ix ).replaceAll(" ", "&nbsp;") ; 
+		}
+		
+		radioW_str += wordRadio1 + ixstr1 + wordRadio2.replace("§this§", newArg);  
+		
+		//if (ix < 17) {  console.log("radioStr ix ==>" + ixstr1 + "<=="); }
+		
+		
+		if (g==0) { first_parm= [ix,g,g2 ]; }
+
+    }
+	//----------------------------------------------------------
+	//console.log("radioW_str=" + radioW_str); 
+ 
+	//
+	ele_dummyRadio.innerHTML  = radioW_str;  
+	
+	//console.log("\n----------------------------\nele_dummyRadio=\n" + ele_dummyRadio.innerHTML + "\n-----------------\n\n"); 
+	
+	var first_ele = ele_dummyRadio.children[0];  
+	/**
+	console.log("first_ele=" + first_ele.outerHTML);
+	console.log("first_ele.children[0]=" + first_ele.children[0].outerHTML);
+	console.log("first_parm="+ first_parm); 
+	**/
+	
+	choose_1_row(first_ele.children[0], first_parm[0], first_parm[1], first_parm[2]) ; 
+
+	//document.getElementById("id_inp_ixRep"     ).max= list_ix_line.length; 
+
+    //document.getElementById("id_nextix").innerHTML =     1;
+    document.getElementById("id_num_riga2nxt"  ).innerHTML = list_ix_line[0];
+	document.getElementById("id_num_rigaRepeat").innerHTML = list_ix_line[0];
+    //document.getElementById("id_inp_ixRep"     ).value = 1;
+	
+    //document.getElementById("id_td_nxt").style.backgroundColor = "yellow";
+    //--
+	/**
+    document.getElementById("id_but_next"  ).disabled = false;
+    document.getElementById("id_but_repeat").disabled = true;
+    document.getElementById("id_but_orig"  ).disabled = true;
+    document.getElementById("id_but_tran"  ).disabled = true;
+	**/
+	
+	document.getElementById("id_but_next"   ).style.display = "block"; 
+    //document.getElementById("id_but_repeat" ).style.display = "none";
+    //document.getElementById("id_but_orig"   ).style.display = "none"; 
+    //document.getElementById("id_but_tran"   ).style.display = "none"; 	
+	
+   
+
+} // end of funParola
+
+//-------------------------------------------------------------------------------
+function binarySearch_insertionPoint(nums, target) {
+
+    var MAX_DIFF = 0.010;
+
+    var start = 0;
+    var end = nums.length - 1;
+
+    var index = Math.floor((end - start) / 2) + start;
+
+    var start2 = start;
+    var end2 = end;
+
+    if (target >= nums[end]) {
+        // The target is beyond the end of this array.
+        return [end, end2, end2];
+    }
+
+    // Start in middle, divide and conquer.
+    while (start < end) {
+        start2 = start;
+        end2 = end;
+
+        // Get value at current index.
+        var value = nums[index];
+
+        if (value === target) {
+            // Found our target.
+            //result = index;  // found
+            break;
+        }
+        var diff1 = Math.abs(value - target);
+        if (diff1 < MAX_DIFF) {
+            break;
+        }
+
+        if (target < value) {
+            // Target is lower in array, move the index halfway down.
+            end = index;
+        } else {
+            // Target is higher in array, move the index halfway up.
+            start = index + 1;
+        }
+        // Get next mid-point.
+        index = Math.floor((end - start) / 2) + start;
+    }
+
+    return [index, start2, end2];
+
+} // end of binarySearch_insertionPoint()
+//===================================================
+
+function getUrlData2word() {
+	
+    //console.log("xxxxxxxxxx customiz getUrlData2() 1");
+
+    const queryString = window.location.search;
+	
+    console.log("window.location.search = queryString=" + queryString);
+
+    //xxxxxxxxxxxxxxxxxxxx  chiama Parole
+	
+ 
+   
+
+
+    //	document.getElementById("id_href_parole").href =  assign_parms; 
+    //xxxxxxxxxxxxxxxxxxx	
+
+	
+
+    if ((queryString == undefined) || (queryString.trim() == "")) {
+        //console.log("xxxxxxxxxx customiz getUrlData2() 2");
+        var myLang = "en";
+        var local_language = navigator.language;
+        if (local_language) {
+            myLang = local_language.substr(0, 2);
+        }
+
+        
+
+        //h1_getAllMsgInLang_xx(myLang);
+
+        var msg1 = "<div style='backgroundColor:white; color:black;'>";
+
+        msg1 += "<br><br><br><div style='color:red; font-size:1.3em;'>" + "<b>" + text_by_msgid("m001") +
+            "</b></div><br>";
+        msg1 += "<br><div>" + text_by_msgid("m002") + "</div>";
+        msg1 += "<br><div>" + text_by_msgid("m003") + "</div>";
+        msg1 += "<br><br><div>" + text_by_msgid("m004") + "</div>";
+        msg1 += "</div>";
+        /**
+        var msg1 = "<br>"  + "This html file has no parameters to use.<br>" + 
+        	"It seems it has been started clicking on it or writing its name on the line command.<br>" +
+        	"It can run only if its called by a file built by ClickByClip_builder.html";
+        **/
+        document.getElementById("id_div20").innerHTML = msg1;
+        //console.log("xxxxxxxxxx customiz getUrlData2() 3");
+        return;
+    }
+    //console.log("xxxxxxxxxx customiz getUrlData2() 4");
+
+    const urlParams = new URLSearchParams(queryString);
+
+    //console.log(decodeURI(queryString.replaceAll("&", "\n")));
+
+    //document.getElementById("id_url").innerHTML =  decodeURI(  queryString.replaceAll("&","<br>")  	); 
+
+
+    var script_sub_path = decodeURI(urlParams.get("p_scr_sub1"));
+	
+	parm_subDeltaTime = decodeURI(urlParams.get("p_subDeltaTime"));
+	parm_subDeltaTime = parseInt( parm_subDeltaTime*1000) / 1000;  
+	//var parm_subDeltaTime = 0;
+	//LS_subWord_beg_delta = parm_subDeltaTime;
+	//LS_subWord_end_delta = parm_subDeltaTime; 
+	
+	set_localStorage_var();
+	
+	
+    document.getElementById("id_hardsub").innerHTML = decodeURI(urlParams.get("p_hardsub"));
+    document.getElementById("id_file_suborig").innerHTML = decodeURI(urlParams.get("p_file_suborig"));
+    document.getElementById("id_file_subtran").innerHTML = decodeURI(urlParams.get("p_file_subtran"));
+    document.getElementById("id_language").innerHTML = decodeURI(urlParams.get("p_language"));
+    document.getElementById("id_reset_storage").innerHTML = decodeURI(urlParams.get("p_reset_storage"));
+
+    sw_reset_storage = (document.getElementById("id_reset_storage").innerHTML == "true");
+
+    //console.log("customization getUrlData2() sw_reset_storage=" + sw_reset_storage);
+
+    video_native_height = decodeURI(urlParams.get("p_video_h"));
+    video_native_width = decodeURI(urlParams.get("p_video_w"));
+
+    
+    //console.log("xxxxxxxxxx customiz getUrlData2() 5");
+
+    // Create new script element
+    const scriptSub = document.createElement('script');
+    scriptSub.src = script_sub_path;
+
+    //-------------------------------
+    scriptSub.addEventListener('load', function() {
+
+        //console.log("xxxxxxxxxx customiz getUrlData2() 5.1");
+
+        // The script is loaded completely
+        // Do something
+
+        //set_all_msg2( txta_msg )
+
+        //h1_getAllMsgInLang_xx(document.getElementById("id_language").innerHTML);        
+
+
+        document.getElementById("id_titolo").innerHTML = urlParams.get("p_title");
+        document.title = urlParams.get("p_title");
+        document.getElementById("myVideo").src = urlParams.get("p_video_src");
+        document.getElementById("myVideo").style.display = "block";
+      
+
+    });
+    //--------------------------------
+    // Append to the `head` element
+    document.head.appendChild(scriptSub);
+    //console.log("xxxxxxxxxx customiz getUrlData2() 6");
+
+
+} // end of getUrlData2word() 
+
+//---------------------------------------------
+
+//finexx 2 customiza...
+
+// 3a_var 
+
+
+
+//-----------------------------------------------------------------------  
+if (sw_sub_onfile == false) {
+    sw_show_clip_num = false;
+}
+//--------------------------------------------------------
+if (document.getElementById("id_playNext2_line_row")) {
+    if (sw_show_clip_num) {
+        document.getElementById("id_playNext2_line_row").hidden = false;
+        document.getElementById("id_replay_line_row").hidden = false;
+    } else {
+        document.getElementById("id_playNext2_line_row").hidden = true;
+        document.getElementById("id_replay_line_row").hidden = true;
+    }
+}
+
+//=========================================================================
+function setDelta(  delta ) {
+	delta = parseFloat(delta);
+	if (delta == 0) return ""; 
+	if (delta < 0) return delta;
+	return "+" + delta;	
+}
+//------------------------------------
+function fun_initial_from_localStorage_values() {
+
+    // the LS_ ... default values are replaced by the those of the previous session ( if they exist)
+   
+    var stored_cbc_localStor = JSON.parse(localStorage.getItem(cbc_LOCALSTOR_key)); //get them back
+    if (stored_cbc_localStor) {      
+        if (sw_reset_storage) {
+            set_localStorage_var();
+        } else {
+            [
+				LS_subWord_beg_delta,
+				LS_subWord_end_delta
+            ] = stored_cbc_localStor;
+        }
+    } else {
+        set_localStorage_var();
+    }
+	document.getElementById("id_inpChgBeg").value = LS_subWord_beg_delta; 
+	document.getElementById("id_inpChgEnd").value = LS_subWord_end_delta; 
+	
+	document.getElementById("outRangeFrom").innerHTML = setDelta( LS_subWord_beg_delta ); 
+	document.getElementById("outRangeTo").innerHTML   = setDelta( LS_subWord_end_delta ); 
+
+    //list_localStorageItems();
+	console.log("initial_from_localStorage_values() LS_subWord_beg_delta=" + LS_subWord_beg_delta + " LS_subWord_end_delta=" + LS_subWord_end_delta); 
+
+
+} // end of fun_initial_from_localStorage_values()
+
+
+//--------------------------------------------------------
+function player_beginning() {
+    //console.log("xxxxxxxxxxxxxxx  PLAYER  xxxxxxxxxxxx ");
+   
+
+    subtitles_beg_delta_time = 0; 
+	
+	
+
+    MAX999 = 999999;
+
+    document.getElementById("MIO5sync").style.display = "table"; //  "block";           
+    document.getElementById("id_show_sub").style.display = "table"; //  "block";
+
+    //document.getElementById("MIO6hard").style.display = "none";
+
+    
+
+
+
+    sw_HARD_subtitle = (document.getElementById("id_hardsub").innerHTML == "true");
+    sw_sub_orig = (document.getElementById("id_file_suborig").innerHTML == "true");
+    sw_sub_tran = (document.getElementById("id_file_subtran").innerHTML == "true");
+    sw_sub_onfile = (sw_sub_orig || sw_sub_tran); //123
+    sw_no_subtitle = ((sw_HARD_subtitle == false) && (sw_sub_onfile == false)); // no subtitles ( neither inside the video, neither in any file apart
+    sw_reset_storage = (document.getElementById("id_reset_storage").innerHTML == "true");
+    /*
+	   HARD         orig            tran 
+	true/false   true/false 	 true/false  -->  2*2*2 = 8 	
+	---------------------------------------------------------
+	
+	HARD     sub_onfile
+	true        true             ==>  incompatible prefer subtitles on files -->  force HARD = false
+    true        false
+	false       true
+    false       false            ==>  sw_no_subtitle 
+	*/
+    if (sw_sub_onfile) {
+        sw_HARD_subtitle = false;
+    } else {
+        sw_no_subtitle = (sw_HARD_subtitle == false);
+    }
+    if (sw_no_subtitle) {
+        document.getElementById("id_tabSub").style.display = "none";
+    }
+
+    get_lines_from_file_sub();
+	
+    numOrig = inp_row_orig.length;
+    numTran = inp_row_tran.length;
+
+    if (sw_sub_onfile == false) {
+		return;      
+    }
+	
+	
+	
+
+    //---------------------
+    if (sw_sub_onfile) {
+        if ((sw_sub_orig) && (sw_sub_tran == false)) {
+            inp_row_tran = inp_row_orig;
+        }
+        if ((sw_sub_orig == false) && (sw_sub_tran)) {
+            inp_row_orig = inp_row_tran;
+        }
+    }
+  
+    //-------------------------------------------------------       
+
+
+    // var lev2 
+    path1 = window.location.pathname;
+    f1 = path1.lastIndexOf("/");
+    f2 = path1.lastIndexOf("\\");
+    f3 = -1;
+    barra = "/";
+    if (f1 > f2) {
+        f3 = f1;
+        barra = "/";
+    } else {
+        f3 = f2;
+        barra = "\\";
+    }
+
+
+
+    ele_time_video = document.getElementById("id_time_video");
+
+    isPlaying = false;
+
+   
+
+    LIMIT_MIN_TIME_CLIP = 0.100; // if time too near ( difference <  LIMIT_MIN_TIME_CLIP) to toTimeClip than use next clip number 
+
+    replace_video_src();
+   
+	separe_time_sub(); 
+	
+	paroleElab();
+
+
+	
+    console.log("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +
+        "\nsw_no_subtitle   = " + sw_no_subtitle +
+        "\nsw_HARD_subtitle = " + sw_HARD_subtitle +
+        "\nsw_sub_onfile    = " + sw_sub_onfile +
+        "\nsw_sub_orig      = " + sw_sub_orig + "   num." + line_inprow_orig_text.length +
+        "\nsw_sub_tran      = " + sw_sub_tran + "   num." + line_inprow_tran_text.length +
+        "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+   
+
+    if (sw_sub_onfile == false) {
+		return;          
+    }
+
+    
+
+} // end of player script beginning 
+
+//--------------------------
+//
+function set_localStorage_var() {
+
+    console.log("set_localStorage_var()  key="+ cbc_LOCALSTOR_key );
+
+    var cbc_LOCALSTOR_val_list = [
+		LS_subWord_beg_delta, 
+		LS_subWord_end_delta
+    ];
+    localStorage.setItem(cbc_LOCALSTOR_key, JSON.stringify(cbc_LOCALSTOR_val_list));
+
+}
+
+
+//------------------------------------
+
+function remove_localStorageItems() {
+    try {
+        for (var i = 0, len = localStorage.length; i < len; i++) {
+            var key = localStorage.key(i);
+            localStorage.removeItem(key);
+        }
+    } catch (e1) {}
+} // end of remove_localStorageItems()
+
+//------------------------------------
+function list_localStorageItems() {
+    try {
+        for (var i = 0, len = localStorage.length; i < len; i++) {
+            var key = localStorage.key(i);
+            var value = localStorage[key];
+            console.log("localStorage key=" + key + "\t = " + value);
+        }
+    } catch (e1) {}
+} // end of list_localStorageItems()
+//-------------------------------------------------
+//list_localStorageItems();
+
+//-------------------------------------------------
+
+function N_secs_to_hhmmssmmm(from1) {
+    // surely a film lasts less than 10 hour
+
+    if ((isNaN(from1)) || (from1 == 0)) {
+        return "00:00:00.000";
+    }
+    var secs = 3600 * 10 + 1 * from1;
+
+    var hhmmss2 = new Date(secs * 1000).toISOString().substr(11, 12);
+    var hhmmss = "0" + hhmmss2.substring(1);
+    //console.log("\tanto N_secs_to_hhmmssmmm(from1=" + from1 + ") secs=" + secs + " hhmmss2=" + hhmmss2 + " hhmmss=" + hhmmss)
+    return hhmmss;
+}
+
+//-----------------------------------------
+function replace_quotation_and_ampersand(text1) {
+    // see remove_quotation ... in bulder folder
+
+    return text1.replaceAll("&amp;", "&").
+    replaceAll("&lt;", "<").
+    replaceAll("&gt;", ">").
+    replaceAll('&quot;', '"').
+    replaceAll('&apos;', "'").
+    replaceAll('&grave;', "`").
+    replaceAll('&Backslash;', "\\");
+
+}
+//-------------------------------------------
+function get_lines_from_file_sub() {
+	
+	/*
+	the  'txta_orig_sub' and 'txta_tran_sub' variables are defined in file  " film_title ...jstxt"  ( var script_sub_path = decodeURI(urlParams.get("p_scr_sub1")); built by the cbc Builder    
+	*/
+	
+    //var txta_orig_sub = document.getElementById("id_txta_orig_sub").innerHTML;
+    //var txta_tran_sub = document.getElementById("id_txta_tran_sub").innerHTML;
+
+    txta_orig_sub = txta_orig_sub.replaceAll('&quot;', '"').replaceAll("&apos;", "'").replaceAll("\n", " "); // from level1 
+    txta_tran_sub = txta_tran_sub.replaceAll('&quot;', '"').replaceAll("&apos;", "'").replaceAll("\n", " "); // from level1 
+
+    txta_orig_sub = replace_quotation_and_ampersand(txta_orig_sub);
+    txta_tran_sub = replace_quotation_and_ampersand(txta_tran_sub);
+
+    var len1 = txta_orig_sub.length;
+    var len2 = txta_tran_sub.length;
+	
+	//console.log("\ntxta_orig_sub=" + txta_orig_sub.substring(0,200) ); 
+
+    if (len1 > 0) {
+        if (len1 == 8) {
+            if (txta_orig_sub == "<br><br>") {
+                txta_orig_sub = "";
+                len1 = 0;
+            }
+        }
+        if (txta_orig_sub.substring(len1 - 4) == "<br>") {
+            len1 = len1 - 4;
+        }
+        inp_row_orig = txta_orig_sub.substring(0, len1).split("<br>");
+		
+		//for(var u=0; u< 6; u++) { console.log("\tinp_row_orig[" + u + "] " +  inp_row_orig[u]); }
+    }
+	
+	//console.log("\ntxta_tran_sub=" + txta_tran_sub.substring(0,200) ); 	
+	
+    if (len2 > 0) {
+        if (len2 == 8) {
+            if (txta_tran_sub == "<br><br>") {
+                txta_tran_sub = "";
+                len2 = 0;
+            }
+        }
+        if (txta_tran_sub.substring(len2 - 4) == "<br>") {
+            len2 = len2 - 4;
+        }
+        inp_row_tran = txta_tran_sub.substring(0, len2).split("<br>");
+		//for(var u=0; u< 6; u++) { console.log("\tinp_row_tran[" + u + "] " + inp_row_tran[u]); }
+    }
+
+    if (sw_sub_orig) {
+        numOrig = inp_row_orig.length;
+        if (numOrig < 1) {
+            inp_row_orig.push("");
+        }
+    }
+    if (sw_sub_tran) {
+        numTran = inp_row_tran.length;
+        if (numTran < 1) {
+            inp_row_tran.push("");
+        }
+    }
+
+} // end of get_lines_from_file_sub() 
+
+//-------------------------------------------
+
+function replace_video_src() {
+
+    var SAME_FOLDER_video = "_ClipByClip_";
+
+    var path_html = location.pathname;
+    var j1 = path_html.lastIndexOf("\\");
+    var j2 = path_html.lastIndexOf("\/");
+    if (j2 > j1) {
+        j1 = j2;
+    }
+    if (j2 < 0) {
+        return;
+    }
+    var html_name = path_html.substring(j2 + 1);
+    //alert(html_name) 
+    if (html_name.indexOf(SAME_FOLDER_video) == 0) {
+        // the name of html begins _ClipByClip_ 
+        //  this comunicate that        
+        //                              the video or audio file is in the same folder of this html file.
+        //  As an answer        
+        //        replace video src  to delete the path which prefix the video file name
+        //                in ths way if the video and the html file remain together can be moved in any other folder    
+
+        var ele_vid = document.getElementById("myVideo");
+        var vid_src = ele_vid.src;
+
+        var v1 = vid_src.lastIndexOf("\\");
+        var v2 = vid_src.lastIndexOf("\/");
+        if (v2 > v1) {
+            v1 = v2;
+        }
+
+        if (v2 > 0) {
+            var new_src = vid_src.substring(v2 + 1);
+            alert("new_src=" + new_src);
+            ele_vid.src = new_src;
+        }
+
+    }
+} // end of replace_video_src()
+
+//-------------------------------------------
+//finexx 4 beginning
+// 5 main script1 
+
+// Play video function
+function playVid() {
+
+    // each tick (less than a second) in the playing,  calls  updateVideoAudio function  
+	
+	vid.playbackRate = parseFloat( ele_video_speed.value ) ; 
+	
+    if (isPlaying) {
+        return;
+    }
+    if (vid.paused) {
+        vid.play();
+    }
+}
+//-------------------------------------------------
+
+// Pause video function
+
+function pauseVid() {
+
+    runningButton = false;
+    //ele_playNext_msg.innerHTML = "";
+
+    if (vid.paused) {
+        return;
+    }
+    if (isPlaying) {
+        vid.pause();
+    }
+}
+
+//-------------------------
+
+
+function text_by_msgid( msgid ) {
+	return document.getElementById( msgid).innerHTML;
+}	
+// -------------------------------
+function choose_1_row(this1,ix,g,g2) {
+	numWordIxElab++;
+	
+	//console.log("choose_1_row(this1," + ix + "," + g + "," + g2 +")"  );
+	
+	ele_lastRadio.style.fontWeight = "normal";	
+	ele_lastRadio.style.backgroundColor = null;
+	ele_lastRadio.style.color = null;
+	this1.parentElement.style.fontWeight = "bold";
+	this1.parentElement.style.backgroundColor = "yellow";
+	this1.parentElement.style.color = "blue";
+    ele_lastRadio = this1.parentElement;
+	
+	
+	ele_dummyRadio.scrollTop = ele_lastRadio.offsetTop - 3*ele_lastRadio.offsetHeight; // ele_dummyRadio.offsetHeight/2;
+	
+	
+	lastRadioIx = ix;	
+	var lastRadioNextIx = list_ix_line[g2];	
+	lastRadioNext_g  = g2;		
+	
+	
+	
+	document.getElementById("id_num_rigaRepeat").innerHTML = lastRadioIx; 
+	document.getElementById("id_num_riga2nxt").innerHTML   = lastRadioNextIx;  
+}
+//----------------------------------------
+function cleanText( ix ) { 	
+
+        var frase =	 funFontColor( line_inprow_orig_text[ix] ) ;
+		//var frase =	 funFontColor( ix + " " + line_inprow_orig_from[ix] + " " + line_inprow_orig_text[ix] ) ;
+		
+        //frase = frase.replaceAll(oneword, "<b>" + oneword + "</b>").replaceAll(onewordUp, "<b>" + onewordUp + "</b>");
+        frase = frase.replaceAll('&quot;', '"').replaceAll("&apos;", "'").replaceAll("\n", "  ");
+        frase = replace_quotation_and_ampersand(frase);
+		
+		frase = fun_boldWord(oneword,frase); 	
+	return frase;
+}	
+
+//--------------------------------------
+function onclick_replay3() {
+	var ix = lastRadioIx;
+	
+	//console.log("onclick_replay3() lastRadioIx=" + lastRadioIx); 
+
+    ele_orig_line1.innerHTML = cleanText(ix);
+    ele_tran_line1.innerHTML = line_inprow_tran_text[ix];
+    document.getElementById("id_orig_ix_line").innerHTML = str_line_num_str + ix ; // wline_list_o_ix[ix];
+	PLAYCLIP_FROM_LINE = ix;
+    playFromTo22();
+}
+//--------------------------------------
+
+function onclick_playNextClip3() {
+
+	//console.log("onclick_playNextClip3()  numWordIxElab=" + numWordIxElab  )
+	if (numWordIxElab == 1) {
+		lastRadioNext_g = lastRadioNext_g - 1;
+		if (lastRadioNext_g < 0) {
+			lastRadioNext_g = list_ix_line.length-1; 		
+		} 
+	}
+	ele_orig_line1.style.display ="none"; 
+	ele_tran_line1.style.display ="none"; 
+	
+	// <label class="labelWordNum">12<input type="radio" checked="checked" name="radioWord"  style="opacity: 0;" onclick="choose_1_row(this,12,15)"></label> 
+	
+	var g = lastRadioNext_g;
+	var numChild = ele_dummyRadio.children.length; 
+	if (g >= numChild) { g=0; }
+	
+	var next_ix = list_ix_line[g]; 
+	var g2 = g+1;
+	if (g2 >= list_ix_line.length) {  g2=0; }
+	if (g2 >= numChild) {  g2=0; }
+
+	//console.log(" onclick_playNextClip3()  lastRadioNext_g=" +  lastRadioNext_g + "  next_ix=" +  next_ix); 
+	
+	var ele_next = ele_dummyRadio.children[ g ]; 
+	var this1 = ele_next.children[0];
+	
+	choose_1_row(this1,next_ix, g, g2) ; 
+	
+	onclick_replay3(); 
+	
+	
+} // end of onclick_playNextClip3()
+//---------------------------------
+
+function wordsFromLine( text ) {
+	// this function is used to split a line in its words ( the var word_separator is defined in 'cbc_MESSAGES.msg' file )
+	
+	// there is a simpler mode to do that, but it requires javascript esversion 9 eg. const regexpUPE = /\p{Letter}+/gu; var words = text.match(regexpUPE);
+
+	let outText = text;
+	for(var s=0; s < word_separator.length;s++) {
+		outText = outText.replaceAll(word_separator.charAt(s),' ');  
+	}  
+	outText = outText.replace(/\s+/g,' '); 
+	return outText.split(" "); 
+}
+//---------------------------------------------
+
+function onchangeInputRange1(this1) {
+	
+	console.log("onchangeInputRange1() " + this1.id); 
+	var value1 = parseFloat(this1.value); 	
+	if (this1.id == "id_inpChgBeg") {
+		LS_subWord_beg_delta = value1;
+		console.log("LS_subWord_beg_delta=" + LS_subWord_beg_delta);
+	} else { 
+		LS_subWord_end_delta = value1;		
+		console.log("LS_subWord_beg_delta=" + LS_subWord_end_delta);
+	}
+	set_localStorage_var();
+} 
+
+
+//-----------------------------------------------
+
+function fun_remove_localStorageItems() {	
+	try{ 
+		for(let i=0, len=localStorage.length; i<len; i++) {
+			let key   = localStorage.key(i);
+			localStorage.removeItem(key); 
+		}
+	} catch(e1) {
+	}	
+} // end of fun_remove_localStorageItems()
+
+
+
+//-------------------------------------------------------
+function separe_time_sub() {
+
+    // inp_row_orig   these are lines from txta_orig_sub.split("<br>")  which are defined in the script file " film_title ...jstxt" built by the ClipByClip_Builder
+    // inp_row_tran   these are lines from txta_tran_sub.split("<br>")  which are defined in the script file " film_title ...js
+   
+	// fill in  the first entry ( 0 index) 
+    line_inprow_orig_from = [0];
+    line_inprow_orig_to1 = [0];
+    line_inprow_orig_text = [""];
+
+    line_inprow_orig_tran_ix = [0];
+    line_inprow_tran_from = [0];
+    line_inprow_tran_to1 = [0];
+    line_inprow_tran_text = [""];
+
+    var from1, to1;
+    var i, col, txt1;
+    
+	//------------------
+	
+	var deltaTime = parm_subDeltaTime;  //  LS_subWord_beg_delta;  // get last session delta time ( from local storage)
+
+	if (deltaTime != 0) {
+        if (deltaTime > 0) {
+            document.getElementById("id_showsync").innerHTML = "  (sync +" + deltaTime.toFixed(3) + ")" ;
+        } else {
+            document.getElementById("id_showsync").innerHTML = "  (sync " + deltaTime.toFixed(3) + ")" ;
+        }
+    } else {
+		document.getElementById("id_showsync").innerHTML = "";
+	}
+	
+    function from1zero(from0) {
+		from0 =  parseFloat( from0 );  
+        var fromint = Math.floor(from0);
+
+        if (Math.round(1000 * (from0 - fromint)) == 999) {
+            return 1.0 * fromint;
+        }
+        return from0;
+    }
+    //-----
+	
+	
+    for (i = 0; i < inp_row_tran.length; i++) {
+		//if (i< 6) { console.log("i=" + i + " " + inp_row_tran[i]);} 
+        col = inp_row_tran[i].split("::");
+        if (col.length < 3) {
+            continue;
+        }
+        txt1 = col[2].trim().toLowerCase();
+        if (txt1.substr(0, 7) == "-nodia-") {
+            continue;
+        }
+		from1 = from1zero(  col[0] ) + deltaTime;
+        to1   = parseFloat( col[1] ) + deltaTime;			
+		
+        line_inprow_tran_from.push(from1);
+        line_inprow_tran_to1.push(to1);
+        line_inprow_tran_text.push(col[2]);	
+		//if (i< 6) { console.log("i=" + i + " new i=" + (line_inprow_tran_text.length-1) + " " + line_inprow_tran_text[ line_inprow_tran_text.length -1]); }
+    }
+    
+	
+    //---------------------
+    // crea lista  parole associate al numero riga  
+	
+    var n2 = 0;  // start from index 1 ; 
+	
+	
+	
+    for (i = 0; i < inp_row_orig.length; i++) {
+		
+		//if (i< 6) { console.log("i=" + i + " " + inp_row_orig[i]);} 
+		//if (i>10) {break;}  // anto??prova
+		//if (i < 20) { console.log("anto??prova inp_row_orig[" + i + "]=" + inp_row_orig[i] )  }
+		//if (i>=20) { break;}
+		
+		
+        col = (inp_row_orig[i]+":: :: :: ").split("::",3);
+        if (col.length < 3) {
+            continue;
+        }
+        txt1 = col[2].trim().toLowerCase();
+        if (txt1.substr(0, 7) == "-nodia-") {
+			txt1 = ""; 
+            continue;
+        }
+        
+		from1 = from1zero( col[0]  ) + deltaTime;
+        to1   = parseFloat( col[1] ) + deltaTime;		
+		
+        line_inprow_orig_from.push(from1);
+        line_inprow_orig_to1.push(to1);
+        //line_inprow_orig_text.push(  (i+1)  + "=" + col[2]);
+		line_inprow_orig_text.push( col[2] );
+		
+		//if (i< 6) { console.log("i=" + i + " new i=" + (line_inprow_orig_text.length-1) + " " + line_inprow_orig_text[ line_inprow_orig_text.length -1]); }
+		
+		//var mio= line_inprow_orig_text.length-1; console.log("line_inprow_orig_text["+mio+"] "  + line_inprow_orig_text[ mio] ); 
+		
+		//line_inprow_orig_text.push(  col[0]+"-" + col[1] + " " + col[2] + "(" + from1 + "-" + to1 ); 
+        n2 += 1;
+        var ix_tran = -1;
+
+        if (from1 == line_inprow_tran_from[n2]) {
+            ix_tran = n2;
+        } else {
+            var ix123 = binarySearch_insertionPoint(line_inprow_tran_from, from1); // look for  original language subtitle index
+
+            ix_tran = ix123[0];
+
+            if (from1 != line_inprow_tran_from[ix_tran]) {
+                ix_tran = 0; // the text of the zero index is blank  
+                for (var f1 = ix123[1]; f1 <= ix123[2]; f1++) {
+                    if ((from1 >= line_inprow_tran_from[f1]) && (from1 <= line_inprow_tran_to1[f1])) {
+                        ix_tran = f1;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+        line_inprow_orig_tran_ix.push(ix_tran);
+
+    }
+	inp_row_orig = null;
+	inp_row_tran = null;
+	
+}  // end of separe_time_sub
+
+//--------------------------------------------------------------	
+
+function onclick_changeVideoSpeed(this1) {
+	var speed =  parseFloat( this1.value ) ; 
+	if (speed  < 0.20) { 
+		speed = 0.20; 
+		this1.value = speed;
+	}	
+	vid.playbackRate = speed; 
+	
+} // end of onclick_changeVideoSpeed()
+
+
+//---------------------------------------------
+
+
+
+
+
+

@@ -1,0 +1,224 @@
+<html>
+<head>
+ <link rel="stylesheet" href="../../cbc_common/cbc_0_style.css">
+<style>
+
+</style>
+<style> 
+         .td_c1{border:0px solid green; text-align:center;} 
+         .td_c2 {border:0px solid green; left-padding:0; left-margin:0;text-align:left;vertical-align:middle;font-size:0.8em;} 
+         .timerow1 {
+         width:1em;
+         font-size:0.6em;
+         color:black;
+         padding:0 0.5em; 
+         vertical-align:middle;
+         text-align:right;
+         }
+         .timerow2 {
+         width:4em;
+         font-size:0.6em;
+         color:black;
+         padding:0 0.2em; 	
+         vertical-align:middle;
+         text-align:center;
+         }
+         .arrow12{
+         width:1em;text-align:right; color:black; font-size:0.5em;
+         }
+         .playBut1{
+         width:1em;padding:0;text-align:center;
+         }
+         .max_slider {
+         padding:0 2px;text-align:right; color:black; font-size:0.5em;vertical-align:middle;	
+         }	
+         .input_delta_slider  {
+         width:4em;display:inline;text-align:right;
+         }
+         .beg_end_slider {
+         border:0px solid black;
+         font-size:0.5em; text-align:center;  vertical-align:bottom; color:black; margin:0;padding:0;
+         }	
+         .big{
+         font-size:1.2em;
+         }
+		.speed_numR1 {
+			width:24%; text-align:right;font-weight:bold;font-size:1em;justify-content:right;align-item:right;
+			vertical-align:top;
+		}
+		.speed_numR2 {
+			width:1em; transform: rotate(-270deg);text-align:center; 
+		}
+		.speed_num {
+			width:25%; text-align:center;font-weight:bold;font-size:1em; 
+		}
+
+		.td_c1{border:0px solid green; text-align:center;} 
+		.td_c2 {border:0px solid green; left-padding:0; left-margin:0;text-align:left;vertical-align:middle;font-size:0.8em;} 
+		
+		.msg {  /* used only to be selected by classname*/ }
+        .header_1 {vertical-align: bottom; color:black; font-weight:bold;}
+		.fsize1 {font-size:1em;}     
+
+  .playBut2{
+         width:1.5em;padding:0;text-align:center;
+         }
+	.playBut3{
+         min-width:5.0em;padding:0;text-align:center;
+         }	
+	.helpTxt { font-size:1.2em; }	 
+      </style>  
+	  
+</head>
+<body>
+
+
+<div   style="display:flex; justify-content:center;width:100%; text-align:center;"> 
+<div style="width:95%;"> 
+	<div  style="width:100%; border:2px solid black;padding0;">
+		<div id="m800" class="msg helpTxt" style="width:100%;padding:0.5em;"><b>ClipByClip</b> is a tool to practice the comprehension of a language.</div>
+		<div id="m820" class="msg helpTxt" style="width:100%;font-size:0.8em;padding-bottom:0.5em;">		<br>				
+				It can be used in active mode by listening, reading, repeating 
+				<br>or in passive mode by endlessly listening to a few lines of subtitles while busy doing something else.
+				<br>It can also be useful in your native language to memorize for instance a poem, a piece of prose or a list of terms. 				
+		</div>		
+			
+<table  style="width:100%;">
+	<tr>
+		<td style="width:80%;font-size:1em; vertical-align:middle;   padding-top:2em;">
+							 <img id="imgword0" src="0_en_player.png"  style="width:98%;height:auto;">
+		</td>
+		<td style="vertical-align:middle;">
+				
+			<br> <p id="m812" class="msg helpTxt" >It's suggested to</p> 
+			<ol class="helpTxt">
+				<li><span id="m801" class="msg">Select a few lines of subtitles to play 
+						by clicking on the §arrowRight§ icon of the first line and the §arrowLeft§ of the last line.</span></li> 
+				<li><span id="m802" class="msg">Hide these lines (click to change the §openedbook§ icon to §closedBook§) 
+					and play them one (click on the §talkingHead§ icon) or several times (§infinity§ icon).</span>	</li>
+				<li><span id="m803" class="msg">If it's useful you can reduce the playback speed (vertical slider).</span> </li> 
+				<li><span id="m804" class="msg">Try to repeat what you hear</span> </li> 
+				<li><span id="m805" class="msg">Show the lines (click to change the  the §openedbook§ icon to §closedBook§) and play them again.</span>  </li>
+				<li><span id="m806" class="msg">To see the translation click on the §hideTran§ icon to change it to §showTran§.</span></li>
+				<li><span id="m807" class="msg">You can play and practice a line at time</span></li>
+			</ol>	
+			<span id="m808" class="msg helpTxt">Of course you can just  enjoy the video as usual from te beginning to the end with or without subtitles using the buttons below the video.</span> 
+		<td>
+	</tr>
+	
+	<tr>
+		<td style="width:80%;font-size:1em; vertical-align:middle;  padding-top:2em; ">
+							 <img id="imgword1" src="1_en_player.png"  style="width:98%;height:auto;">
+		</td>
+		<td  style="vertical-align:middle;" ><span id="m809" class="msg helpTxt">
+		To watch the film without interruptions click on the button with the little arrow inside a circle which is just below the video. </span>
+		<p id="m810" class="msg helpTxt">To read the subtitles in the original language, click on the book close icon, and on the open book to hide them.</p>
+		<p id="m811" class="msg helpTxt">To read the translated subtitles, click on the t? icon and to hide them click on the T icon. </p>
+		</td>
+	</tr>
+	
+	<tr>
+		<td style="width:80%;font-size:1em; vertical-align:middle;  padding-top:2em; ">
+							 <img id="imgword2" src="2_en_select_a few lines.png"  style="width:98%;height:auto;">
+		</td>
+		<td  style="vertical-align:middle;">
+			<span id="m813" class="msg helpTxt">zzz To select some lines of subtitles to play 
+						click on the §arrowRight§ icon of the first line and the §arrowLeft§ of the last line.
+					<br>Two highlighted stripes will appear before the first line and after the last.
+					<br>The buttons on the new line before the first have effect on all the selected lines 
+					(eg. clicking on the §talkingHead§ playbacks all the selected lines).     	
+				</span> 
+			<p id="m814" class="msg helpTxt">xx The line being played is surrounded by a red border that is visible even when the subtitle is hidden.</p>	
+		</td>
+	</tr>
+	
+	<tr>
+		<td style="width:80%;font-size:1em; vertical-align:middle;  padding-top:2em; ">
+							 <img id="imgword4" src="4_en_select_only_1_line.png"  style="width:98%;height:auto;">
+		</td>
+		<td   style="vertical-align:middle;">		
+			<p id="m815" class="msg helpTxt">zz You can show, hide and play a single line inside a selected group</p>	
+		</td>
+	</tr>
+	
+	<tr>
+		<td style="width:80%;font-size:1em; vertical-align:middle;   padding-top:2em;">
+							 <img id="imgword5" src="5_en_words_1.png"  style="width:98%;height:auto;">
+		</td>
+		<td  style="vertical-align:middle;">
+			<p id="m816" class="msg helpTxt">This page is called by the <b>Words in  reverse order of use</b> button.
+				Each button on the right get all rows containing the word displaied. 
+				The most used (those which appear in more rows) are listed first, 
+				the least are last, so that you can practice firstly the most useful.			
+			</p>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="width:80%;font-size:1em; vertical-align:middle;  padding-top:2em; ">
+							 <img id="imgword6" src="6_en_words_2_a_word.png"  style="width:98%;height:auto;">
+		</td>
+		<td  style="vertical-align:middle;">
+			<p id="m817" class="msg helpTxt">zz words 6</p>
+		</td>
+	</tr>
+
+</table>
+</div>
+</div>
+</div>
+ 
+	  <script src="../../cbc_common/cbc_MESSAGES.msg"        ></script>
+	  <script>
+			let clock_timer_symb     = "&#x23f1;"  ;
+			let infinity_symb        = "&infin;"   ; 
+			let speakinghead_symb    = "&#128483;" ;
+			/**
+			let hide_translation_symb = '<span style="position:relative;">&nbsp;?' + 
+				'<span style="position:absolute;top:-0.0em;left:-0.2em;font-weight:bold;width:1em;">t</span></span>';   			
+			let show_translation_symb = '<span style="position:relative;">&nbsp;' +
+				'<span style="position:absolute; top:0.1em;right:-0.2em;font-weight:bold;">T</span></span>'; 
+			**/	
+			let hide_translation_symb = '<span style="font-weight:bold;">&nbsp;t?&nbsp;</span></span>';  
+			let show_translation_symb = '<span style="font-weight:bold;">&nbsp;T&nbsp;</span></span>';  
+					
+				
+				
+			let pause_symb = "&#x23F8;" ; 
+			let play_symb  = "&#x23F5;" ; 			
+			let openbook_symb        = "&#128214;" ; 
+			let closedbook_symb      = "&#128213;" ; 
+			let left_arrow_symb      = "&#8592;"   ; 
+			let right_arrow_symb     = "&#8594;"   ; 	
+			let breakwords_symb      = "/|/" ;  
+			var zero123 = `<span class="playBut2 buttonFromToIx" style="display:block;font-size:2em;height:1.4em;">${right_arrow_symb}</span>`; 
+			var butt_rightArrow   = `<span class="playBut2 buttonFromToIx" >${right_arrow_symb}</span>`; 
+			var butt_leftArrow    = `<span class="playBut2 buttonFromToIx" >${left_arrow_symb}</span>`;	
+			var butt_openedBook   = `<span class="playBut2 buttonTD2"      >${openbook_symb}</span>`; 
+			var butt_closedBook   = `<span class="playBut2 buttonTD2"      >${closedbook_symb}</span>`;
+			var butt_hideTran     = `<span class="playBut2 buttonTD2"      >${hide_translation_symb}</span>`; 
+			var butt_showTran     = `<span class="playBut2 buttonTD2"      >${show_translation_symb}</span>`;
+			var butt_speakingHead = `<span class="playBut2 buttonTD2"      >${speakinghead_symb}</span>`; 
+			var butt_infinity     = `<span class="playBut2 buttonTD2"      >${infinity_symb}</span>`;
+			
+			
+         function custom_message_change(txt1) {
+			return txt1.
+				replaceAll("§arrowRight§"  , butt_rightArrow  ).
+				replaceAll("§arrowLeft§"   , butt_leftArrow   ).
+				replaceAll("§openedbook§"  , butt_openedBook  ).
+				replaceAll("§closedBook§"  , butt_closedBook  ).
+				replaceAll("§hideTran§"  , butt_hideTran  ).
+				replaceAll("§showTran§"  , butt_showTran  ).
+				replaceAll("§talkingHead§" , butt_speakingHead).
+				replaceAll("§infinity§"    , butt_infinity    ) ;        
+         }         
+      </script>	
+      <script src="../../cbc_common/cbc_MESSAGE_manager.jstxt"  onload="messageMain('H','en')"></script> 		  
+	 
+<script>
+	
+</script>
+      
+</body>
+</html>

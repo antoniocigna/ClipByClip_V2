@@ -1,0 +1,941 @@
+/* ClipByClip style*/
+:root {
+    --main-bg-color: #fefbd8
+}
+
+body,
+html {
+    background-color: var(--main-bg-color);
+    margin: auto;
+    height: 98%;
+    width: 98%;
+    margin: auto;
+    vertical-align: middle;
+    padding: 0;
+    text-align: center
+}
+
+
+
+
+html {
+    font-size: 1.5em
+}
+
+h1 {
+    text-align: center;
+}
+
+input,
+textarea {
+    background-color: #d5daf3;
+}
+
+video {
+    height: auto;
+}
+
+td {
+    margin: auto;
+    vertical-align: top;
+    padding: 0 1em 0 1em;
+    border: 0 solid #000;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    opacity: 1
+}
+
+
+div {
+	margin: auto;
+    vertical-align: top;
+	text-align: center; 
+	/**    
+    text-align: center;   // problemi   tange slider  i punti thumb vanno a finire fuori, c'é un modo per inoperizzarlo ?   
+	**/ 
+}
+ 
+
+
+
+
+div.fixed_top {
+  position:fixed;    
+  top: 10%;
+  right:20%;
+  padding: 5px;
+}
+
+
+div.fixed_bottom {
+  position:fixed;    
+  top: 90%; 
+  right:20%;
+  padding: 5px;
+}
+
+ #myProgress {
+	 width: 100%;
+	 background-color: #ddd;
+ }
+ #myBar {
+	 width: 0%;
+	 height: 30px;
+	 background-color: #04AA6D;
+	 text-align: center;
+	 line-height: 30px;
+	 color: white;
+ }
+ 
+ 
+ 
+
+
+#id_h11 {
+    font-size: .8em;
+    line-height: 80%;
+}
+
+
+
+.button {
+    background-color: #0015D994;
+    border: 1px solid #000000;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.4em;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 1.4em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+}
+
+.button:hover {
+    background-color: #00042dbf
+}
+.buttonFromToIx
+{
+    background-color: #0015D994;
+    border: 1px solid #000000;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.4em;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 1.4em;
+	width:1.5em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+}
+
+.buttonFromToIx {
+    background-color: #00042dbf
+}
+
+
+.buttonClip {
+    background-color: #0015D994;
+    border: 1px solid #000000;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8em;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 1.4em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+}
+
+.buttonClip:hover {
+    background-color: #00042dbf
+}
+
+.buttonTD {
+    background-color: #0015D994;
+    border: 1px solid #000000;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    
+    margin: auto;
+    border-radius: 1.4em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+}
+
+.buttonTD:hover {
+    background-color: #00042dbf
+}
+
+.TD2 {
+	text-align:left;
+	
+	width:25%;	
+	height:50%;
+	 border: 1px solid black;
+}
+
+.buttonTD2 {
+    background-color: lightgrey;
+    border: 1px solid #000000;
+    color: black;
+	text-align:left;
+	padding-left:0.3em;
+	padding-right:0.3em;   
+    border-radius: 1.4em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+}
+.buttonTD2:hover {
+	background-color: orange;
+}
+.buttonWhite {
+    background-color: white;
+    border: 1px solid #000000;
+    color: black;
+	text-align:left;
+	padding-left:0.3em;
+	padding-right:0.3em;   
+    border-radius: 1.4em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+}
+.buttonWhite:hover {
+	background-color: orange;
+}
+
+.speak{
+	width: 2em; 
+	background-color: coral;
+	border:0px solid blue; 
+    vertical-align: middle; text-align:center; 
+	font-size:0.7em;
+}
+
+
+.TD3 {
+	text-align:left;
+	vertical-align:middle;	
+	margin:0;
+	padding:0;
+	border:1px solid black;
+}
+.buttonTD3 {	
+	font-weight:bold;
+	background-color: lightgrey;
+	border: 1px solid #000000;
+	color: black;
+	vertical-align: top;
+	padding-left:0.3em;
+	padding-right:0.3em;   
+	border-radius: 1.4em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+}
+.buttonTD3:hover {
+	background-color: lightblue;
+}
+
+
+.buttonCtr {
+    border: 1px solid #000000;
+    color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    
+    margin: auto;
+    border-radius: 1.4em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+}
+
+
+
+.input1 {
+    opacity: 0;
+    width: 0;
+    height: 0
+}
+
+.bord1 {
+    border: 1px solid blue;
+}
+
+
+.orig_txt {
+    margin: auto;
+    text-align: center;
+    font-size: 1.3em;
+    color: blue;
+	width:100%;
+    background-color: white;
+}
+
+.trad_txt {
+    margin: auto;
+    text-align: center;
+    font-size: 1.3em;
+    color: black;
+	width:100%; 
+    background-color: white
+}
+
+.w_o {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #000
+}
+
+.w_o .w_t {
+    visibility: hidden;
+    width: 30em;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -15em;
+    opacity: 0;
+    transition: opacity .3s
+}
+
+.w_o .w_t::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent
+}
+
+.w_o:hover .w_t {
+    visibility: visible;
+    opacity: 1
+}
+
+.td1 {
+    text-align: center;
+    border: 0 solid green;
+    vertical-align: middle;
+    margin: auto
+}
+
+.height_tr1 {
+    height: 60%
+}
+
+.height_tr2 {
+    height: 40%
+}
+
+.c_error {
+    color: red;
+    font-weight: 700;
+    background-color: #ff0
+}
+
+.c_dragMain {
+    position: absolute;
+    z-index: 9;
+    text-align: center;
+    border: 0 solid #d3d3d3
+}
+
+.c_dragAnchor {
+    cursor: move;
+    z-index: 10;
+    background-color: #2196f3;
+    color: #fff
+}
+
+.divPage {
+    width: 98%;
+    height: 98%;
+    text-align: center;
+    vertical-align: middle;
+	padding-top: 1%;
+}
+
+.divVideo {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0
+}
+
+.flex-container1 {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    margin: auto;
+	vertical-align: top;
+}
+
+.div20Num {
+    font-size: .8em;
+    width: 4em;
+    text-align: center
+}
+
+.c_inp_number {
+    font-size: .8em;
+    width: 3em;
+    text-align: center
+}
+
+.c_hidden {
+    visibility: hidden
+}
+
+.border_red {
+    border: 0 solid red
+}
+
+.border_green {
+    border: 0 solid green
+}
+
+.border_1black {
+    border: 1px solid #000
+}
+
+.pad0 {
+    padding: 0
+}
+
+.pad_vert {
+    padding: .5em 0 .5em 0
+}
+
+.pad_vert1 {
+    padding: 1em 0 1em 0
+}
+
+.h100 {
+    height: 100%
+}
+
+.h98 {
+    height: 98%
+}
+
+.h95 {
+    height: 95%
+}
+
+.w100 {
+    width: 100%
+}
+
+.w99 {
+    width: 99%
+}
+
+.w98 {
+    width: 98%
+}
+
+.w95 {
+    width: 95%
+}
+
+.w70 {
+    width: 70%
+}
+
+.w01 {
+    width: 1%
+}
+
+.marg_auto {
+    margin: auto
+}
+
+.marg_vert {
+    margin: .8em 0 .8em 0
+}
+
+.vertical_middle {
+    vertical-align: middle
+}
+
+.back_color_body {
+    background-color: rgb(0 142 255/52%)
+}
+
+.back_color2 {
+    background-color: #d3d3d3
+}
+
+.box_shadow {
+    box-shadow: .5em .5em 1em -.5em #101b3e;
+}
+
+.display_none {
+    display: none;
+}
+
+.rad_x {
+    width: 10%;
+    padding: 0;
+}
+
+.rad_1 {
+    width: 8%;
+    padding: 0;
+}
+
+.rad_2 {
+    width: 3em;
+    padding: 0;
+}
+
+.rad_3 {
+    text-align: left;
+    padding: 0em;
+	width:80%;
+}
+
+.rad_4 {
+    text-align: left;
+    padding: 0em;
+	min-width:1em;
+}
+
+.center {
+    margin: auto;
+	text-align:center;
+	vertical-align: middle;
+}
+
+.centerFlex {
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+.left {
+    text-align: left
+}
+
+.right {
+    text-align: right
+}
+
+.top {
+    vertical-align: top
+}
+.nw-resize {cursor: nw-resize;}
+.resize {
+    background-color: rgb(0 142 255/52%);
+    border: 2px solid;
+    padding: 20px;
+    resize: both;
+    overflow: auto
+}
+
+::-webkit-resizer {
+	cursor: nw-resize;	
+    border: 2px solid red;
+    background: blue; 
+    display: block;
+	/**
+    width: 150px!important;
+    height: 150px!important
+	*/
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: yellow;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}  
+
+.subtd1{ text-align: right; width:7em; margin:0 0.5em 0 0.5em; padding:0 0.5em 0 0.5em ;}
+.subtd2{ text-align: left;  width:7em; margin:0 0.2em 0 0.5em; min-width:5em; padding:0;}
+.subtd3{ text-align: left;  width:7em; margin:0 0.2em 0 0.5em; min-width:5em; padding:0;}
+.subtd4{ text-align: left; }
+
+
+ .tdcenter {
+    margin: auto;
+    vertical-align: top;
+    padding: 0 1em 0 1em;
+    text-align:center;
+}
+.right_button_square {
+	width:100%;
+	font-size:1em;  
+	border: 1px solid rgb(1, 0, 3);
+	box-shadow: .5em .5em 1em -.5em #101b3e;	
+    padding: 0;
+    margin: auto;
+	vertical-align: middle;
+	text-align:center;
+}	
+.boldLine {			
+	background-color:yellow;
+	font-weight: bold;
+	color:blue;
+}
+.suboLine {		
+	color: black;
+	font-style: oblique;
+	text-align:left; 
+}	
+.tranLine {
+	color: green; 
+	font-weight: normal;
+	font-style: oblique;	
+	text-align:left; 
+}
+.noneLine {	
+	color: lightgrey; 
+	text-align:left; 
+}	
+
+
+
+.rotate_vertical {
+  writing-mode: vertical-rl; 
+  transform: rotate(180deg);
+  text-align:center;
+}
+.rot45 {
+  display: inline-block;
+  transform: skewY(45deg);
+}
+
+
+.cl_row {
+	top: 0;
+	display: flex;
+	justify-content: space-around;
+	
+}
+
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	opacity: 1; 	
+	display: flex;
+	justify-content: space-around;
+}
+
+.height100 {
+	min-height:2.5em;
+}
+
+.width100 {
+	min-width:100%;
+}
+.radioActive {
+	background-color: blue; 
+	color:white;
+}
+
+.TD4 {
+	text-align:center;
+	vertical-align:middle;	
+	margin:0;
+	padding:0;
+}
+.styleButtTD4 {
+	font-weight:bold;
+	color: black;
+	vertical-align: top;
+	margin:2em;
+	padding:0.5em;
+}
+.buttonTD4 {	
+	display:flex; 
+	justify-content: center;
+	width:90%;
+	font-weight:bold;
+	background-color: lightgrey;
+	border: 2px solid green;
+	color: black;
+	text-align:center; 
+
+	vertical-align: top;
+	margin: 0 0.2em 0 0.2em;
+	padding-left:0.5em;
+
+	border-radius: 1.4em;
+	box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+	
+}
+.buttonTD4:hover {
+	background-color: lightblue;
+}
+.but_word {
+	display: inline-block;
+	font-size: 0.8em;
+	margin: auto;
+	cursor: pointer;
+	text-decoration: none;
+	border: 0;
+	background-color: var(--main-bg-color);
+}
+.but_word:hover {
+	background-color: lightGrey;
+	box-shadow: 0.3rem 0.3rem #999;
+}
+
+.howToBreak {
+	color: black;
+	font-size:0.5em; 
+	font-family: italic; 	
+	text-align:left;
+}
+
+.bg_head_somewords {
+	display: inline-block;
+	text-align:left;
+	width:7em;
+	font-size:1em;	
+}
+
+
+/**  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  **/
+.cutSlider2 {
+	/*-webkit-appearance: none; */
+	width: 100%;
+	height: 25px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	/*-webkit-transition: .2s; */
+	/*transition: opacity .2s; */
+}
+
+.cutSlider {
+	padding: 0;
+	margin: 0;
+	-webkit-appearance: none;
+	width: 100%;
+	height: 25px;
+	background: #d3d3d3;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: .2s;
+	transition: opacity .2s;
+}
+
+.slider:hover {
+	opacity: 1;
+}
+
+.cutSlider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 1em;
+	height: 25px;
+	background: red;
+	cursor: pointer;
+}
+
+.cutSlider::-moz-range-thumb {
+	width: 1em;
+	height: 25px;
+	background: red;
+	cursor: pointer;
+}
+
+.wrapper {
+	text-align: initial;
+	/* you need it to neutralize other value in the parent or some other anchestor element */
+	width: 95%;
+	background-color: #ffffff;
+	padding: 3em 1em 3em;	
+}
+
+.container {  
+   text-align: initial;
+	position: relative;
+	width: 100%;
+	/*
+	margin-top: 2em;
+	*/
+}
+
+.rangeSlider {
+	text-align: initial;
+	' z-index: +9;' 	
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: 100%;
+	outline: none;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	/* -2.6em; */
+	bottom: 0;
+	background-color: transparent;
+	pointer-events: none;
+}
+
+.rangeSliderRow {
+	text-align: initial;
+	width: 100%;
+	height: 5px;
+	position: absolute;
+	margin: auto;
+	top: -0.2em;
+	bottom: 0;
+	border-radius: 5px;
+}
+
+.rangeSlider::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	height: 5px;
+}
+
+.rangeSlider::-moz-range-track {
+	-moz-appearance: none;
+	height: 5px;
+}
+
+.rangeSlider::-ms-track {
+	appearance: none;
+	height: 5px;
+}
+
+.rangeSlider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	height: 1.7em;
+	width: 1.7em;
+	background-color: #3264fe;
+	cursor: pointer;
+	margin-top: -9px;
+	pointer-events: auto;
+	border-radius: 50%;
+}
+
+.rangeSlider::-moz-range-thumb {
+	-webkit-appearance: none;
+	height: 1.7em;
+	width: 1.7em;
+	cursor: pointer;
+	border-radius: 50%;
+	background-color: #3264fe;
+	pointer-events: auto;
+}
+
+.rangeSlider::-ms-thumb {
+	appearance: none;
+	height: 1.7em;
+	width: 1.7em;
+	cursor: pointer;
+	border-radius: 50%;
+	background-color: #3264fe;
+	pointer-events: auto;
+}
+
+.rangeSlider:active::-webkit-slider-thumb {
+	background-color: #ffffff;
+	border: 3px solid #3264fe;
+}
+
+.rangeValues {
+	background-color: #3264fe;
+	position: relative;
+	margin: auto;
+	padding: 10px 0;
+	border-radius: 5px;
+	text-align: center;
+	font-weight: 500;
+	font-size: 25px;
+	color: #ffffff;
+}
+
+.border {
+	border: 1px solid green;
+}
+
+.ticks {
+	width: 100%;
+	padding:0;
+	margin: auto;
+	background-color: lightgrey;
+	display: flex;
+	justify-content: space-between;
+}
+
+.o_txt {
+	text-align: center;
+}
+
+.connectTimeLimit { 
+	     padding:0px; margin:0px;  
+		 height: 1em; 		  
+		 color: blue; 
+		 text-align:center; 
+		 background-color: lightgrey; 
+		 line-height:1px;  
+		 position:absolute;  
+		 left: 0;  
+		 top:  0;  
+		 width:0; 
+		 
+		 transform-origin: bottom left; 
+} 
+.time_tf_td {
+	display:none;
+	
+}
+.vertHeaderT {
+		
+  writing-mode: vertical-lr;
+  -webkit-writing-mode: vertical-lr;
+  -ms-writing-mode: vertical-lr;
+  
+  transform: rotate(180deg);
+ 
+  text-align:left;
+  vertical-align: middle; 
+  color:black;
+  font-size:0.5em;
+  width:1em;
+  font-weight: bold;
+}
+.header_1{		
+  text-align:center;
+  vertical-align: middle; 
+  color:black;
+  font-size:0.5em;
+  width:1em;
+  font-weight: bold;
+}

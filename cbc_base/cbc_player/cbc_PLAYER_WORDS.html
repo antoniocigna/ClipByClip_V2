@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="UTF-8">
+      <meta name="description" content="ClipByClip a tool to practice language comprehension">
+	  <meta name="license"     content="license MIT: you can share and modify the software, but you must include the license file">
+      <meta name="keywords"    content="HTML,CSS,JavaScript, bilingue, video, audio, subtitle,clip">
+      <meta name="author"      content="Antonio Cigna">
+      <meta name="date"        content="2021-2022">
+      <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+      <title>TITOLO FILM</title>
+      
+      <link rel="stylesheet"   href="../cbc_common/cbc_0_style.css">
+      <style>
+		html, body {
+			margin:auto; text-align:center; 
+			width:97%; 
+			height:95%;
+			padding: 1em 1em 1em 1em;
+			background-color: #C8BEBC;
+		}
+		table, tr, td {
+			vertical-align:top; 
+			/*border:1px solid black;*/
+		}
+		.sub_line {
+			background-color: yellow; color:black;
+			font-size:2.0em;
+			vertical-align:middle;
+			text-align:center;
+			padding:0;
+			margin:0.5px;
+		}
+		.word_table {
+			/*border:4px solid blue; */ 
+		}
+		.a_word {
+			border:1px solid black;
+			margin:0.5em;  
+			background-color: white; 
+			color: black; 
+			box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+		}
+		.a_word:hover {
+			background-color: black; color: white; 
+			font-weight: bold;  
+		}
+
+		a_numfra {visibility: hidden;}
+		a_numfra:over  {visibility: visible;}
+
+		//a_numfra       {display:none;}
+		//a_numfra:over  {display:block;}
+
+
+		.button {
+			box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+		}
+		.button:hover {
+			background-color: lightgrey;
+			color: black; 
+		}
+		/* Tooltip container */
+		.tooltip {
+			position: relative;
+			display: inline-block;
+			/*border-bottom: 1px dotted black;*/ /* If you want dots under the hoverable text */
+			border:1px solid black;
+			margin:0.5em;  
+			background-color: white; color:black;
+			color: black;  font-weight: bold;  
+			box-shadow: 0.5em 0.5em 0.5em rgba(0,0,0,0.6);  
+		}
+		/* Tooltip text */
+		.tooltip .tooltiptext {
+			visibility: hidden;
+			/*width: 40em; */
+			background-color: black; color: white; font-weight: bold; 
+			text-align: center;
+			padding: 5px 0;
+			border-radius: 6px;
+			/* Position the tooltip text - see examples below! */
+			position: absolute;
+			z-index: 1;
+			margin-left:1em;
+		}
+
+		/* Show the tooltip text when you mouse over the tooltip container */
+		.tooltip:hover .tooltiptext {
+			visibility: visible;
+		}  
+		.labelWordNum {
+			text-align:center;
+			margin:auto;
+			align-self: center;
+			vertical-align:middle;	
+			border:1px solid white;
+			width-max;1em; font-family:monospace;
+			box-shadow: 0.2em 0.2em 0.2em 
+		}
+		.labelWordNum:hover {
+			background-color: lightgrey;
+			color: black; 
+		}		 
+		.msg {  /* used only to be selected by classname*/ }
+		 
+      </style>
+ </head>
+   
+    <body id="id_body">
+      <div  id="id_titolo" style="text-align:center; font-size:1.2em;  font-weight:bold;">ClipByClip - Words</div>
+      <div  id="id_titolo2" style="text-align:center;font-weight:bold;">
+		<div id="m500" class="msg" style="font-size:1.5em;">Words</div>	  
+		  </div>
+      <span id="id_language" style="display:none;">en</span>  
+   
+      <span id="id_hardsub" style="display:none;">false</span>   
+      <span id="id_file_suborig" style="display:none;">true</span>   
+      <span id="id_file_subtran" style="display:none;">true</span>   
+      <span id="id_reset_storage" style="display:none;">false</span>  
+	  <span id="id_line_num_str" style="display:none;">linea n.</span>      
+      <span id="m501" class="msg" style="display:none;"> DOC/shared/cbc_4_HELP.html?language=it</span>
+	  <span id="m502" class="msg" style="display:none;"> $numwords$ parole ($percSingle$%) formano il $percX$% del testo</span>	  
+	  <span id="m503" class="msg" style="display:none;"> Questa parola si trova in $numrighe$ righe (Clicca sul pulsante in giallo per eseguire la prima riga)</span>
+	    
+      <div style="text-align:center; font-size:0.8em;">
+         <span id="m504" class="msg"> Tutte le parole dei sottotitoli sono elencate qui a destra come pulsanti in ordine inverso di frequenza, dai più ai meno referenziati.</span>
+         <br>
+		 <span id="m505" class="msg">Cliccando su un pulsante che riporta una parola è possibile riprodurre tutte le righe di sottotitoli che la contengono</span>
+      </div>
+	 
+      <div id="id_div20" style="display:none;"></div>
+      <div id="id_div20buffer" style="display:none;"></div>
+      <div id="MIO5sync" style="display: table;"></div>
+      <div id="id_show_sub" style="display: table;"></div>
+      <span id="id_ext_time" style="display:none;"></span>
+	  
+	 
+	  <div  style="position: relative;margin:auto; text-align:center;border:0px solid red; height:48%;width:100%; padding:0;  ">
+         <div style="position:absolute; top:2%; left:0%; width:50%;height:100%; margin:auto; text-align:center; vertical-align: top; border:0px solid green; ">
+            <div id="id_ctrVideo" class="centerFlex" 
+               style=" width:100%; height:90%; 
+               padding:0.5em;margin:0;
+               margin:auto;text-align:center; vertical-align: top;">
+               <video id="myVideo"  controls style="width:auto; height:90%; margin: auto; "
+                  onloadedmetadata="onloaded_fun()"  >
+               </video>
+               <div id="id_timestaff">
+                  <span id="id_time_video" style="font-size:1em; height:1.2em;"></span>  
+                  <span id="id_orig_ix_line" ></span>  
+				   <span id="id_showsync" style="display:none;"></span>  
+               </div>
+		
+				<div style="width:100%; text-align:left;">				  
+						<table style="font-size:0.7em;width:100%;border:0px solid red;">
+						<tr>
+							<td style="text-align:left;padding: 0 0.1em;width:20%;" id="m506" class="msg">Cambia Velocità</td>
+							<td style="text-align:left;padding:0;margin:0;">
+								 <input type="range" min="0.0" max="2" value="1" step="0.25" id="id_setSpeedy" 
+									onchange="onclick_changeVideoSpeed(this)" 
+									oninput="document.getElementById('outSpeed').innerHTML = parseFloat(setDelta( this.value ))*100+'%' "  		
+									style="width:100%;">
+							</td>
+							<td  id="outSpeed" style="text-align:left;width:8%;"></td>	
+						</tr>
+						<tr>
+							<td style="text-align:left;padding: 0 0.1em;width:20%;">
+								<span id="id_chgBeg">
+									<span id="m507" class="msg">cambia tempo begin</span>
+								</span>
+							</td> 		
+							<td style="text-align:left;padding:0;margin:0;">
+								<input type="range"  min="-2" max="2" value="0.0" step="0.001" style="text-align:left; width:100%;"
+									id="id_inpChgBeg" onchange="onchangeInputRange1(this)" 
+									oninput="document.getElementById('outRangeFrom').innerHTML = setDelta( this.value )" > 						
+							</td>									
+												
+							<td id="outRangeFrom" style="text-align:left;"></td>			
+						</tr>
+						
+						<tr>	
+							<td style="text-align:left;padding:0;margin:0;width:20%;">
+								<span id="id_chgEnd">
+									<span id="m508" class="msg">cambia tempo end</span>
+								</span>
+							</td> 	
+							<td  style="text-align:left;padding:0;margin:0;">
+								<input type="range"  min="-2" max="2" value="0.0" step="0.001"  style="text-align:left; width:100%;"
+									id="id_inpChgEnd" onchange="onchangeInputRange1(this)" 
+									oninput="document.getElementById('outRangeTo').innerHTML = setDelta( this.value )" > 						
+							</td>																		
+							
+							<td id="outRangeTo" style="text-align:left;width:8%;"></td>		
+						</tr>						
+						
+					</table>	
+				 
+				 </div>
+			
+			</div> 
+			
+         </div>         
+		
+         <div id="list_buttwords"  
+			style="overflow-y:auto; position:absolute; top:2%; right:0%; width:50%;height:95%;margin:auto; text-align:center; 
+			vertical-align:top;  border:0px solid green; ">
+         </div>
+      </div>
+	  
+<div id="id_overmsg" style="">&nbsp;</div>
+	  
+	  
+      <div id="id_but_to_play" style="display:none;">
+        
+         <table style="width:100%; border-collapse: collapse;">
+            <tbody>
+				<tr>
+				
+               <td  style="width:70%; text-align:center;">
+					 <div id="id_oneWord" style="font-size:2em; font-weight: bold;"><b>ich</b></div>
+               
+					 <div id="id_oneWord2xx" style="display:none;width: 100%; font-size: 0.8em; margin: auto; text-align: center; "> 
+					 Questa parola si trova nelle righe identificate dai seguenti numeri (click sul numero per riprodurre la riga)</div>	
+					
+					 <div id="id_dummyRadio" 
+						style="overflow-y: auto; width: 90%;height:2em;font-size: 0.8em; margin: auto; padding-bottom:0.8em;
+							display: block; text-align:left;">
+					 </div>	
+			   </td>
+               <td colspan="2"> 
+					<div id="m509" class="msg" style="font-size:0.5em;">La parola si trova nelle righe identificate dai numeri listati sotto di essa<br>
+    	(per riprodurre una riga cliccare sul numero o su uno dei 2 pulsanti qui sotto)
+					</div>
+					<div style="display:flex;width:100%;">
+						<button id="id_but_next" class="buttonTD2" 
+							style="display: block; font-size: 0.8em; width: 6em; line-height: 80%;padding:0.3em;text-align:center; " 
+							onclick="onclick_playNextClip3()">			  
+							<span id="m510" class="msg"> Play + <br>riga </span>
+							<span id="id_num_riga2nxt"style="font-size:0.7em;">5</span>
+						</button>
+						<button id="id_but_repeat" class="buttonTD2" 
+							style="display: block; font-size: 0.8em; width: 6em; line-height: 80%;padding:0.3em;text-align:center; " 
+							onclick="onclick_replay3()">
+							<span id="m511" class="msg">Ripeti<br>riga</span> 
+							<span id="id_num_rigaRepeat" style="font-size:0.7em; ">5</span>
+						</button>
+						<button id="id_but_loop" class="buttonTD2" 
+							style="display: block; font-size: 0.8em; width: 6em; line-height: 80%;padding:0.3em;text-align:center; " 
+							onclick="onclick_OneClipRow_play_LoopW(this)">
+							<span id="m514" class="msg">xxRipeti Infinito<br>riga</span> 
+							<span id="id_num_loopRepeat" style="font-size:0.7em; ">5</span>
+						</button>
+				  </div>
+		
+
+				  </td>
+            </tr>	
+			
+		
+            <tr  id="trbut2" style="display:block;">
+               <td style="width:70%;border:1 px solid black;">
+                  <span id="id_orig_line1" class="sub_line" 
+						style="display: block; font-size: 1.1em;color:blue;background-color:white;"></span>		   
+               </td>
+			 
+               <td style="border:1 px solid black;"> 
+                  <button id="id_but_orig" class="buttonTD2" 
+						style="display: block; font-size: 0.8em; width: 10em; line-height: 80%;padding:0.3em;text-align:center; " 
+						onclick="onclick_display( ele_orig_line1)">
+						<span id="m512" class="msg"> Mostra Sottotitoli Originali</span>
+                  </button>	
+               </td>
+				<td style="text-align:center;">	
+					
+				</td>
+            </tr>
+            <tr id="trbut3" style="display:block;">
+               <td style="width:70%;border:1px px solid black;">
+                  <span id="id_tran_line1" class="sub_line" 
+						style="display: none; font-size: 1.1em;background-color:white;"></span>	
+               </td>
+			   
+               <td style="border:1 px solid black;">  				
+                  <button id="id_but_tran" class="buttonTD2" 
+						style="display: block; font-size: 0.8em; width: 10em; line-height: 80%;padding:0.3em;text-align:center; " 
+						onclick="onclick_display( ele_tran_line1)">
+						<span id="m513" class="msg"> Mostra Sottotitoli Tradotti</span>
+                  </button>	
+               </td>
+				<td>
+				</td>					
+            </tr>
+			</tbody>
+		 </table>
+      </div>	
+	  
+	  <div style="display:none;">
+		<span id="m001"></span>
+		<span id="m002"></span>
+		<span id="m003"></span> 
+		<span id="m004"></span>
+		</div>
+	
+	  <script src="../cbc_common/cbc_MESSAGES.msg"        ></script>
+	  <script>
+         function custom_message_change(txt1) {
+         return txt1; 
+         }         
+      </script>	
+      <script src="../cbc_common/cbc_MESSAGE_manager.jstxt"  onload="messageMain('C')"></script> 		  
+	
+      <script src="./cbc_PLAYER_WORDS_script.jstxt"  	defer ></script>	
+         
+</body>
+</html>

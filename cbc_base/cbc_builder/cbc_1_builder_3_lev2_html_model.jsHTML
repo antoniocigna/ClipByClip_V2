@@ -1,0 +1,75 @@
+"use strict";
+/*  
+ClipByClip A tool to practice language comprehension
+Antonio Cigna 2021/2022
+license MIT: you can share and modify the software, but you must include the license file 
+*/ 
+/* jshint strict: true */
+/* jshint esversion: 6 */
+/* jshint undef: true, unused: true */	 
+
+
+function second_level_html( HTML_TITLE, video_path2, video_filename, this_root, lev2_html, lev2_script_fn ) {
+	
+	// this file uses   back-ticks (``)  = ALT + 96  
+	
+	var lev2_html_model = `      
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Clip By CLip: A tool to practice language comprehension by playing video/audio a clip at time with/without subtitles">
+	<meta name="license"     content="license MIT: you can share and modify the software, but you must include the license file">
+	<meta name="keywords"    content="HTML,CSS,JavaScript, bilingue, video, audio, subtitle,clip" >
+	<meta name="author"      content="Antonio Cigna">
+	<meta name="date"        content="2021-2022">	 
+	<meta name="keywords"    content="ClipByClip, Language, Learning, Tool, Comprehension, clip, subtitle">	
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+	<meta name="generator"   content="ClipByClip_Builder.html"> 
+
+	<script id="thisscript" src="${lev2_script_fn}"></script>  
+
+	<!--   This file has been built by the ClipByClip_Builder.html file  -->
+</head>
+ 
+<body>
+	<!--
+	This html file passes the control to another html which is the actual html page you will see
+	a few parameters are passed together with the control:
+	the more important ones are the video (id_vidpath,id_vidfile) 
+	and the address of the script file  (cbc_2_...title....jstxt) which containts the subtitles 
+	-->		
+	<script> 	
+		var time_limit =  parseInt(x_bldtime) + 10000; 	
+		if ( Date.now() < time_limit) {
+			window.close();
+		}	
+		var scrsubfile = document.getElementById("thisscript").src;    
+		var html2path  = x_main_code_folder; 
+		var html2call  = "file:///" + html2path + "cbc_player/cbc_PLAYER.html";   // new page to call 
+
+		x_vidpath2 =  x_vidpath.replaceAll("\\\\","/");  // replace all forward slash with back slash						
+		var params ="";
+		params += "&p_title="         + x_title ;  
+		params += "&p_video_src="     + x_vidpath2 + x_vidfile;
+		params += "&p_video_w="       + x_vid_width  ;    
+		params += "&p_video_h="       + x_vid_height ;  
+		params += "&p_scr_sub1="      + scrsubfile ;  
+		params += "&p_language="      +  x_language;   // 2 character language ( language of the messages and other info) 
+		params += "&p_reset_storage=" +  x_reset_storage; 
+		params += "&p_hardsub="       +  x_xhardsub;  
+		
+		params += "&p_file_suborig="  +  x_xfile_suborig;  
+		params += "&p_file_subtran="  +  x_xfile_subtran; 
+		var assign_parms =  html2call + "?" +  encodeURI( params.substring(1) ) ; 					
+		window.location.assign( assign_parms ) ; 			
+	</script>				
+</body>
+</html>
+	` ;  // end of lev2_html_model
+	
+	return lev2_html_model; 
+	
+} // end of second_level_html	
+
+//-----------------------------------------------
