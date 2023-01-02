@@ -12,9 +12,10 @@ license MIT: you can share and modify the software, but you must include the lic
 //
 // part1: subtitle_data  
 
-var SILENT_GAP_LIMIT = 10;  
+var SILENT_GAP_LIMIT = 2;  // limit in seconds 
 //  if there is time gap  ==> add something to the to_time of the previous and subtract something from the present line    
 //  if the gap is too much large insert a new line with a button to skip it 
+var SILENT_GAP_LIMIT2 = 2*SILENT_GAP_LIMIT;  // limit in seconds 
 
 
 //---------
@@ -326,27 +327,27 @@ function add_nodialog_clips3( inpArray ) {
 		silent_gap = fromTime - maxPrevToTime;	
 		
 		if (silent_gap > 0) {
-		
-				if (silent_gap <= SILENT_GAP_LIMIT) {		
-					// the gap is small,  eliminate it by increasing the previous to_time and decreasing the present from-time ( maybe useful to hide sync errors)   
-					half_gap = silent_gap/2; 	
+				//console.log("silent_gap=" + silent_gap + "  limit=" + SILENT_GAP_LIMIT);
+				if (silent_gap <= SILENT_GAP_LIMIT2) {		
+					// the gap is small,  eliminate it by increasing the previous to_time and decreasing the present from-time ( maybe useful to hide sync errors) 
+					half_gap = silent_gap; 
 				} else {
 					// the gap is too large, may be is annoying  (the user of this tool want to listen, not to wait)     
 					//     use half the gap limit to increase the previous to_time and decrease the present from-time (maybe useful to hide sync errors)   
 					//     and add a line which will host a button to skip it
-					half_gap = (silent_gap - SILENT_GAP_LIMIT) / 2; 
-				}	
+					//half_gap = (silent_gap - SILENT_GAP_LIMIT) / 2; 
+					half_gap = SILENT_GAP_LIMIT / 2; 
+				}  				
 				
-				if (i < 2) {
-					maxPrevToTime=0; 
-				} else {
+				if (maxPrevToTime >= 1.00) {
 					maxPrevToTime  += half_gap;     // increase the maximum toTime for a bit
 					rigaTo[  i-1 ] = maxPrevToTime; // and assign it to the last to_time 
-				}
-				
+				}				
 				fromTime -=  half_gap;        // decrease  the present fromTime for a bit 
 				rigaFrom[i] = fromTime;       // and assign it to the present from time  
-				
+	
+				//console.log("help_gap=" + half_gap + "  new maxPrevToTime=" + maxPrevToTime + "  fromTime=" + fromTime);		
+	
 				if (maxPrevToTime < fromTime) {
 					txtsilent = sayNODIALOG + (fromTime - maxPrevToTime).toFixed(0) + " " + document.getElementById("ma30").innerHTML ; 
 					silent_row = (100000 + maxPrevToTime).toFixed(3).substring(1) + "::" +  (100000 + fromTime).toFixed(3).substring(1) + ":: " + txtsilent; 	
