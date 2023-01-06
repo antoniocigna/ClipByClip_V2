@@ -64,7 +64,16 @@
 		
 		.msg {  /* used only to be selected by classname*/ }
         .header_1 {vertical-align: bottom; color:black; font-weight:bold;}
-		.fsize1 {font-size:1em;}                
+		.fsize1 {font-size:1em;}     
+		.toricFrame {
+			border: 1px solid black;
+			color: black;
+			background-color:lightgrey;
+			text-align: center;
+			vertical-align: middle;   
+			margin: auto;
+			border-radius: 1.4em;
+		}		
       </style>  
 	  
    </head>
@@ -132,7 +141,7 @@
                <span id="id_reset_storage" style="display:none;">false</span>  
                <span class="msg" id="mh00" style="display:none;">../DOC/DOC_English/doc_en.html</span>
                <div id="id_head0" style="border:0px solid red;">
-                  <b><span style="font-size:2em;" id="id_titolo">Charade 1963 dicembre</span></b> 
+                  <b><span style="font-size:2em;" id="id_titolo"></span></b> 
                   <br>
                   <div style="font-size:1em;line-height:0.8em;">									
                      <i>Clip By Clip</i>
@@ -541,22 +550,26 @@
                            </video>
                         </div>
 						
-                        <!-- html_Include_1_1_4 -->		
-                        <div id="id_central" style="display: block; height: 100%; margin: auto; border: 0px solid red; text-align: center; width: 95%; opacity: 1;">
+                        <!-- html_Include_1_1_4 -->	
+							<div id="id_central" style="display: block; height: 100%; 
+									margin: auto; border: 0px solid red; text-align: center; 
+									width: 95%; opacity: 1;">
                            <div id="subOrigEndTime2" style="display:none;border:0px solid blue;">0</div>
-                           <div style="display:flex; width:100%;">
-                              <div style="padding-right:1em;">
-                                 <button id="id_ctl_playpause" class="buttonTD2" onclick="onclick_controls_emul_play(this)">
+                           <div class="toricFrame" style="display:flex; width:100%; border:1px solid black;">
+                              <div>
+                                 <button id="id_ctl_playpause"  style="border:0;background: rgba(125, 125, 0, 0)" 
+									onclick="onclick_controls_emul_play(this)">
                                  <span style="display: block; font-size: 2em; height: 1.4em;">⏵</span>
                                  <span style="display: none; font-size: 2em; height: 1.4em;">⏸</span>
                                  </button>
                               </div>
-                              <div style="width:97%">
-                                 <input id="id_ctl_slider" type="range" min="0.0" max="6816.287347" value="0" step="0.001" style="width:100%" oninput="oninput_ctl_slider()" onchange="onchange_ctl_slider()">
-                                 <br>
-                                 <div style="text-align:left; font-size:0.5em;" id="id_ctl_value">0,000</div>
+                              <div style="width:100%; border:0px solid black;vertical-align:middle;text-align:left;">	
+								 <span style="text-align:left; font-size:0.5em;" id="id_ctl_value">0,000</span><span>&nbsp;</span>	
+                                 <input id="id_ctl_slider" type="range" min="0.0" max="6816.287347" value="0" step="0.001" 
+									style="width:80%;" oninput="oninput_ctl_slider()" onchange="onchange_ctl_slider()">      
                               </div>
                            </div>
+						   
                            <div style="display:flex; width:100%;">
                               <div style="padding-right:1em;">
                                  <button class="buttonTD2" id="idb_xx" style="min-width:3em;width:3em;" onclick="onclick_22OneClipRow_showHide_sub(this, document.getElementById('id_subOrigText2'))">

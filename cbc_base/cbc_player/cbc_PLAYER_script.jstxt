@@ -337,7 +337,7 @@ ele_ctl_playpause.children[0].innerHTML = ele_ctl_playpause.children[0].innerHTM
 ele_ctl_playpause.children[1].innerHTML = ele_ctl_playpause.children[1].innerHTML.replace("§pause_symb§",pause_symb);  
 let ele_ctl_slider = document.getElementById("id_ctl_slider"); 
 let ele_ctl_value  = document.getElementById("id_ctl_value"); 
-
+let ctl_slider_maxValue_hhmm = 0; 
 let myLang = navigator.language;        // eg.  it-IT
 let decimal_point = (0.123).toLocaleString( myLang ).toString().substr(1,1);    
   
@@ -3483,9 +3483,13 @@ function onloaded_fun() {
 	
 	vid_duration = vid.duration;
 	
-	ele_ctl_slider.max = vid_duration; 
+	ele_ctl_slider.max = vid_duration;
 	ele_ctl_slider.value = 0;  
-	console.log("vid.duration=" + vid_duration);
+	
+	ctl_slider_maxValue_hhmm = fun_N_secs_to_hhmmssRid( parseFloat(vid_duration) ) ;
+	
+	
+	console.log("vid.duration=" + vid_duration + " ctl_slider_maxValue_hhmm=" + ctl_slider_maxValue_hhmm); 
 	 
     // Assign an ontimeupdate event to the video element, and execute a function if the current playback position has changed
     
@@ -5701,7 +5705,8 @@ function onclick_controls_emul_play(this1) {
 } // end of onclick_controls_emul_play(); 
 //---------------------
 function oninput_ctl_slider() {
-	ele_ctl_value.innerHTML = fun_N_secs_to_hhmmssmmmRid(  ele_ctl_slider.value) ;
+	//ele_ctl_value.innerHTML = fun_N_secs_to_hhmmssmmmRid(  ele_ctl_slider.value) + "/" + ctl_slider_maxValue_hhmm; 
+	ele_ctl_value.innerHTML = fun_N_secs_to_hhmmssRid(  ele_ctl_slider.value) + "/" + ctl_slider_maxValue_hhmm; 
 
 	//console.log("oninput_ctl_slider() ctl slider= " +  parseFloat(ele_ctl_slider.value ) ) ;  
 } // end of oninput_ctl_slider()
@@ -5714,14 +5719,25 @@ function onchange_ctl_slider() {
 //-----------------------------------
 function fun_N_secs_to_hhmmssmmmRid(  seconds ) {	
 	var hhmm1 = " " + fun_N_secs_to_hhmmssmmm( parseFloat( seconds ) );
+	//console.log("fun_N_secs_to_hhmmssmmmRid(" + seconds + "   hhmm1=" + hhmm1);  
+	
 	return hhmm1.replace(".", decimal_point).
 		replace(" 00:00:0"," ").replace(" 00:00:"," ").replace(" 00:0"," ").replace(" 00:"," ").
 		replace(" 0"," ").replace(" ,", " 0,").replace(" ."," 0.").trim() ; 
 }
+//-----------------------------------
+function fun_N_secs_to_hhmmssRid(  seconds ) {	
+	var hhmm2 = fun_N_secs_to_hhmmssmmmRid(  seconds ); 
+	var hhmm3 = hhmm2.split( decimal_point)[0]; 
+	return hhmm3; 
+}
 //---------------------------------------------
 function set_ctl_value( seconds ) {
-	var hhmm = fun_N_secs_to_hhmmssmmmRid( seconds ) ;
-	ele_ctl_value.innerHTML = hhmm; 
+
+    //var hhmm = fun_N_secs_to_hhmmssmmmRid( seconds ) ;	
+	var hhmm = fun_N_secs_to_hhmmssRid( seconds ) ;
+	ele_ctl_value.innerHTML = hhmm + " / " + ctl_slider_maxValue_hhmm; 
+	
 	ele_ctl_slider.value = seconds;
 	
 	LS_stor_playnext_replay = hhmm + ";;" + hhmm + ";;" + hhmm; 
