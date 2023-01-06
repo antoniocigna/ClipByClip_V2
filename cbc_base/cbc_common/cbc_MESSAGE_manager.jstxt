@@ -46,7 +46,7 @@ This script file is executed onload by the html file: eg.
 
 //==============================
 var parser, xmlDoc;
-
+var DEFAULT_language_test =  "_antonio_test_"; 
 //---------------------------------------
 
 function execParser() {
@@ -77,6 +77,10 @@ function update_HtmlEle_MsgById(parm_pgm_ABCH, id_language) {
 	
 	var defaut_id_language = "en";
 	
+	if ( window.location.pathname.toLowerCase().indexOf( DEFAULT_language_test ) >= 0) {
+		id_language = "xx";   
+	}
+		
 	var langKey = 'lang_' + id_language; 
 	
 	let list_msg_id_val; 
