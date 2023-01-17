@@ -3913,14 +3913,14 @@ function onclick_pauseContinue(this1,isClip=false) {
 				// stop the running clip 
 				clip_play_time_interrupt = vid.currentTime; 
 				save_runningButton = runningButton;
-				document.getElementById("id_t5").style.backgroundColor = "lightgrey";
+				//document.getElementById("id_t5").style.backgroundColor = "lightgrey";
 				this1.style.backgroundColor = "black";		
 				this1.style.color = "white";				
 				vid.pause();
 			} else { 
 				// continue
 				runningButton = save_runningButton;
-				document.getElementById("id_t5").style.backgroundColor = null;
+				//document.getElementById("id_t5").style.backgroundColor = null;
 				this1.style.backgroundColor = null;	
 				this1.style.color = null;
 				//onclick_replay_from_to(true, clip_play_time_interrupt); 				
@@ -3934,13 +3934,13 @@ function onclick_pauseContinue(this1,isClip=false) {
 	//------------------------------------
     if (isPlaying) { // stop the running clip 
         save_runningButton = runningButton;
-        document.getElementById("id_t5").style.backgroundColor = "lightgrey";
+        //document.getElementById("id_t5").style.backgroundColor = "lightgrey";
 		this1.style.backgroundColor = "black";		
 		this1.style.color = "white";				
         vid.pause();
     } else {  // continue
         runningButton = save_runningButton;
-        document.getElementById("id_t5").style.backgroundColor = null;
+        //document.getElementById("id_t5").style.backgroundColor = null;
 		this1.style.backgroundColor = null;	
 		this1.style.color = null;		
         fun_playVideo("onclick_pauseContinue() file ..29_on_routines.jstxt");
