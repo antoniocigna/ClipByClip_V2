@@ -53,6 +53,8 @@ console.log("LOADED file SCRIPT " + currScript.substring( 1+Math.max(bar1,bar2) 
 //------------------------------------------
 var swdebug=false; 
 
+const NO_VIDEO_AUDIO_FILE = "noVIDEO_noAUDIO".toLowerCase(); 
+var sw_is_no_videoaudio = false;
 
 let clock_timer_symb     = "&#x23f1;"  ;
 let playLoop_symb        = "&infin;"   ; 
@@ -74,7 +76,8 @@ let clipFromRow    = 0;
 let clipToRow      = 0;
 let clip_play_time_interrupt = 0;	
 
-
+let sw_the_are_no_subtitles = false; 
+const NO_TEXT_NO_SUBTITLES = "NO_TEXT_NO_SUBTITLES"; 
 
 let sw_CLIP_play      = false; 
 
@@ -233,8 +236,6 @@ let ele_replayVa_to_row_value      ;
 
 let ele_replay2_to_row_innerHTML      ; 
 
-//let txta_orig_sub =""; 
-//let txta_tran_sub ="";   
  
 
 let ele_clip_subtext          ; 
@@ -349,26 +350,80 @@ let eleTabSub_save_clientWidth, eleTabSub_save_clientHeight;
 let sw_eleTabSub_widthInit = true; 
 let t_swMove = true;
 
+//-----------------------------
+
+
+getUrlData2(); 	
+
+window.dispatchEvent(new Event('resize'));
+
+//-----------------------------------------------------------------------  
+if (sw_sub_onfile == false) {
+    sw_show_clip_num = false;
+} 
+//--------------------------------------------------------
+if (document.getElementById("id_playNext2_line_row") ) { 
+	if (sw_show_clip_num) {
+		document.getElementById("id_playNext2_line_row").hidden = false;
+		document.getElementById("id_replay_line_row").hidden = false;
+	} else {
+		document.getElementById("id_playNext2_line_row").hidden = true;
+		document.getElementById("id_replay_line_row").hidden = true;
+	}
+ } 
+//--------------------------
+
 
 //================================================
-function assign_params_for_word_html_file() {
+function assign_params_for_word_html_file(wh) {
+	console.log("assign_params_for_word_html_file(wh=" + wh+")" )
+
 	var params = html_parms_queryString; 	
 	params += "&p_subDeltaTime="  +  LS_subDeltaTime; 	// add parameter to html_parms_queryString (the input parameter) 
+	//--------------------------
 	
 	let html2call  = "cbc_PLAYER_WORDS.html";  
 	var assign_parms =  html2call + params; 
 	document.getElementById("id_href_parole").href =  assign_parms; 
-	console.log("assign_params_for_word_html_file() " + ' "id_href_parole").href =  ' + assign_parms );
+	
+	
+	let html2call2  = "cbc_PLAYER_BILINGUAL.html";  
+	var assign_parms2 =  html2call2 + params; 
+	document.getElementById("id_href_biling").href =  assign_parms2; 
+	
+	
+	let html2call3  = "cbc_PLAYER_ORIG_TEXT.html";  
+	var assign_parms3 =  html2call3 + params; 
+	document.getElementById("id_href_origTxt").href =  assign_parms3; 
 }
 
+//================================================
+function XXassign_params_for_word_html_file() {
+	var params = html_parms_queryString; 	
+	params += "&p_subDeltaTime="  +  LS_subDeltaTime; 	// add parameter to html_parms_queryString (the input parameter) 
+	
+	let html2call  = "cbc_PLAYER_WORDS.html";  
+	var assign_parms =  html2call + params.replace("p_title=","p_title=words_"); 
+	document.getElementById("id_href_parole").href =  assign_parms; 
+	console.log("\nassign_params_for_word_html_file() " + ' "id_href_parole").href =  ' + assign_parms + "\n");
+	
+	//--------------------------
+	
+	let html2call2  = "cbc_PLAYER_BILINGUAL.html";  
+	var assign_parms2 =  html2call2 + params.replace("p_title=","p_title=bilingual_"); 
+	document.getElementById("id_href_biling").href =  assign_parms2; 
+	console.log("\nassign_params_for_bilingual_html_file() " + ' "id_href_biling").href =  ' + assign_parms2 +"\n");	
+}
 //-------------------------------
 
 function getUrlData2() {
 	
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX getUrlData2() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n"); 
+	
 	html_parms_queryString = window.location.search;
 	console.log("window.location.search = html_parms_queryString="  +  html_parms_queryString);
 	
-	assign_params_for_word_html_file();  	
+	//assign_params_for_word_html_file(1);  	
 	
 	if ((html_parms_queryString == undefined ) || (html_parms_queryString.trim() == "") ) {
 	
@@ -414,21 +469,24 @@ function getUrlData2() {
 	
 	sw_reset_storage = (document.getElementById("id_reset_storage").innerHTML == "true"); 
 	
-		
-	video_native_height = decodeURI( urlParams.get("p_video_h"    ) ); 
-	video_native_width  = decodeURI( urlParams.get("p_video_w"    ) ); 
-	let errVideo=false;
-	
-	if ( isNaN(video_native_height) ) {errVideo=true;}
-	if ( isNaN(video_native_width) )  {errVideo=true;}
-	if (errVideo) {
-		console.log("VIDEO  ERROR   height or width not numeric ") ;
-		document.getElementById("id_div20").innerHTML = "<br><br><br>"   + "VIDEO/AUDIO file ERROR"  + "<br><br>" + "<small>" + "run the Builder again" +"</small>";   
-		document.getElementById("id_div20").style.fontSize="2em";   
-		document.getElementById("id_div20").style.color = "red";   		
-		document.getElementById("id_div20").style.backgroundColor = "white";   		
+
+	var listener_video_src =  urlParams.get("p_video_src");  
+	if (listener_video_src.toLowerCase().indexOf( NO_VIDEO_AUDIO_FILE ) >=0 ) {
+		sw_is_no_videoaudio = true; 
+	} else {
+		video_native_height = decodeURI( urlParams.get("p_video_h"    ) ); 
+		video_native_width  = decodeURI( urlParams.get("p_video_w"    ) ); 
+		let errVideo=false;		
+		if ( isNaN(video_native_height) ) {errVideo=true;}
+		if ( isNaN(video_native_width) )  {errVideo=true;}
+		if (errVideo) {
+			console.log("VIDEO  ERROR   height or width not numeric ") ;
+			document.getElementById("id_div20").innerHTML = "<br><br><br>"   + "VIDEO/AUDIO file ERROR"  + "<br><br>" + "<small>" + "run the Builder again" +"</small>";   
+			document.getElementById("id_div20").style.fontSize="2em";   
+			document.getElementById("id_div20").style.color = "red";   		
+			document.getElementById("id_div20").style.backgroundColor = "white";   		
+		}
 	}
-	
 	
 	// Create new script element
 	const scriptSub = document.createElement('script');
@@ -446,8 +504,15 @@ function getUrlData2() {
 					
 					document.getElementById("id_titolo").innerHTML = urlParams.get("p_title");
 					document.title = urlParams.get("p_title");
-					document.getElementById("myVideo").src = urlParams.get("p_video_src");  
-					document.getElementById("myVideo").style.display = "block";  
+					
+					
+					var listener_video_src =  urlParams.get("p_video_src");  
+					if (listener_video_src.toLowerCase().indexOf( NO_VIDEO_AUDIO_FILE ) >=0 ) {
+						sw_is_no_videoaudio = true; 
+					} else {
+						document.getElementById("myVideo").src = urlParams.get("p_video_src");  
+						document.getElementById("myVideo").style.display = "block";  
+					}
 					title1 = document.title; 
 									
 					cbc_LOCALSTOR_key    = "ClipByClip_player_"    + encodeURI(title1);	
@@ -471,16 +536,9 @@ function getUrlData2() {
 					//id_list_id_border
 					
 					lastBG_rgb_color = 	fun_hexToRgb( hex_defaultColorBG ) ; 
-					/**
-					fun_riduz_VideoDim(); 
-					
-					ele_ctr=  document.getElementById("id_ctrVideo"); 
-					myvid1 = document.getElementById("myVideo");  
-
-					document.getElementById("id_dim_video_container2").innerHTML = "w="+ele_ctr.offsetWidth + " h="+  ele_ctr.offsetHeight;
-					document.getElementById("id_dim_video2"          ).innerHTML = "w="+myvid1.offsetWidth  + " h="+  myvid1.offsetHeight;
-					document.getElementById("id_dim_nat_video2"      ).innerHTML = "w="+myvid1.videoWidth   + " h="+  myvid1.videoHeight;  
-					**/
+					if (sw_is_no_videoaudio) {
+						FAKE_onloaded_fun(); 
+					}
 					
 				}
 	);
@@ -527,39 +585,6 @@ function get_last_start_colors() {
 
  //  end former file player_2_a_2_customization_script.jstxt 								
 //=============================================    	
-
-//=============================================    								
-// 3 beg. former file player_3_a_var_def_init.jstxt 										
-
-//--------------------------------------------------------
-
-getUrlData2(); 	
-
-
-
-window.dispatchEvent(new Event('resize'));
-
-
-//-------------
-// for debug:                    
-//                               if you want to show the START /  END times of each subtitle, 
-//                                                     rename the file so that it contains the string "debug_"     
-
-//-----------------------------------------------------------------------  
-if (sw_sub_onfile == false) {
-    sw_show_clip_num = false;
-} 
-//--------------------------------------------------------
-if (document.getElementById("id_playNext2_line_row") ) { 
-	if (sw_show_clip_num) {
-		document.getElementById("id_playNext2_line_row").hidden = false;
-		document.getElementById("id_replay_line_row").hidden = false;
-	} else {
-		document.getElementById("id_playNext2_line_row").hidden = true;
-		document.getElementById("id_replay_line_row").hidden = true;
-	}
- } 
-//--------------------------
 
 
 //--------------------
@@ -657,12 +682,14 @@ function fun_initial_from_localStorage_values() {
 	
 	fun_start_logon_ctr() ;
 	
-	assign_params_for_word_html_file();
+	assign_params_for_word_html_file(2);
 	
 } // end of fun_initial_from_localStorage_values()
 //---------------------------------------------
 
 function fun_player_beginning() {
+
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX fun_player_beginning() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n"); 
 	
     let help_filename = document.getElementById("mh00").innerHTML;
 
@@ -858,9 +885,9 @@ function fun_player_beginning() {
     fun_setMinMaxIxClip();
 
 
-
-    fun_replace_video_src();
-
+    if (sw_is_no_videoaudio == false) {
+		fun_replace_video_src();
+	}
 
     
     console.log("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" +					
@@ -879,19 +906,12 @@ function fun_player_beginning() {
 			document.getElementById("id_playNext2_line_row").style.display = "none";  	
 			document.getElementById("id_replay2_line_row"  ).style.display = "none"; 
         }       
-    /**
-	if (sw_rotate) {
-		sw_rotate = false;
-		document.getElementById("buttxt1").innerHTML = fun_rotateChar45( document.getElementById("m024").innerHTML );   
-		document.getElementById("buttxt2").innerHTML = fun_rotateChar45( document.getElementById("m025").innerHTML );   
-		document.getElementById("buttxt3").innerHTML = fun_rotateChar45( document.getElementById("m026").innerHTML );   
-		document.getElementById("buttxt4").innerHTML = fun_rotateChar45( document.getElementById("m033").innerHTML );   
-	}
-	**/
+    
 	
 	//fun_build_all_clip() ; 
-	 document.getElementById("id_inpshowclipA").checked = true;
-	onclick_ClipSub_All(  document.getElementById("id_inpshowclipA") ); // fun_build_all_clip() ; 
+	// document.getElementById("id_inpshowclipA").checked = true;
+	 
+	former_onclick_ClipSub_All();                    //  ...ClipSub_All(document.getElementById("id_inpshowclipA") ); 
 	
 	//subtitle_row_length2();
 	onclick_scroll_right( document.getElementById("id_bRigthLeft") ) ;
@@ -991,7 +1011,7 @@ function fun_set_localStorage_ctrvar_item_from_vars() {
 	
 	//document.getElementById("id_statist").innerHTML = stat0 + "\n" + stat12 + "\n" +  stat1 + "\n" + stat2 + "\n" + "</table> \n";	
 	
-	fun_list_localStorageItems();
+	//fun_list_localStorageItems();
 	
 }
 
@@ -1156,7 +1176,7 @@ function fun_list_localStorageItems() {
 	try{ 
 		for(let i=0, len=localStorage.length; i<len; i++) {
 			let key   = localStorage.key(i);
-			console.log("localStorage.key = " + key); 
+			//console.log("localStorage.key = " + key); 
 			if (key != cbc_LOCALSTOR_key) { 		
 				continue;
 			}
@@ -1230,19 +1250,31 @@ function fun_update_html_with_last_session_values() {
 	
 	let p_list = LS_stor_playnext_replay.split(";;");
 	
-	//console.log("file _a_ ... LS_stor_playnext_replay =" + LS_stor_playnext_replay);
-	//console.log("file _a_ ... p_list = "+ p_list)
+	console.log("file _a_ ... LS_stor_playnext_replay =" + LS_stor_playnext_replay);
+	console.log("file _a_ ... p_list = "+ p_list);
 	
 	ele_playNextVa_from_hhmmss_value = p_list[0] ;
 	ele_replayVa_from_hhmmss_value   = p_list[1] ; 
 	ele_replayVa_to_hhmmss_value     = p_list[2] ; 
+	if (ele_playNextVa_from_hhmmss_value == 0) {  ele_playNextVa_from_hhmmss_value = "00:00:00.000";  }
+	if (ele_replayVa_from_hhmmss_value == 0  ) {  ele_replayVa_from_hhmmss_value   = "00:00:00.000";  }
+	if (ele_replayVa_to_hhmmss_value == 0    ) {  ele_replayVa_to_hhmmss_value     = "00:00:00.000";  }
+	
+	
 	if ( ele_replayVa_from_hhmmss_value < ele_playNextVa_from_hhmmss_value) { ele_playNextVa_from_hhmmss_value = ele_replayVa_from_hhmmss_value; } 
 	
 	let secs4 =	fun_N_hhmmss_to_secs( ele_replayVa_to_hhmmss_value );
+	
+	console.log("ele_replayVa_to_hhmmss_value = " + ele_replayVa_to_hhmmss_value  +   " secs4=" + secs4 ); 
+	
 	let hhmmss4 = fun_N_secs_to_hhmmssmmm( secs4 - 1.0  );  
 	ele_replayVa_to_hhmmss_value = hhmmss4; 
 	
-	vid.currentTime = secs4; 
+	if (sw_is_no_videoaudio == false) {
+		if (vid) {
+			vid.currentTime = secs4; 
+		}
+	}
 	
 	//LS_stor_playnext_replay = ele_playNextVa_from_hhmmss_value + ";;" + ele_replayVa_from_hhmmss_value + ";;" + ele_replayVa_to_hhmmss_value;  fun_set_localStorage_item_from_vars();
 	
@@ -1259,7 +1291,7 @@ function fun_update_html_with_last_session_values() {
 	sw_end_dialog_overlap  = false;
 	
 	if ( (number_of_subtitle_endsentence == 0) &&  (number_of_subtitle_time_overlap == 0) ) {
-		document.getElementById("irad_r1").style.display = "none"; 		
+		//document.getElementById("irad_r1").style.display = "none"; 		
 	} else {				
 		if (number_of_subtitle_time_overlap > 0) { 
 			end_dialog_overlap     = "true";  	
@@ -1338,7 +1370,7 @@ function fun_add_delta_time_to_localStor(deltaTime) {
 	
 	fun_set_localStorage_item_from_vars(); 
 	
-	assign_params_for_word_html_file();
+	assign_params_for_word_html_file(3);
 	
 
     return newval;
@@ -1571,8 +1603,8 @@ function fun_set_inner_HARD_sub() {
 		document.getElementById("id_b4_s").style.display = "none";   
         document.getElementById("id_check_sync").style.display = "none";
 		
-		document.getElementById("m135").innerHTML = document.getElementById("m126").innerHTML;
-		document.getElementById("m100").innerHTML = document.getElementById("m101").innerHTML;		
+		innerHTML_from_innerHTML("m135", "m126"); // Type and Duration of a Clip - Duration of a Clip
+		innerHTML_from_innerHTML("m100", "m101"); // Specify clip type and duration - Change the duration of the clips		
 					
 		document.getElementById("m019").style.display = "none";	
 		document.getElementById("m020").style.display = "none";
@@ -1600,8 +1632,8 @@ function fun_set_inner_no_subtitle() {
 		document.getElementById("id_b4_s").style.display = "none";   
         document.getElementById("id_check_sync").style.display = "none";
         
-		document.getElementById("m135").innerHTML = document.getElementById("m126").innerHTML;
-		document.getElementById("m100").innerHTML = document.getElementById("m101").innerHTML;		
+		innerHTML_from_innerHTML("m135", "m126"); // Type and Duration of a Clip - Duration of a Clip
+		innerHTML_from_innerHTML("m100", "m101"); // Specify clip type and duration - Change the duration of the clips			
 				
 		document.getElementById("m019").style.display = "none";	
 		document.getElementById("m020").style.display = "none";
@@ -1657,8 +1689,8 @@ function fun_set_inner_no_sub_in_file() {
 		document.getElementById("id_playNext_line_row").style.display = "none"; 
 		document.getElementById("id_replay2_line_row"  ).style.display = "none"; 
 		  
-		document.getElementById("m135").innerHTML = document.getElementById("m126").innerHTML;
-		document.getElementById("m100").innerHTML = document.getElementById("m101").innerHTML;		
+		innerHTML_from_innerHTML("m135", "m126");  // Type and Duration of a Clip - Duration of a Clip
+		innerHTML_from_innerHTML("m100", "m101");  // Specify clip type and duration - Change the duration of the clips			
 		
 		document.getElementById("st_2lines").style.display = "none"; // 
 		
@@ -1705,9 +1737,53 @@ function fun_replace_quotation_and_ampersand( text1 )  {
 		
 } 
 
+//--------------------------------------------
+
+
+function build_fake_sub_entries( f_line ) {
+	
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX  build_fake_sub_entries() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n");  
+	
+	var col1 = f_line.split("::"); 
+	sw_the_are_no_subtitles = true; 
+	document.getElementById("id_spee").style.left="85%"; 
+
+	var list1_collapse_ele = [
+		document.getElementById("col_3"), 
+		document.getElementById("col_4"), 
+		document.getElementById("id_c_textCol")
+		] ;
+	var list1_hide_ele = [
+		document.getElementById("id_bRigthLeft"    ),   // arrow right left button ( just down stop/continue button)
+		document.getElementById("id_underVideoOrig"),   // show/hide orig.sub. buttons ( under video )
+		document.getElementById("id_underVideoTran"),   // show/hide tran.sub. buttons ( under video )
+		
+		document.getElementById("id_subOnLeftSync" ),   // initial show/hide subtitles setting button (on left of video) 
+		document.getElementById("id_subOnLeftVideo"),   // initial show/hide subtitles setting button (on left of video) 
+		document.getElementById("id_div_words"     )    // words button (on left of video) 
+		];  
+	fun_collapse(  list1_collapse_ele, list1_hide_ele, 1/3 ) ;	
+	
+	var from1 = parseFloat( col1[0] );
+	var to1   = parseFloat( col1[1] );
+	var timeF;
+	var timeT = 0;
+	inp_row_orig = []; 
+	
+	var dur = parseInt( 1+ vid.duration ) ; 
+		
+	for(var v=1; v <= dur; v++) {
+		timeF = timeT;	
+		timeT = v;
+		inp_row_orig.push( timeF + "::" + timeT + "::" + "&nbsp;" ); 
+	} 
+	
+} // end of build_fake_sub_entries()
+
 //-------------------------------------------
 function get_lines_from_file_sub() {
-
+	
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX get_lines_from_file_sub() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n");  
 
     inp_text_orig = document.getElementById("id_txta_orig_sub").innerHTML;
     inp_text_tran = document.getElementById("id_txta_tran_sub").innerHTML;
@@ -1721,6 +1797,9 @@ function get_lines_from_file_sub() {
 		
     let len1 = inp_text_orig.length;
     let len2 = inp_text_tran.length;
+	
+	
+	
    
     if (len1 > 0) {
 		if (len1 == 8) { if (inp_text_orig == "<br><br>") { inp_text_orig=""; len1=0; } }
@@ -1738,6 +1817,12 @@ function get_lines_from_file_sub() {
 		numOrig = inp_row_orig.length; 
 		if (numOrig < 1) {
 			inp_row_orig.push("");
+		} else {
+				//  00000.000::00345.000::NO_TEXT_NO_SUBTITLES
+				if (inp_row_orig[0].indexOf("NO_TEXT_NO_SUBTITLES") >= 0) {
+					build_fake_sub_entries( inp_row_orig[0] ); 
+				}  
+			
 		}
 	}
 	if (sw_sub_tran) {
@@ -2166,11 +2251,13 @@ function fun_syncronize_add_delta_sub_zz( decimal_point,
 	list_x_from00[1] = 0; // film starts always from time=0   and index 1 
 	
     let max = MAX999;
-    if (vid.duration) {
-        if (vid.duration > 0) {
-            max = vid.duration;
-        }
-    }
+	if (sw_is_no_videoaudio == false) {
+		if (vid) {
+				if (vid.duration > 0) {
+					max = vid.duration;
+				}			
+		}
+	}
 	
     list_x_to1[ len-1] = max; // last subtitle line must end always at the duration time; 
 	list_x_to00[len-1] = max; // last subtitle line must end always at the duration time; 
@@ -2252,7 +2339,7 @@ function fun_syncronize_add_delta_sub_zz( decimal_point,
     }
     fmt_str1 += "</table>";
 
-    document.getElementById( id_FMT_txta ).innerHTML = fmt_str1;
+    //document.getElementById( id_FMT_txta ).innerHTML = fmt_str1;
     
     //--------------------
 } // end of fun_syncronize_add_delta_sub_zz()
@@ -2384,51 +2471,6 @@ let clip_legend = `<hr>
 //	document.getElementById("id_symb_meaning").innerHTML = clip_legend;			
 //
 //--------------------------------------------
-	
-	//  transform: rotate(-90deg);
-	// 	transform-origin: 0% 0%;color:black;font-weight:bold;font-size:0.5em;width:1em;text-align:right;">traduzione</div> ' +  	
-		let rowclipH = '' + 			
-						'<colgroup>  \n' +
-						'   <col                    span="4" style="visibility: visible" > \n' +
-						'	<col id="id_c_textCol"  span="1" style="text-align:left;"> \n' +
-						'   <col                    span="8"> \n' +					
-						'</colgroup> \n' +
-	
-						'<tr id="id_tr_row_zero"	style="background-color:pink; "> \n' + 					
-						'   <th                    class="header_1" >selez. inizio</th>  \n' +	
-						'   <th                    class="header_1" >selez. fine</th>  \n' +
-						'   <th                    class="header_1" >mostra / nascondi<br>sottotitoli</th> \n' +
-                        '   <th                    class="header_1" >mostra / nascondi<br>traduzione</th> \n' +
-						'   <th id="id_h_textCol" style="width:1em;text-align:center;  vertical-align:bottom; ' + 
-						'       color:black;font-weight:bold;"> \n '+
-						'		<div id="id_h_visible">Sottotitoli</div> \n ' +
-						'       <!-- the content of the line below because is used to set the column width --> \n' + 
-						'		<div id="id_h_hidden" style="visibility:hidden; font-family:monospace;width:73ch;min-width:73ch;max-width:73ch;" ' + 
-						'		>Bonsoir, signori, dame, signore e signori, buona sera, signora e signori.</div> \n' + 
-						'	</th>  \n' +  
-						'   <th                    class="header_1" > Play una sola volta</th> \n' +
-                        '   <th 			       class="header_1" > Play all&apos;infinito</th> \n' +
-                        '   <th id="id_h_leftEnd"  class="timerow1"    style="vertical-align:bottom;text-align:right;">N.</th> \n' +
-                        '   <th id="id_h_rightBeg" class="timerow2"    style="vertical-align:bottom;">from</th> \n' +
-                        '   <th                    class="timerow2"    style="vertical-align:bottom;">to</th> \n' +
-						'   <th                    class="header_1"> ' +
-						'       massimo numero di <br>' + 						 
-						'       secondi di spostamento<br>' +							 
-						'   </th>  \n' +  
-						'   <th                    style="width:3em;font-size:0.5em; text-align:center;  vertical-align:bottom; ' +
-						'       color:black;font-weight:bold;">' + 
-						'       far scorrere il cursore a sinistra o a destra' + '<br>' +
-						'    	per anticipare <br>o posticipare <br>' +
-						'		l&apos;inizio della riga' +
-						'   </th> \n' +						
-						'   <th id="id_h_lastCol"  style="width:3em;font-size:0.5em; text-align:center;  vertical-align:bottom; ' + 
-						'       color:black;font-weight:bold;">' + 						 
-						'       far scorrere il cursore a sinistra o a destra' + '<br>' +
-						'       per anticipare <br>o posticipare <br>' +
-						'       la fine della riga' + 					 
-						'   </th> \n' +
-						"</tr> \n" ; 	
-	// end of rowclipH
 			
 	let string_tr_fant = `
 		<tr id="idtr_§1§_m2"  style="display:none;background-color:yellow;height:0.5em;" > 
@@ -2556,7 +2598,7 @@ function fun_checked_false_goBack(this1) {
 //-----------------
 
 function fun_build_all_clip() { 
-
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX fun_build_all_clip()\nXXXXXXXXXXXXXXXXXXXXXXXXXX\n");  
 	ele_sub_filler.innerHTML = "";
 	if (sw_sub_onfile== false) { return;  }
 	if (sw_sub_orig  == false) { return;  }
@@ -2584,12 +2626,17 @@ function fun_build_all_clip() {
 	let clipSub_showTxt, txt1; 
 	//document.getElementById("id_clip00_subtext").style.display= null;  // use class= flex-container1
 	//document.getElementById("id_div_showclip").style.backgroundColor = "lightgrey";	
+	console.log("1vid=" + vid); 
+	//console.log("12vid.duration=" + vid.duration + "<=="); 
 	
 		clipFromRow = 0 ;
 		clipToRow   = line_list_orig_text.length-1;
 		sw_CLIP_play   = true; 
 		Clip_startTime = 0;
-		Clip_stopTime  = vid.duration;
+		
+		if (sw_is_no_videoaudio == false) {
+			Clip_stopTime  = vid.duration;
+		}
 	
 	
 	//clipSub_showTxt = '<table  style="width:100%;"> \n' ; 
@@ -2604,7 +2651,7 @@ function fun_build_all_clip() {
 	
 	//num_word_id = 0; // defined in file 'cbc_3_player_3_b_01_break_words_precision.jstxt' 
 	
-	//clipSub_showTxt += rowclipH; 
+	
 		clipSub_showTxt = "\n"; 
 	for(let z3 = clipFromRow; z3 <= clipToRow; z3++) {
 			let txt1_fromtime  = line_list_o_from1[z3];
@@ -2645,10 +2692,30 @@ function fun_build_all_clip() {
 	
 	eleTabSub_tbody.innerHTML =  clipSub_showTxt;  
 	
+	if (sw_is_no_videoaudio) {
+		console.log("XXXXXXXXXXXX  video/audio missing") 
+		collapse_cols(); 
+	}	
+	
+	console.log( "fun_build_all_clip()   sw_the_are_no_subtitles=" + sw_the_are_no_subtitles); 	
+		
+		
+	if (sw_the_are_no_subtitles) {		
+		var ele_col_3_nosub   = document.getElementById("col_3" );
+		var ele_col_4_nosub   = document.getElementById("col_4" );
+		var ele_c_textCol_nosub = document.getElementById("id_c_textCol" );		
+		ele_col_3_nosub.style.visibility   = "collapse"; 	
+		ele_col_4_nosub.style.visibility   = "collapse"; 		
+		ele_c_textCol_nosub.style.visibility = "collapse"; 			
+	} else {
+		if (sw_sub_tran == false) {
+			document.getElementById("col_4"            ).style.visibility = "collapse"; 	
+			document.getElementById("id_underVideoTran").style.visibility = "collapse"; 			
+		}
+	}
+	
+	
 	//  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  now html elements for clip section are ready xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-	//document.getElementById( "id_FMT_txta_orig_sub").innerHTML = clipSub_showTxt;
-	//document.getElementById( "id_FMT_txta_tran_sub").innerHTML = ""; // clipSub_showTxt; 
 	
 	let eleF = document.getElementById("b1_" + clipFromRow) ;
 	let eleT = document.getElementById("b2_" + clipToRow)   ;	
@@ -2684,13 +2751,109 @@ function fun_build_all_clip() {
 	eleTabSub.style.backgroundColor =  clip_reset_BG_color;     
 	ele_clip_subtext.style.backgroundColor =  clip_reset_BG_color;     
 	
-	//console.log("eleTabSub.offsetWidth=" + eleTabSub.offsetWidth + "  first_tr=" + document.getElementById("id_tr_row_zero").offsetWidth ); 
-
 
 } // end of fun_build_all_clip();  
-//----------------------------
-function onclick_ClipSub_All(this1) {	
 
+
+//----------------------------
+function former_onclick_ClipSub_All(this1) {
+	
+	var this1_checked = true;  
+	
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX onclick_ClipSub_All() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n"); 
+
+	
+	var sw_all = true; 
+	ele_sub_filler.innerHTML = "";
+	if (sw_sub_onfile== false) { return;  }
+	if (sw_sub_orig  == false) { return;  }
+	
+	save_last_oneOnlyRow = ""; 
+	save_last_oneOnly_idtr = ""; 
+	
+	ele_last_tran_line = null; 
+	
+	if (this1_checked == false) { 		
+		fun_checked_false_goBack(this1) ;	
+		console.log("\tonclick_ClipSub_All() return " ) 
+		return; 
+	}
+	
+	console.log("\tonclick_ClipSub_All() call fun_build_all_clip() " ) ;
+	
+	
+	fun_build_all_clip(); 
+	
+	//this1.parentElement.style.backgroundColor = "black";	
+	
+	if (sw_all) {
+		clipFromRow = 0 ;
+		clipToRow   = line_list_orig_text.length-1;
+		sw_CLIP_play   = true; 
+		Clip_startTime = 0;
+		if (sw_is_no_videoaudio == false) {
+			Clip_stopTime  = vid.duration;
+		}
+	} else {
+		clipFromRow = parseInt( ele_replayVa_from_row_value );
+		clipToRow   = parseInt( ele_replayVa_to_row_value   );
+		sw_CLIP_play   = true; 
+		Clip_startTime = parseFloat(ele_replay_from_secs_innerHTML  );
+		Clip_stopTime  = parseFloat(ele_replay_to_secs_innerHTML    ) ;
+	}
+	
+	
+	
+	//  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  now html elements for clip section are ready xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+	
+	
+	let eleF = document.getElementById("b1_" + clipFromRow) ;
+	let eleT = document.getElementById("b2_" + clipToRow)   ;	
+
+	
+	onclick_arrowFromIx( eleF, clipFromRow ) ; 
+	onclick_arrowToIx(   eleT, clipToRow   ) ; 
+	
+
+	
+    ele_clip_subtext.style.display = "block";    
+	
+        
+    //document.getElementById("id_central"     ).style.display = "none"; 
+    document.getElementById("id_td_suborig2" ).style.display = "none"; 
+	document.getElementById("id_td_subtra2"  ).style.display = "none"; 
+	/**
+	let ele1 = document.getElementById("rad_csubAll");
+	ele1.checked = true;
+	//onclick_ClipSub_HideShow(ele1,'rad_csubClick');  
+	**/
+	
+	//-------------------
+	//set new dimension to be the almost the body dimension 
+	
+		//let new_eleTabSub_clientWidth = parseInt(elebody.clientWidth  * 0.95);		
+		//let new_eleTabSub_clientHeight= parseInt(elebody.clientHeight * 0.80);	
+		let new_eleTabSub_clientWidth   = eleTabSub.clientWidth; 
+		let new_eleTabSub_clientHeight  = eleTabSub.clientHeight; 
+		//--- translate to style width/height
+		eleTabSub.style.width = (new_eleTabSub_clientWidth - eleTabSub_diff_clientW) + "px";   // set  new dimension			
+		eleTabSub.style.height= (new_eleTabSub_clientHeight- eleTabSub_diff_clientH) + "px";   // set  new dimension
+	//----------------
+	
+	var elediv20 = document.getElementById("id_div20");
+
+	clip_reset_BG_color = get_backgroundColor(elediv20);
+	eleTabSub.style.backgroundColor =  clip_reset_BG_color;     
+	ele_clip_subtext.style.backgroundColor =  clip_reset_BG_color;     
+	
+}  // end of former_onclick_ClipSub_All()
+//-------------------------------------
+
+function TOGLIonclick_ClipSub_All(this1) {	
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX onclick_ClipSub_All() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n"); 
+	console.log("\tonclick_ClipSub_All() this1.id=" + this1.id + " checked=" + this1.checked ) 
+	
 	var sw_all = true; 
 	ele_sub_filler.innerHTML = "";
 	if (sw_sub_onfile== false) { return;  }
@@ -2703,8 +2866,12 @@ function onclick_ClipSub_All(this1) {
 	
 	if (this1.checked == false) { 		
 		fun_checked_false_goBack(this1) ;	
+		console.log("\tonclick_ClipSub_All() return " ) 
 		return; 
 	}
+	
+	console.log("\tonclick_ClipSub_All() call fun_build_all_clip() " ) ;
+	
 	
 	fun_build_all_clip(); 
 	
@@ -2715,7 +2882,9 @@ function onclick_ClipSub_All(this1) {
 		clipToRow   = line_list_orig_text.length-1;
 		sw_CLIP_play   = true; 
 		Clip_startTime = 0;
-		Clip_stopTime  = vid.duration;
+		if (sw_is_no_videoaudio == false) {
+			Clip_stopTime  = vid.duration;
+		}
 	} else {
 		clipFromRow = parseInt( ele_replayVa_from_row_value );
 		clipToRow   = parseInt( ele_replayVa_to_row_value   );
@@ -2771,7 +2940,7 @@ function onclick_ClipSub_All(this1) {
 	
 	
 	
-} // end of onclick_ClipSub_All()
+} // end of TOGLIonclick_ClipSub_All()
 
 
 //---------------------------------------------
@@ -2834,7 +3003,7 @@ function show_hideORIG(z3) {
 	let ele_orig_text       = document.getElementById( "idc_"  + z3 ); // element of original text to show/hide	  			
 	
 	// show subtitle if icon opened book is visible otherwise hide it ( icon closed book is visible) 
-	fun_oneClipRow_showHide_ORIG_if_book_opened(ele_orig_text,  ele_orig_toTestShow); 	
+	fun_oneClipRow_showHide_ORIG_if_book_opened(ele_orig_text,  ele_orig_toTestShow, z3); 	
 } // end of  show_hideORIG
 //-------------------------
 function show_hideTRAN(z3) {	
@@ -2878,25 +3047,35 @@ function highlightRow(ele1) {
 	last_BoldRow = ele1; 
 }
 //-------------------------------------------
-function fun_oneClipRow_showHide_ORIG_if_book_opened( ele1, ele_to_test ) {
+function fun_oneClipRow_showHide_ORIG_if_book_opened( ele1, ele_to_test , z3) {
+	
+	var ele1_tr = ele1.parentElement.parentElement ;
 
+	var last_tr; 
 	if (last_BoldRow) {
 		last_BoldRow.classList.remove("boldLine");
 		last_BoldRow.style.backgroundColor = null; 
 		last_BoldRow.parentElement.style.border = null; 
+		if (sw_is_no_videoaudio == false) {
+			last_tr = last_BoldRow.parentElement.parentElement ;	
+			last_tr.style.backgroundColor = "lightgrey";	
+		}
 	}
 	if (ele1 == null) {return;}	
 	
 	if (ele_to_test.children[0].style.display == "block") {  // openbook ==> show 
 		ele1.style.visibility = "visible"; 
 		ele1.classList.add("boldLine"); 
-		ele1.style.backgroundColor = "yellow";				
+		ele1.style.backgroundColor = "yellow";			
 		ele1.parentElement.style.border = null;
+		if (sw_is_no_videoaudio == false) ele1_tr.style.backgroundColor = "yellow";			
+		
 	} else {	                                      // closebook  ==> hide 
 		ele1.style.visibility = "hidden"; 	
 		ele1.classList.remove("boldLine");
 		ele1.style.backgroundColor = null; 
 		ele1.parentElement.style.border = "1px solid red"; 
+		if (sw_is_no_videoaudio == false) ele1_tr.style.backgroundColor = "yellow";			
 	}	
 	
 	last_BoldRow = ele1; 
@@ -3470,11 +3649,136 @@ function onclick_changeVideoSpeed(this1) {
 	vid.playbackRate = speed; 
 	
 } // end of onclick_changeVideoSpeed()
+ 
+//===================
+
+function fun_collapse( list_collapse_ele, list_hide_ele , ratio ) {	
+	console.log("ZZZZZZZZ   ZZZZZZZZZ  fun_collapse() list_collapse_ele=" + list_collapse_ele + "  list_hide_ele=" +  list_hide_ele); 	
+		
+	var ele_filler_nosub    = document.getElementById("id_filler"); 	
+	
+	console.log("    00  ele_filler_nosub.style.width = " + ele_filler_nosub.style.width);  	
+	
+	var diff_width_nosub = 0;
+	for (var x1=0; x1 < list_collapse_ele.length; x1++) {
+		diff_width_nosub += parseFloat( list_collapse_ele[x1].offsetWidth ); 
+		console.log("          collapse id=" + list_collapse_ele[x1].id + 
+			" width=" +  list_collapse_ele[x1].offsetWidth + " diff_width_nosub=" + diff_width_nosub)
+	}	
+	
+	var filler_nosub_with   =  parseInt(diff_width_nosub * ratio); 	   	
+	
+	console.log("       filler_nosub_with =" + filler_nosub_with );  
+	
+	for (var x1=0; x1 < list_collapse_ele.length; x1++) {
+		list_collapse_ele[x1].style.visibility   = "collapse"; 	 
+	}	
+	
+	ele_filler_nosub.style.width = filler_nosub_with  + "px"; 
+	
+	console.log("    11   ele_filler_nosub.style.width = " + ele_filler_nosub.style.width);  
+	
+		
+	for (var x2=0; x2 < list_hide_ele.length; x2++) {
+		console.log("          HIDE id=" + list_hide_ele[x2].id); 
+		list_hide_ele[x2].style.display = "none";  
+	}	
+	
+} // end of fun_collapse()
+
+//------------------------------
+function innerHTML_from_innerHTML(id_to, id_from) {
+	
+	if (document.getElementById(id_to) ) {
+		if ( document.getElementById( id_from) ) {
+			document.getElementById(id_to).innerHTML = document.getElementById( id_from).innerHTML;  
+			if (id_to=="m031") {  console.log("XXX  " + id_to + " " + document.getElementById(id_to).innerHTML);}
+		} else { 
+			console.log("innerHTML " + id_from + "  does not exist"); 
+		}
+	} else { 
+		console.log("innerHTML " + id_to  + "  does not exist"); 
+	}	
+} // end of innerHTML_from_innerHTML( 
+
+//--------------------------
+function collapse_cols() {
+
+	var list1_collapse_ele = [
+		document.getElementById("col_6_7"), 
+		document.getElementById("col_9_13")
+		] ;
+	var list1_hide_ele = [
+		document.getElementById("id_spee"    ),  // arrow right-left, change speed, stop/continus buttons ( on the right of video place)
+		document.getElementById("id_central" ),  // video/audio zone (video, cursor, show/hide original/translated subtitles button) 
+		document.getElementById("id_subOnLeftSync")   // sync button on left of video zone 
+		//ele_time_video                           // seconds and clips progress ( at top just after the video title 
+		];  	
+				
+	fun_collapse(  list1_collapse_ele, list1_hide_ele, 0 ) ;	
+		
+	ele_time_video.innerHTML = '<span style="font-size:2em; font-weight:bold;">' + document.getElementById("mc88").innerHTML + "</span>";//bilingue   		
+	innerHTML_from_innerHTML("m224", "m324"); // Text Lines 
+	innerHTML_from_innerHTML("m891", "m791"); // Original Text 
+	innerHTML_from_innerHTML("m892", "m792"); // Translated Text 
+	innerHTML_from_innerHTML("m111", "m711"); // Lines 
+	innerHTML_from_innerHTML("m115", "m715"); // show all subtitles  / lines	
+	innerHTML_from_innerHTML("m116", "m716"); // hide all subtitles  / lines 									
+	innerHTML_from_innerHTML("m117", "m717"); // list of all subtitles / lines
+	innerHTML_from_innerHTML("m031", "m731"); // goto beginning of original subtitles / lines
+	innerHTML_from_innerHTML("m032", "m732"); // goto beginning of translated subtitles / lines
+}
+
+//---------------
+function TOGLIcollapse_colsORIG() {
+	/**	
+						'   <col id="col_1_4"       span="2"> \n' +
+						'	<col id="id_c_textCol"  span="1" style="text-align:left;"> \n' +
+						'   <col id="col_6_7"       span="2"> \n' +
+						'   <col id="col_8"         span="1"> \n' +
+						'   <col id="col_9-13"      span="5"> \n' +		
+	**/
+	
+	document.getElementById("col_6_7" ).style.visibility  = "collapse"; 
+	document.getElementById("col_9_13").style.visibility = "collapse"; 
+	document.getElementById("id_section_row").style.width = "74%"; 
+	document.getElementById("id_tabSub").style.minWidth = "100%"; 
+	document.getElementById("id_c_textCol").style.width = "100%"; 
+	
+}  
 
 //-----------------------------------------------------------------
+function FAKE_onloaded_fun() {
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX FAKE_onloaded_fun() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n"); 
+						
+    document.getElementById("id_div20").style.display = "block";
+	
+	ele_ctl_slider.value = 0;  	
+	runningButton = false;
+	PLAYCLIP_TO_TIME = 0;
+    PLAYCLIP_TO_LINE = 0;
+	
+    isPlaying = false;
+	
+    fun_player_beginning();
+    
+	//fun_magnifyVideo_begin();
+	
+    document.getElementById("id_div20buffer").style.display = "block";
+   	
+	document.getElementById("idbT_xx").children[0].innerHTML = show_translation_symb;  
+	document.getElementById("idbT_xx").children[1].innerHTML = hide_translation_symb;  
+	
+	set_initial_force_sub_visibility() ; 
+
+
+} // end of FAKE_onloaded_fun() 
+
+
+//--------------------------
 
 function onloaded_fun() {
-	
+	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX onloaded_fun() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n"); 
     document.getElementById("id_div20").style.display = "block";
 
     vid = document.getElementById("myVideo");	
@@ -4228,7 +4532,7 @@ function fun_running_video_emul(time_secs) {
     msg += ")";
     ele_time_video.innerHTML = msg;
 
-			//console.log("\t4  _display_subtitles_lineclip_o_t(" + time_secs + ", " + ixfrom_o + ", " + ixto_o );  
+	//console.log("\t4  _display_subtitles_lineclip_o_t(" + time_secs + ", " + ixfrom_o + ", " + ixto_o );  
 			
     fun_display_subtitles_lineclip_o_t(time_secs, ixfrom_o, ixto_o, ixfrom_t, ixto_t); // subtitle texts ( more lines can be active on the same moment 
 
@@ -4905,7 +5209,7 @@ function fun_show_difference_table(time_secs, ixClip1) {
         ixClip2 = line_list_o_to1.length - 1;
     }
 
-    let x_stoptime = document.getElementById("mb83").innerHTML; // "883 tempo di stop "; 
+    //let x_stoptime = document.getElementById("mb83").innerHTML; // "883 tempo di stop "; 
     let x_secondi = document.getElementById("mb84").innerHTML; // "884 secondi";
     let x_da = document.getElementById("mb85").innerHTML; // "885 dal secondo" ;
     let x_a = document.getElementById("mb86").innerHTML; // "886 al secondo" ; 
@@ -4913,9 +5217,11 @@ function fun_show_difference_table(time_secs, ixClip1) {
     let x_parole = document.getElementById("mb89").innerHTML; // "889 testo della clip";  
     let x_press_last_word = document.getElementById("mb90").innerHTML; // "(.b90)) Premi il pulsante della riga che termina con l'ultima parola pronunciata ";
 
-    txt1 += x_stoptime + " " + time_secs.toFixed(1) + " " +
+    /**
+	txt1 += x_stoptime + " " + time_secs.toFixed(1) + " " +
         x_secondi;
     txt1 += "<br>";
+	**/
     txt1 += x_press_last_word + "<br>";
 
 
@@ -5190,7 +5496,7 @@ function fun_set_time_to_show(time_secs, swpause) {
     if (swpause == 1) { // 2021.08.23
           fun_show_difference(time_secs, ixClip);
     }
-
+		
     ele_time_video.innerHTML = msg;
 	
 	fun_setting_subtitles_of_group4_o_t(time_secs, ixfrom_o, ixto_o,  ixfrom_t, ixto_t );

@@ -57,13 +57,25 @@ function execParser() {
 	if (z1>0) { xml_text = xml_text.substr(z1+2); }
 	
 	xml_text = xml_text.replace(/\&/g      , "&amp;"      ).
+	
 						replace(/\<br\>/g  , "&lt;br&gt;" ).
+						
 						replace(/\<b\>/g   , "&lt;b&gt;"  ).
-						replace(/\<\/b\>/g , "&lt;\/b&gt;").
+						replace(/\<\/b\>/g , "&lt;\/b&gt;").	
+
+						replace(/\<ul\>/g   , "&lt;ul&gt;"  ).
+						replace(/\<\/ul\>/g , "&lt;\/ul&gt;").		
+						
+						replace(/\<li\>/g   , "&lt;li&gt;"  ).
+						replace(/\<\/li\>/g , "&lt;\/li&gt;").								
+				
 						replace(/\'/g      , "&apos;"     ).
 						replace(/\"/g      , "&quot;"     );
 	
+	console.log( xml_text);
+	
 	parser = new DOMParser();
+	
 	xmlDoc = parser.parseFromString(xml_text,"text/xml");
 
 } // end of execParser()
@@ -73,7 +85,7 @@ function execParser() {
 function update_HtmlEle_MsgById(parm_pgm_ABCH, id_language) {
 	if (xmlDoc == null) return; 
 	
-	var sw_debug = false;
+	var sw_debug = true; //false;
 	
 	var defaut_id_language = "en";
 	
@@ -121,7 +133,7 @@ function update_HtmlEle_MsgById(parm_pgm_ABCH, id_language) {
 		var msgIdH = msgId0.substring(1); 
 		var eleH = document.getElementById( msgIdH );
 		if ( eleH ) {			
-			if (sw_debug) console.log( eleM.msgId + " "  + eleM.msgText); 
+			//if (sw_debug) console.log( eleM.msgId + " "  + eleM.msgText); 
 			txt2 =  custom_message_change( eleM.msgText );  // this function must exist in an application script file 		
 			eleH.innerHTML = txt2; 		
 			numOK++;	

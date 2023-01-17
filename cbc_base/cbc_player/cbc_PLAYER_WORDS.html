@@ -103,11 +103,14 @@
 			color: black; 
 		}		 
 		.msg {  /* used only to be selected by classname*/ }
+		.bold{ font-weight:bold;}
+		.bold2{background-color:white; color:black;}
 		 
       </style>
  </head>
    
     <body id="id_body">
+		<div id="id_url" style="display:none;"></div><br><br>
       <div  id="id_titolo" style="text-align:center; font-size:1.2em;  font-weight:bold;">ClipByClip - Words</div>
       <div  id="id_titolo2" style="text-align:center;font-weight:bold;">
 		<div id="m500" class="msg" style="font-size:1.5em;">Words</div>	  
@@ -151,7 +154,7 @@
 				   <span id="id_showsync" style="display:none;"></span>  
                </div>
 		
-				<div style="width:100%; text-align:left;">				  
+				<div id="id_chg_speed_beg_end"  style="width:100%; text-align:left;">				  
 						<table style="font-size:0.7em;width:100%;border:0px solid red;">
 						<tr>
 							<td style="text-align:left;padding: 0 0.1em;width:20%;" id="m506" class="msg">Cambia Velocità</td>
@@ -195,7 +198,7 @@
 						
 					</table>	
 				 
-				 </div>
+				</div>
 			
 			</div> 
 			
@@ -235,19 +238,21 @@
 						<button id="id_but_next" class="buttonTD2" 
 							style="display: block; font-size: 0.8em; width: 6em; line-height: 80%;padding:0.3em;text-align:center; " 
 							onclick="onclick_playNextClip3()">			  
-							<span id="m510" class="msg"> Play + <br>riga </span>
+							<span id="m510" class="msg bold" > Play + <br>riga </span>
 							<span id="id_num_riga2nxt"style="font-size:0.7em;">5</span>
+							<span id="id_ix_of_ixRowThis" style="display:none;"></span>
+							<span id="id_ix_of_ixRowNext" style="display:none;"></span>
 						</button>
 						<button id="id_but_repeat" class="buttonTD2" 
 							style="display: block; font-size: 0.8em; width: 6em; line-height: 80%;padding:0.3em;text-align:center; " 
 							onclick="onclick_replay3()">
-							<span id="m511" class="msg">Ripeti<br>riga</span> 
+							<span id="m511" class="msg bold">Ripeti<br>riga</span> 
 							<span id="id_num_rigaRepeat" style="font-size:0.7em; ">5</span>
 						</button>
 						<button id="id_but_loop" class="buttonTD2" 
 							style="display: block; font-size: 0.8em; width: 6em; line-height: 80%;padding:0.3em;text-align:center; " 
 							onclick="onclick_OneClipRow_play_LoopW(this)">
-							<span id="m514" class="msg">xxRipeti Infinito<br>riga</span> 
+							<span id="m514" class="msg bold">xxRipeti Infinito<br>riga</span> 
 							<span id="id_num_loopRepeat" style="font-size:0.7em; ">5</span>
 						</button>
 				  </div>
@@ -258,16 +263,18 @@
 			
 		
             <tr  id="trbut2" style="display:block;">
-               <td style="width:70%;border:1 px solid black;">
-                  <span id="id_orig_line1" class="sub_line" 
-						style="display: block; font-size: 1.1em;color:blue;background-color:white;"></span>		   
+               <td style="width:70%;border:0px solid black;">
+					<span id="id_orig_line1" class="sub_line" 
+						style="display: block; font-size: 1.1em;color:blue;background-color:white;">
+					</span>			
                </td>
 			 
-               <td style="border:1 px solid black;"> 
+               <td style="border:0px solid black;"> 
                   <button id="id_but_orig" class="buttonTD2" 
 						style="display: block; font-size: 0.8em; width: 10em; line-height: 80%;padding:0.3em;text-align:center; " 
 						onclick="onclick_display( ele_orig_line1)">
-						<span id="m512" class="msg"> Mostra Sottotitoli Originali</span>
+						<span id="m512" class="msg bold"> Mostra Sottotitoli Originali</span>&nbsp;							
+						<span id="id_show_ixrow" display="inline-block;"></span>
                   </button>	
                </td>
 				<td style="text-align:center;">	
@@ -280,11 +287,11 @@
 						style="display: none; font-size: 1.1em;background-color:white;"></span>	
                </td>
 			   
-               <td style="border:1 px solid black;">  				
+               <td style="border:0px solid black;">  				
                   <button id="id_but_tran" class="buttonTD2" 
 						style="display: block; font-size: 0.8em; width: 10em; line-height: 80%;padding:0.3em;text-align:center; " 
 						onclick="onclick_display( ele_tran_line1)">
-						<span id="m513" class="msg"> Mostra Sottotitoli Tradotti</span>
+						<span id="m513" class="msg bold"> Mostra Sottotitoli Tradotti</span>
                   </button>	
                </td>
 				<td>
@@ -299,7 +306,14 @@
 		<span id="m002"></span>
 		<span id="m003"></span> 
 		<span id="m004"></span>
-		</div>
+		<span id="m604"></span>
+		<span id="m605"></span>
+		<span id="m609"></span>
+		<span id="m610"></span>
+		<span id="m611"></span>
+		<span id="m612"></span>
+		<span id="m613"></span>		
+	  </div>
 	
 	  <script src="../cbc_common/cbc_MESSAGES.msg"        ></script>
 	  <script>

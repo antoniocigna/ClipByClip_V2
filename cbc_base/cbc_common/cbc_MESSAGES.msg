@@ -15,7 +15,7 @@ var word_separator = ".,.;:?!_+-\[\]\(\)"  + "\t\n\r" ;  // word separator chara
 //----------------------------------------------------
 // This function returns an XML string with all the messages from the application.
 // xml doesn&apos;t accept &apos;<&apos; and &apos;&&apos; characters,
-// but here you can use the following html markup: <br><b></b>
+// but here you can use the following html markup: <br><b></b> <ul><li></li></ul>
 // and the following characters: & &apos; "
 //-----
 // If you want to edit a message you need to edit this file only (the texts in the html file are just for reminder).
@@ -32,12 +32,15 @@ var word_separator = ".,.;:?!_+-\[\]\(\)"  + "\t\n\r" ;  // word separator chara
 //    A  message for  cbc_builder.html file    
 //    B  message for  cbc_player.html file    
 //    C  message for  cbc_Player_Words_ClipByClip.html file    
+//    H  message for  ...  DOC/DOC_english/doc_en.html     
+//    S  message for  ...  SRT_v2_from_TEXT.html
+
 // The m... following A,B,C is the id  of the html element that will receive the message text (eg. id="m123")   
 //
 //----------------------------------------------------------------------------------------------------------------------------------------
 // Questa funzione restituisce una stringa XML con tutti i messaggi dell&apos;applicazione. 
 // xml non accetta i caratteri &apos;<&apos; e &apos;&&apos;,
-// ma qui puoi usare i seguenti marcatori html: <br><b></b>
+// ma qui puoi usare i seguenti marcatori html: <br><b></b> <ul><li></li></ul>
 // e i seguenti caratteri: & &apos; "
 //-----
 // Se vuoi modificare un messaggio devi modificare soltanto questo file (quelli nel file html servono soltanto come promemoria)
@@ -65,9 +68,40 @@ function get_messages() {
 <messages>
 	<lang_en>		
 		<id_language>en</id_language>	
-		<languageName>English</languageName>
-		<Amh00>../DOC/doc_English/doc_en.html</Amh00>	
-		<Am112> Change<br>duration</Am112>
+		<languageName>English</languageName>	
+		
+		<Afile>cbc_builder.html</Afile>
+		<Ama20>title is missing</Ama20>		
+		<Ama21>the original subtitle file has not been read yet or is empty</Ama21>	
+		<Ama22>the text in source language is missing</Ama22>	
+		<Ama23>the translated text is missing</Ama23>	
+		<Ama24>a text file is useless, a subtitle file is needed</Ama24>
+		<Ama25>The file <b>§file§</b> content is not in srt subtitle format</Ama25>
+		<Ama26>but if that's ok, in the <b>§m705§</b> window write 3 dots in a row <b>§...§</b></Ama26>  
+		<Ama30>seconds without dialogue</Ama30>	
+		<Amh00>../DOC/doc_English/doc_en.html</Amh00>			
+		<Am001>after you have pressed the key below,
+			<br>before clicking on the name of the chosen file,
+			<br>select and copy the full address of the folder that contains it (you&apos;ll have to paste it right after)
+		</Am001>
+		<Am002>Choose video or audio file</Am002>
+		<Am003>Confirm or make a new choice</Am003>
+		<Am004>Confirm</Am004>
+		<Am005>File Name</Am005>
+		<Am006>Go back</Am006>		
+		<Am007>Does the original language subtitle file exist?</Am007>
+		<Am008>Yes, it exists</Am008>
+		<Am009>No, it doesn't exist</Am009>		
+		<Am010>The input consists of a video or audio file, a text or subtitle file in the original language and translated
+			<br>one or more files may be missing
+		</Am010>
+		<Am011>Is there a video or audio file to play? </Am011>
+		<Am012>Yes, there is a video or audio file </Am012>
+		<Am013>No, there is neither a video file nor an audio file</Am013>
+		<Am014>but there is a text file</Am014>
+		<Am015>the file type of the original text <b>§origtype§</b> 
+			is not the same as that of the translated text <b>§trantype§</b>
+		</Am015>
 		<Am138> Download</Am138>
 		<Am139> Two files will be downloaded in the system download folder. 
 			<br> Press the button here below to download the first file (it contains all the subtitles)
@@ -79,44 +113,29 @@ function get_messages() {
 			<br><br>It can be re-run as many times as you want<br> by clicking on the CBC_1 _..... html file 
 			<br> The two files (script and html) can be moved to any other folder, but they must always stay together. <br> <br>
 			</Am142>
-		<Am143> Download the html file</Am143>		
-		<Am152> Press the button below to choose the Video or Audio file <br> but be careful: after you have chosen the folder, 
-			<br> before selecting the file, <br> copy the full path of it  (eg. C:\\antonio\\video\\english\)  
-			<br> (you will need it shortly to paste it where you will be prompted to enter the path)
-			</Am152>	
-		<Am153> Confirm or make a new choice</Am153>
-		<Am154> Choose the file</Am154>
-		<Am155> Confirm</Am155>
-		<Am156> File Name</Am156>
+		<Am143> Download the html file</Am143>			
 		<Am157> paste here below the path to the selected file</Am157>
 		<Am158> Confirm</Am158>
 		<Am159> Confirm</Am159>
-		<Am160> Confirm</Am160>
+		<Am160> Confirm</Am160>		
 		<Am161> Write the title</Am161>
-		<Am162> Where the subtitles are located</Am162>
-		<Am163> they do not exist</Am163>
-		<Am164> they are hardcoded inside the video</Am164>
-		<Am165> they are on separate files (<b>srt</b> or <b>vtt</b> type)</Am165>
-		<Am244> To synchronize the subtitles to the speech <br>enter the misalignment value in the <b>diff.sync</b> field <br>or</Am244>
-		<Am245> press the <b> Play/Stop</b> button and <br> press it again as soon as a line of subtitles has been fully spoken.</Am245>
 		<Am700> A tool to  <br>improve foreign language comprehension</Am700>
-		<Am701> Create yourself an html file with which you can play a video or audio file in clips, 
-			<br> each one with original and translated subtitles on demand
-			</Am701>
-		<Am702> Help</Am702>
+		
 		<Am704> Source Language Subtitles</Am704>
 		<Am705> Translated Subtitles</Am705>
 		<Am706> make subtitles and write new file</Am706>
-		<Am875> Video/Audio Folder</Am875>
-		<Ama06> Confirm</Ama06>
-		<Ama10> Press to download</Ama10>
-		<Ama12> title</Ama12>
-		<Ama17>  <b>This is the subtitle area</b>,<br>you can move it by dragging the anchor <br>
-			(click on the anchor and holding down move the mouse)  
-			<br>you can change the size of this strip by dragging the blue square
-			</Ama17>		
-		<Amb67> select the subtitles files and then <br>click here below<br> to download the two files</Amb67>				
+		<Am714> Source Language text</Am714>
+		<Am715> Translated text</Am715>
+		
+		
+		<Am875> Video/Audio Folder</Am875>				
+		<Amb64>is not text</Amb64>									
+		<Amb65>is not a text file</Amb65>		
+		<Amb67> select the subtitles files and then <br>click here below<br> to download the two files</Amb67>		
+		<Amb68> select the subtitles files and then <br>click here below<br> to download the two files</Amb68>	
+		
 		<Bmh00>../DOC/doc_English/doc_en.html</Bmh00>	
+		<Bfile>cbc_player.html</Bfile>
 		<Bm001>ERROR</Bm001>									
 		<Bm002>This html file has no parameters to use.</Bm002>		
 		<Bm003>It appears to have been started by clicking on it or typing its name on the command line,									
@@ -219,19 +238,32 @@ function get_messages() {
 		<Bm231>slide the cursor left or right<br>to bring forward <br>or delay<br>the beginning of the line</Bm231>
 		<Bm232>slide the cursor left or right<br>to bring forward <br>or delay <br>the end of the line</Bm232>		
 		<Bm244><b>To synchronize subtitles with speech</b></Bm244>	
-		<Bm245>selects a group of subtitle lines (keys <b>&#8594; &nbsp; &#8592;</b>),									
-			<br>make sure subtitles are visible (open book &#128214;)									
-			<br>click on the talking head icon &#128483; to start playback.									
-			<br>as soon as any line of subtitles has been completely spoken<br>press the <b>Stop</b>key									
-			<br>If it is difficult to stop the video at the exact point in time,									
-			<br>you can decrease the speed (vertical side slider) and try again.									
-			<br>The <b>Sync.OK</b>button closes this window.									
-		</Bm245>									
+		<Bm245><ul><li>Select a group of subtitle lines (keys <b>&#8594; &nbsp; &#8592;</b>),
+			</li><li>make sure the subtitles are visible (open book &#128214;)
+			</li><li>click the talking head icon &#128483; to start playback.
+			</li><li>as soon as any line of subtitles has been fully spoken press the <b>Stop</b> key
+			</li><li>If it is difficult to stop playback at the exact point, decrease the speed (vertical slider to the right) and try again.
+			</li><li>After the stop, a box will open where you will have to indicate this last talked line.
+			</li><li>At this point the correction will have been made and
+			it will remain active in subsequent sessions (even after restarting the computer).
+			</li><li>To close this window press the <b>Sync.OK</b> button. </li></ul>
+		</Bm245>
 		<Bm300>Words</Bm300>									
-		<Bm301>in reverse order of use</Bm301>									
-		<Bmd01>Play all Subtitles</Bmd01>									
+		<Bm301>in reverse order of use</Bm301>	
+		<Bm302>Printable Bilingual Text</Bm302>		
+		<Bm303>Printable Text</Bm303>	
+		<Bm324>Text Lines</Bm324> 
+		<Bmd01>Play all Subtitles</Bmd01>		
+		<Bm711>Lines</Bm711>
+		<Bm715>show all lines</Bm715>
+		<Bm716>hide all lines</Bm716>
+		<Bm717>list all lines</Bm717>		
+		<Bm731>go to beginning of lines in original language</Bm731>
+		<Bm732>go to beginning of translated lines</Bm732>
 		<Bm782>Show the <b>Subtitles</b>of the line being played</Bm782>									
-		<Bm783>Show the <b>Translation</b>of the line being played</Bm783>									
+		<Bm783>Show the <b>Translation</b>of the line being played</Bm783>			
+		<Bm791>Original text</Bm791>
+		<Bm792>Translated text</Bm792>	
 		<Bm801>Click here to download<br>the complete source of this HTML page<br>(if you are not a developer, ignore) </Bm801>									
 		<Bm846>Skip</Bm846>									
 		<Bm891>Subtitles in original language</Bm891>									
@@ -260,7 +292,8 @@ function get_messages() {
 		<Bmb13>Select another Video or Audio file in the <b>ClipByClip/VideoAudio</b></Bmb13>									
 		<Bmb22>to improve listening and reading comprehension of a foreign language</Bmb22>									
 		<Bmb23>to improve listening and reading comprehension of a foreign language</Bmb23>									
-		<Bmb50>Error<br>the file is neither video nor audio</Bmb50>									
+		<Bmb50>Error<br>the file is neither video nor audio</Bmb50>		
+		<Bmb52>can&apos;t be played</Bmb52>								
 		<Bmb62>the file to run</Bmb62>									
 		<Bmb64>is not text</Bmb64>									
 		<Bmb65>is not a text file</Bmb65>									
@@ -281,8 +314,10 @@ function get_messages() {
 		<Bmb91>subtitle lines</Bmb91>									
 		<Bmc85>subtitle line</Bmc85>									
 		<Bmc86>increased by</Bmc86>									
-		<Bmc87>decreased by</Bmc87>		
-		
+		<Bmc87>decreased by</Bmc87>	
+		<Bmc88>Bilingual Text</Bmc88> 	
+			
+		<Cfile>cbc_Player_Words_ClipByClip.html</Cfile>
 		<Cm001>ERROR</Cm001>
 		<Cm002>This html file has no parameters to use.</Cm002>
 		<Cm003>It appears to have been started by clicking on it or typing its name on the command line,
@@ -291,7 +326,7 @@ function get_messages() {
 		<Cm004>Must be called from a file created by <b>ClickByClip_builder.html</b>.</Cm004>
 		<Cm500>Words</Cm500>
 		<Cm501>DOC/shared/cbc_4_HELP.html?language=en</Cm501>
-		<Cm502>$numwords$ words ($percSingle$%) form the $percX$% of the text</Cm502>
+		<Cm502>$numwords$ words ($percSingle$%) form the <b>$percX$% of the text</b></Cm502>
 		<Cm503>This word is found in $numlines$ lines (Click on the yellow button to execute the first line)</Cm503>
 		<Cm504>All subtitle words are listed as buttons here on the right in reverse order of frequency, from most to least referenced.</Cm504>
 		<Cm505>By clicking on a button that contains a word, it is possible to reproduce all the lines of subtitles that contain it</Cm505>
@@ -307,6 +342,18 @@ function get_messages() {
 		<Cm512>Show Original Subtitles</Cm512>
 		<Cm513>Show Translated Subtitles</Cm513>
 		<Cm514>Repeat endlessly<br>line</Cm514>		
+		<Cm604>All the words of the text are listed as buttons here on the right in reverse order of frequency, from most to least referenced.</Cm604>
+		<Cm605>By clicking on a button showing a word it is possible to read all the lines that contain it</Cm605>	
+		<Cm609>The word is found in the lines identified by the numbers listed below it<br>
+			to read a row click on the corresponding number or <br>
+			to go from one to the next, click on the <b>Go to line</b> button
+		</Cm609>
+		<Cm610>Go to <br>line</Cm610>
+		<Cm611>Show<br>line</Cm611>
+		<Cm612>Show Original Text Line</Cm612>
+		<Cm613>Show Translated Text Line</Cm613>		
+			
+		<Hfile>doc/helpxx.html</Hfile>
 		<Hm800><b>ClipByClip</b> is a tool to practice the comprehension of a language.</Hm800>
 		<Hm820>It can be used in active mode by listening, reading and repeating 
 				<br>or in passive mode by endlessly listening to a few lines of subtitles while busy doing something else.
@@ -354,8 +401,39 @@ function get_messages() {
 	<lang_it>
 		<id_language>it</id_language>	
 		<languageName>Italiano</languageName>	
+		
+		<Afile>cbc_builder.html</Afile>	
+		<Ama20>manca il titolo</Ama20>
+		<Ama21>il file dei sottotitoli originali non è stato ancora letto oppure è vuoto</Ama21>		
+		<Ama22>manca il testo in lingua originale</Ama22>		
+		<Ama23>manca il testo tradotto</Ama23>		
+		<Ama24>il file di testo non può essere utilizzato, serve un file di sottotitoli</Ama24>	
+		<Ama25>il contenuto del file <b>§file§</b> non è in  formato di sottotitoli srt</Ama25>
+		<Ama26>ma se va bene così nella finestra <b>§m705§</b> scrivi 3 puntini di seguito <b>§...§</b></Ama26>   
+		<Ama30>secondi senza dialogo</Ama30>
 		<Amh00>../DOC/doc_Italiano/doc_it.html</Amh00>	
-		<Am112> Cambia<br>durata</Am112>
+		<Am001>dopo che hai premuto il tasto qui sotto,
+					<br>prima di cliccare sul nome del file scelto, 
+				<br>seleziona e copia l&apos;indirizzo completo della cartella che lo contiene  (dovrai incollarlo subito dopo) 
+		</Am001>		
+		<Am002>Scegli il file video o audio</Am002>
+		<Am003>Conferma o fai una nuova scelta</Am003>
+        <Am004>Conferma</Am004>	
+		<Am005>Nome del File</Am005>			
+		<Am006>Torna indietro</Am006>
+		<Am007>Esiste il file di sottotitoli in lingua originale?</Am007>
+		<Am008>Si, esiste</Am008>			
+		<Am009>No, non esiste</Am009>		
+		<Am010>L&apos;input consiste in un file video o audio, un file di testo o di sottotitoli in lingua originale e tradotti
+			<br>uno o più file possono mancare 
+		</Am010>
+		<Am011>Esiste un file video o audio da riprodurre?  </Am011>
+		<Am012>Si, esiste un file video o audio  </Am012>
+		<Am013>No, non c\'&egrave; n&eacute; un file video n&eacute; un file audio</Am013>
+		<Am014>ma esiste un file di testo</Am014>
+		<Am015>il tipo file del testo originale <b>§origtype§</b> 
+			non &egrave; eguale a quello del testo tradotto <b>§trantype§</b>
+		</Am015>
 		<Am138> Download</Am138>
 		<Am139> Nella cartella dei download saranno scaricati due file.
 					<br> Premi il pulsante qui sotto per scaricare il primo file (contiene tutti i sottotitoli)
@@ -368,50 +446,29 @@ function get_messages() {
 					<br>I due file possono essere spostati in qualsiasi altra cartella, ma devono stare sempre insieme.<br><br>
 					</Am142>
 		<Am143> Scarica il file html</Am143>	
-		<Am152> Premi il tasto qui sotto per scegliere il file Video or Audio
-					<br>ma attenzione: dopo che hai scelto la cartella,<br> prima di selezionare il file,
-					<br> copia il percorso completo
-					(es. C:\\antonio\\video\\english\\) 
-					<br>(ti servirà tra poco per incollarlo dove sarà richiesto di inserire il percorso) 
-					</Am152>	
-		<Am153> Conferma oppure fai una nuova scelta</Am153>
-		<Am154> Scegli il file</Am154>
-		<Am155> Conferma</Am155>
-		<Am156> Nome del file</Am156>
+
 		<Am157> incolla qui sotto il percorso al file selezionato</Am157>
 		<Am158> Conferma</Am158>
-		<Am159> Conferma</Am159>
-		<Am160> Conferma</Am160>
-		<Am161> Scrivi il titolo</Am161>
-		<Am162> Dove si trovano i sottotitoli</Am162>
-		<Am163> non esistono</Am163>
-		<Am164> sono codificati nel video</Am164>
-		<Am165> sono su file a parte (tipo <b>srt</b> o <b>vtt</b>)</Am165>
-		<Am244> Per sincronizzare i sottotitoli col parlato<br>inserisci il valore di disallineamento nel campo 
-					<b>diff.sync</b> <br>oppure
-					</Am244>
-		<Am245> premi il pulsante <b>Play/Stop</b> e <br>ripremilo appena una riga di sottotitoli è stata completamente pronunciata.</Am245>
+		<Am159> Conferma</Am159>		
+		<Am161> Scrivi il titolo</Am161>	
 		<Am700> Uno strumento per <br>migliorare la comprensione delle lingue straniere</Am700>
-		<Am701> Crea tu stesso un file html con cui riprodurre un file video o audio in clip,<br> ognuna con sottotitoli originali e tradotti a richiesta</Am701>
-		<Am702> Help</Am702>
 		<Am704> Sottotitoli Originali</Am704>
-		<Am705> Sottotitoli tradotti</Am705>
+		<Am705> Sottotitoli Tradotti</Am705>
 		<Am706> Ottiene sottotitoli e scrive nuovo file</Am706>
-		<Am875> Cartella File Video/Audio</Am875>
-		<Ama06> Conferma</Ama06>
-		<Ama10> Premi per scaricare</Ama10>
-		<Ama12> titolo</Ama12>
-		<Ama17> <b>Questa è l&apos;area dei sottotitoli</b>,<br> è possibile spostarla trascinando l&apos;ancora 
-					<br>(cliccare sull&apos;ancora e tenendo schiacciato spostare il mouse)
-					<br>E&apos; possibile modificare le dimensione di questa striscia trascinando il quadrato blu .
-					</Ama17>
+		<Am714> testo in lingua originale</Am714>
+		<Am715> testo tradotto</Am715>
+		<Am875> Cartella File Video/Audio</Am875>	
+		<Amb64>non è un testo</Amb64>
+		<Amb65>non è un file di testo</Amb65>						
 		<Amb67> Specifica i file sottotitoli da utilizzare e quindi <br>clicca qui sotto<br>per scaricare i due file</Amb67>		
+		<Amb68> Specifica i file sottotitoli da utilizzare e quindi <br>clicca qui sotto<br>per scaricare i due file</Amb68>		
 		
 		<Bmh00>../DOC/doc_Italiano/doc_it.html</Bmh00>	
+		<Bfile>cbc_player.html</Bfile>
 		<Bm001>ERRORE</Bm001>
 		<Bm002>Questo file html non ha parametri da usare.</Bm002>
 		<Bm003>Sembra che sia stato avviato facendo clic su di esso o scrivendo il suo nome sul comando di riga,
-		<br>ma non può andare da solo (gli mancano i dati da usare).
+			<br>ma non può andare da solo (gli mancano i dati da usare).
 		</Bm003>
 		<Bm004>Deve essere chiamato da un file creato da <b>ClickByClip_builder.html</b>.</Bm004>
 		<Bm010>quanto stai lavorando con questo file</Bm010>
@@ -511,21 +568,35 @@ function get_messages() {
 		<Bm232>far scorrere il cursore a sinistra o a destra<br>per anticipare <br>o posticipare <br>la fine della riga</Bm232>		
 		<Bm244><b>Per sincronizzare i sottotitoli col parlato</b>
 		</Bm244>
-		<Bm245>seleziona un gruppo di righe di sottotitoli (tasti <b>&#8594; &nbsp; &#8592;</b>), 
-		<br>assicurati che i sottotitoli siano visibili (libro aperto &#128214;)  
-		<br>clicca sull&apos;icona della testa parlante &#128483; per far partire la riproduzione.  	
-		<br>appena una qualsiasi riga di sottotitoli è stata completamente pronunciata<br>premi il tasto <b>Stop</b>
-		<br>Se è difficile fermare in tempo il video al punto esatto,
-		<br>puoi diminuire la velocità (cursore laterale verticale) e riprovare.
-		<br>Il tasto <b>Sync.OK</b>chiude questa finestra. 	
+		<Bm245><ul><li>Seleziona un gruppo di righe di sottotitoli (tasti <b>&#8594; &nbsp; &#8592;</b>), 
+		</li><li>assicurati che i sottotitoli siano visibili (libro aperto &#128214;)  
+		</li><li>clicca sull&apos;icona della testa parlante &#128483; per far partire la riproduzione.  	
+		</li><li>appena una qualsiasi riga di sottotitoli è stata completamente pronunciata premi il tasto <b>Stop</b>
+		</li><li>Se è difficile riuscire a fermare la riproduzione al punto esatto, diminuisci la velocità (cursore verticale a destra) e riprova.
+		</li><li>Dopo lo stop si aprirà un riquadro dove dovrai indicare questa riga. 
+		</li><li>A questo punto la correzione sarà stata effettuata e 
+			resterà attiva anche nelle sessioni successive (anche dopo aver fatto ripartire il computer).
+		</li><li>Per chiudere questa finestra premi il tasto <b>Sync.OK</b>. </li></ul>
 		</Bm245>
 		<Bm300>Parole</Bm300>
 		<Bm301>in ordine inverso<br>di utilizzo</Bm301>
+		<Bm302>Bilingue Stampabile</Bm302>		
+		<Bm303>Testo Stampabile</Bm303>	
+		<Bm324>Testo</Bm324> 
 		<Bmd01>Play tutti i Sottotitoli</Bmd01>
+		<Bm711>Righe</Bm711>	
+		
+		<Bm715>mostra tutte le righe</Bm715>
+		<Bm716>nascondi tutte le righe</Bm716>
+		<Bm717>lista tutte le righe</Bm717>	
+		<Bm731>vai a inizio delle righe in lingua originale</Bm731>  
+		<Bm732>vai a inizio delle righe tradotte</Bm732>	
 		<Bm782>Mostra i  <b>Sottotitoli</b>della riga in riproduzione</Bm782>
 		<Bm783>Mostra la <b>Traduzione</b>della riga in riproduzione</Bm783>
-		<Bm801>Clicca qui per scaricare<br>il sorgente completo di questa pagina HTML<br>(se non sei uno sviluppatore, ignora)	</Bm801>
-		<Bm846>Salta</Bm846>
+		<Bm791>Testo in lingua originale</Bm791>
+		<Bm792>Testo tradotto</Bm792>
+		<Bm801>Clicca qui per scaricare<br>il sorgente completo di questa pagina HTML<br>(se non sei uno sviluppatore, ignora)	</Bm801>		
+		<Bm846>Salta</Bm846>		
 		<Bm891>Sottotitoli in lingua originale</Bm891>
 		<Bm892>Sottotitoli tradotti</Bm892>
 		<Bma06>Conferma</Bma06>
@@ -574,7 +645,9 @@ function get_messages() {
 		<Bmc85>riga sottotitolo</Bmc85>
 		<Bmc86>aumentato di</Bmc86>
 		<Bmc87>diminuito di</Bmc87>			
+		<Bmc88>Testo Bilingue</Bmc88>   	
 		
+		<Cfile>cbc_Player_Words_ClipByClip.html</Cfile>
 		<Cm001>ERRORE</Cm001>
 		<Cm002>Questo file html non ha parametri da usare.</Cm002>
 		<Cm003>Sembra che sia stato avviato facendo clic su di esso o scrivendo il suo nome sul comando di riga,
@@ -583,9 +656,9 @@ function get_messages() {
 		<Cm004>Deve essere chiamato da un file creato da <b>ClickByClip_builder.html</b>.</Cm004>
 		<Cm500>Parole</Cm500>	  
 		<Cm501>DOC/shared/cbc_4_HELP.html?language=it</Cm501>
-		<Cm502>$numwords$ parole ($percSingle$%) formano il $percX$% del testo</Cm502>	  
+		<Cm502>$numwords$ parole ($percSingle$%) formano il <b>$percX$% del testo</b></Cm502>	  
 		<Cm503>Questa parola si trova in $numrighe$ righe (Clicca sul pulsante in giallo per eseguire la prima riga)</Cm503>		
-		<Cm504>Tutte le parole dei sottotitoli sono elencate come pulsanti qui a destra in ordine di frequenza inverso, dal più al meno referenziato.</Cm504>
+		<Cm504>Tutte le parole dei sottotitoli sono elencate come pulsanti qui a destra in ordine inverso di frequenza, dal più al meno referenziato.</Cm504>
 		<Cm505>Cliccando su un pulsante che riporta una parola è possibile riprodurre tutte le righe di sottotitoli che la contengono</Cm505>
 		<Cm506>Cambia la Velocità</Cm506>		
 		<Cm507>modifica tempo di inizio</Cm507>
@@ -599,6 +672,18 @@ function get_messages() {
 		<Cm512>Mostra Sottotitoli Originali</Cm512>
 		<Cm513>Mostra Sottotitoli Tradotti</Cm513>	
 		<Cm514>Ripeti infinit.<br>riga</Cm514>	
+		<Cm604>Tutte le parole del testo sono elencate come pulsanti qui a destra in ordine inverso di frequenza, dal più al meno referenziato.</Cm604>
+		<Cm605>Cliccando su un pulsante che riporta una parola è possibile leggere tutte le righe che la contengono</Cm605>		
+		<Cm609>La parola si trova nelle righe identificate dai numeri listati sotto di essa<br>
+			per leggere una riga cliccare sul numero corrispondente oppure <br>
+			per passare da una alla successiva cliccare sul pulsante <b>Vai alla riga</b>
+		</Cm609>		
+		<Cm610>Vai alla <br>riga</Cm610>
+		<Cm611>Mostra<br>linea</Cm611>
+		<Cm612>Mostra riga di testo originale</Cm612>
+		<Cm613>Mostra riga di testo tradotta</Cm613>	
+		
+		<Hfile>doc/helpxx.html</Hfile>
 		<Hm800><b>ClipByClip</b> è uno strumento per esercitarsi nella comprensione di una lingua.</Hm800>
 		<Hm820>Può essere utilizzato in modalità attiva ascoltando, leggendo e ripetendo
 			<br>o in modalità passiva ascoltando all&apos;infinito alcune righe di sottotitoli mentre si &egrave; impegnati a fare altro.
@@ -629,7 +714,7 @@ function get_messages() {
 		<Hm814>È possibile sapere quando un sottotitolo è in riproduzione anche quando è invisibile,
 			perché in questo caso la riga che lo contiene è incorniciata da un bordo rosso.
 		</Hm814>
-		<Hm815>Puoi mostrare, nascondere e riprodurre una singola riga all'interno di un gruppo selezionato</Hm815>
+		<Hm815>Puoi mostrare, nascondere e riprodurre una singola riga all&apos;interno di un gruppo selezionato</Hm815>
 		<Hm816>Questa pagina è richiamata dal pulsante <b>Parole in ordine inverso di utilizzo</b>.
 			<br>Tutte le parole dei sottotitoli sono listate sui pulsanti a destra in ordine inverso di utilizzo,  
 			le più usate (quelle che compaiono in più righe) sono elencate per prime, in tal modo è possibile notare con quali conviene esercitarsi per prima.
@@ -637,12 +722,12 @@ function get_messages() {
 			</Hm816> 
 		<Hm817>Ogni riga che contiene la parola richiesta è rappresentata da un pulsante. 
 			Cliccando su uno di questi si riproduce il brano corrispondente. 
-			<br><br>Il pulsante a destra <b>Play + riga</b> serve a riprodurre una riga dopo l'altra. 
+			<br><br>Il pulsante a destra <b>Play + riga</b> serve a riprodurre una riga dopo l&apos;altra. 
 			<br>Il pulsante <b>Ripeti riga</b> serve a ripetere la riga. 
-			<br>Il pulsante <b>Ripeti infinito riga</b> serve a ripetere all'infinito la riga (per bloccare cliccare di nuovo). 
-			<br><br>E' possibile diminuire la velocità di riproduzione agendo sul cursore <b>Cambia la velocità</b>. 
+			<br>Il pulsante <b>Ripeti infinito riga</b> serve a ripetere all&apos;infinito la riga (per bloccare cliccare di nuovo). 
+			<br><br>E&apos; possibile diminuire la velocità di riproduzione agendo sul cursore <b>Cambia la velocità</b>. 
 			<br><br>I due cursore <b>cambia il tempo di inizio</b> e <b>cambia il tempo di fine</b> possono essere utili 
-				per anticipare o posticipare l'inizio e la fine della riga se necessario. 
+				per anticipare o posticipare l&apos;inizio e la fine della riga se necessario. 
 		</Hm817>	
 	</lang_it>
 </messages>	

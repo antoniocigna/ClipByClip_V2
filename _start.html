@@ -1,0 +1,42 @@
+
+      
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="Clip By CLip: A tool to practice language comprehension by playing video/audio a clip at time with/without subtitles">
+	<meta name="license"     content="license MIT: you can share and modify the software, but you must include the license file">
+	<meta name="keywords"    content="HTML,CSS,JavaScript, bilingue, video, audio, subtitle,clip" >
+	<meta name="author"      content="Antonio Cigna">
+	<meta name="date"        content="2021-2022">	 
+	<meta name="keywords"    content="ClipByClip, Language, Learning, Tool, Comprehension, clip, subtitle">	
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
+</head>
+ 
+<body>
+	<!--
+	This html file passes the control to the builder file of ClipByCkip 
+	-->		
+	<script> 	
+		let path = location.pathname;
+		var path1 = path.substring(1); 
+		var i1 = path1.lastIndexOf("/");
+		if (i1 < 0) { i1 = path1.lastIndexOf("\\");  }		
+		console.log("path1=" + path1 );
+
+		var html2path  = path1.substr(0, i1+1) ;  
+		
+		console.log("html2path=" + html2path );
+		
+		
+		var html2call  = "file:///" + html2path + "./cbc_base/cbc_builder/cbc_Builder.html";    // new page to call 
+		
+		console.log("html2call=" + html2call);
+		
+		var assign_parms =  html2call ; 
+		
+		window.location.assign( assign_parms ) ; 			
+		
+	</script>				
+</body>
+</html>

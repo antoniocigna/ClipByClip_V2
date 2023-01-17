@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="description" content="ClipByClip A tool to practice language comprehension">
+      <meta name="license"     content="license MIT: you can share and modify the software, but you must include the license file">
+      <meta name="keywords"    content="HTML,CSS,JavaScript, bilingue, video, audio, subtitle,clip">
+      <meta name="author"      content="Antonio Cigna">
+      <meta name="date"        content="2021-2022">
+      <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+      <title>here his the title</title>
+     
+      <style>
+         .timerow1 {
+			 width:1em;
+			 color:black;
+			 text-align:right; vertical-align:bottom; 
+			 font-size:1.0em;
+			 padding-right:1em;
+         }
+         
+		 div {
+			text-align:left;
+		 }
+		.suboLine {		
+			font-style: oblique;
+			text-align:left; vertical-align:bottom; 
+			font-size:1.5em;
+		}	
+		.tranLine {
+			display:none;
+			font-weight: normal;
+			font-style: oblique;	
+			text-align:left; 
+			font-size:1.0em;
+		}
+      </style>
+   </head>
+   <body   style="color: black; font-family: Arial, Helvetica, verdana, sans-serif;">
+            <div id="id_div20s">
+               <span id="id_language" style="display:none;">en</span>   
+               <span id="id_hardsub" style="display:none;">false</span>   
+               <span id="id_file_suborig" style="display:none;">true</span>   
+               <span id="id_file_subtran" style="display:none;">true</span>   
+               <span id="id_reset_storage" style="display:none;">false</span>  
+               <span class="msg" id="mh00" style="display:none;">../DOC/DOC_English/doc_en.html</span>
+               <div id="id_head0" style="display:flex;">
+				  <div style="width:1em">&nbsp;</div> 
+                  <div>
+					  <div style="font-size:2em;"><b><span  id="id_titolo"></span></b></div>
+					   <div style="font-size:1em;">Testo ottenuto dai sottotitoli in lingua originale</div>
+					  <br>
+					  <div style="font-size:1em;line-height:0.8em;">									
+						 <i>Clip By Clip</i>
+						 <br>
+						 <span style="font-size:0.6em;"><i>Antonio Cigna 2021-2022</i></span>
+					  </div>
+				  </div>
+               </div>             
+            </div>
+	<br><br>
+			<table id="id_tabSub">
+			 <colgroup>   
+				<col id="id_c_textCol"  span="1">
+				<col id="col_8"         span="1">
+			 </colgroup>			
+			 <tbody id="id_tabSub_tbody">
+			 </tbody>
+			</table>
+
+     
+         <div id="id_subtitle_container" style="display:block;border:0px solid red;">       
+            <div id="id_txta_orig_sub" style="display:none;">
+            </div>                 
+            <div id="id_txta_tran_sub" style="display:none;">
+            </div>
+         </div>     
+    
+	  	  
+      
+      <script src="../cbc_common/cbc_MESSAGES.msg"        ></script>
+      <script>
+         function custom_message_change(txt1) {
+         return txt1; 
+         }         
+      </script>	
+      <script src="../cbc_common/cbc_MESSAGE_manager.jstxt"  onload="messageMain('B')"></script> 		  
+      <script src="./cbc_PLAYER_BILINGUAL_script.jstxt"  defer ></script>
+   
+   </body>
+</html>
