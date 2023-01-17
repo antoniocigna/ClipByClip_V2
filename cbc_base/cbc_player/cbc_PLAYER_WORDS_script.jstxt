@@ -674,7 +674,7 @@ function funParola(this1) {
     //console.log("anto string_list_ix_line="  +  string_list_ix_line); 
 
     var wordRadio1 = '<label class="labelWordNum">';
-    var wordRadio2 = '<input type="radio" name="radioWord"  style="opacity: 0;" onclick="choose_1_row(§this§)"></label> \n';
+    var wordRadio2 = '<input type="radio" name="radioWord"  style="opacity: 0;" onclick="choose_1_row(§this§,3)"></label> \n';
 
     var radioW_str = '';
 
@@ -753,7 +753,7 @@ function funParola(this1) {
 
     var first_ele = ele_dummyRadio.children[0];
     
-    choose_1_row(first_ele.children[0], first_parm[0], first_parm[1], first_parm[2]);
+    choose_1_row(first_ele.children[0], first_parm[0], first_parm[1], first_parm[2],4);
 
     //document.getElementById("id_inp_ixRep"     ).max= list_ix_line.length; 
 	var ix2 = 0;  
@@ -1346,7 +1346,7 @@ function text_by_msgid(msgid) {
     return document.getElementById(msgid).innerHTML;
 }
 // -------------------------------
-function choose_1_row(this1, ixRow, g_ix_of_ixRow, g2_ix_of_ixNextRow) {
+function choose_1_row(this1, ixRow, g_ix_of_ixRow, g2_ix_of_ixNextRow,wh) {
 	
     lastPlayRowLoop = false;
     if (ele_last_play) ele_last_play.style.backgroundColor = null;
@@ -1367,7 +1367,14 @@ function choose_1_row(this1, ixRow, g_ix_of_ixRow, g2_ix_of_ixNextRow) {
     lastRadioIx = ixRow;
 	assignOnRow_OrigTranText(ixRow);
 	
-    var lastRadioNextIx = list_ix_line[g2_ix_of_ixNextRow];
+	if (g2_ix_of_ixNextRow >= list_ix_line.length) {
+		g2_ix_of_ixNextRow=0; 
+	}
+	var lastRadioNextIx = list_ix_line[g2_ix_of_ixNextRow];
+	if (lastRadioNextIx == undefined) {
+		console.log("ERROR in choose_1_row(this, ixRow=" + ixRow + ", g_ix_of_ixRow=" + g_ix_of_ixRow + 
+			", g2_ix_of_ixNextRow=" + g2_ix_of_ixNextRow + " wh=" + wh  + "  lastRadioNextIx=" + lastRadioNextIx);
+	}	
     lastRadioNext_g = g2_ix_of_ixNextRow;
 
     document.getElementById("id_num_loopRepeat").innerHTML = lastRadioIx;
@@ -1521,7 +1528,7 @@ function fun_next_ix_toShow() {
     var ele_next = ele_dummyRadio.children[ix_of_ixRow];
     var this1 = ele_next.children[0];
 	
-	choose_1_row(this1, ixRow, ix_of_ixRow, ix_of_ixNext);  	
+	choose_1_row(this1, ixRow, ix_of_ixRow, ix_of_ixNext,1);  	
 	
 }  // end of fun_next_ix_toShow() 
 
@@ -1544,17 +1551,24 @@ function onclick_playNextClip3() {
 	se clicco:  8 (ixRow=1)  deve diventare la riga attiva 
 	lastRadioIx = 
 	**/
-	var ix_of_ixRow =  parseInt( document.getElementById("id_ix_of_ixRowNext").innerHTML );  
+	var ix_of_ixRow =  parseInt( document.getElementById("id_ix_of_ixRowNext").innerHTML );
+	if (ix_of_ixRow >= list_ix_line.length) ix_of_ixRow = 0; 
 	var ix_of_ixNext=  ix_of_ixRow + 1;
 	if (ix_of_ixNext >= list_ix_line.length) ix_of_ixNext = 0; 
 	var ixRow = list_ix_line[ ix_of_ixRow  ] ; 
-	var ixNext= list_ix_line[ ix_of_ixNext ] ; 
+	var ixNext= list_ix_line[ ix_of_ixNext ] ;
 	
-	
-    var ele_next = ele_dummyRadio.children[ix_of_ixRow];
-    var this1 = ele_next.children[0];
-	
-	choose_1_row(this1, ixRow, ix_of_ixRow, ix_of_ixNext);  	
+	try{
+		var ele_next = ele_dummyRadio.children[ix_of_ixRow];
+		var this1 = ele_next.children[0];	
+		choose_1_row(this1, ixRow, ix_of_ixRow, ix_of_ixNext,2);  	
+	} catch(e1) {
+		console.log("ERROR in onclick_playNextClip3() " +" ix_of_ixRow=" + ix_of_ixRow + " ix_of_ixNext=" +  ix_of_ixNext + " list_ix_line.length="+list_ix_line.length)
+		console.log("\t2onclick_playNextClip3() list_ix_line="+list_ix_line );
+		console.log("\t3onclick_playNextClip3() ix_of_ixNext=" +  ix_of_ixNext ); 
+		console.log("\t4onclick_playNextClip3() ix_row=" + ixRow + " ixNext=" + ixNext); 
+		console.log(e1);
+	}
 	
 	onclick_replay3();
 
