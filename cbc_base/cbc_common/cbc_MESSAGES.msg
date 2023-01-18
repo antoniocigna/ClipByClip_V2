@@ -250,7 +250,7 @@ function get_messages() {
 		</Bm245>
 		<Bm300>Words</Bm300>									
 		<Bm301>in reverse order of use</Bm301>	
-		<Bm302>Printable Bilingual Text</Bm302>		
+		<Bm302>Printable Bilingual</Bm302>		
 		<Bm303>Printable Text</Bm303>	
 		<Bm324>Text Lines</Bm324> 
 		<Bmd01>Play all Subtitles</Bmd01>		
