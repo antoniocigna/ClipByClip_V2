@@ -72,12 +72,11 @@
          margin: auto;
          border-radius: 1.4em;
          }
-		.h_size1 { font-size:2em;}
 		.h_buttonWhite {
 			background-color: white;
 			border: 2px solid black;
 			font-weight: bold; 
-			font-size:0.5em;
+			font-size:1.0em;
 			color: black;
 			text-align:center;
 			vertical-align:middle;
@@ -192,8 +191,9 @@
 								</colgroup>		
 								<tr>						
 									<td id="id_div_words" >                          
-										<button id="id_call_words" class="h_buttonWhite h_size1"  style="font-size:1em;"> 
-											<a id="id_href_parole" style="text-decoration: none;" target="_blank"  onclick="fun_pauseVid()">
+										<button id="id_call_words" class="h_buttonWhite"> 
+											<a id="id_href_parole" style="color:blue; text-decoration: none;" 
+													target="_blank"  onclick="fun_pauseVid()">
 												<span class="msg" id="m300" style="min-width:100%;">Words</span><br>
 												<!--
 												<span class="msg" id="m301" 
@@ -208,8 +208,9 @@
 								</tr>							
 								<tr>
 									<td id="id_div_biling" >
-									   <button id="id_call_biling" class="h_buttonWhite"   style="font-size:1em;">										
-											<a id="id_href_biling" href="" style="text-decoration: none;" target="_blank"  onclick="fun_pauseVid()" >
+									   <button id="id_call_biling" class="h_buttonWhite">										
+											<a id="id_href_biling" href="" style="color:blue; text-decoration: none;" 
+													target="_blank"  onclick="fun_pauseVid()" >
 													<span class="msg" id="m302" style="min-width:100%;">Testo bilingue</span>									  
 											</a>     
 									    </button>
@@ -218,8 +219,9 @@
 								</tr>
 								<tr>
 									<td id="id_div_origText"> 
-										<button id="id_call_origTxt" class="h_buttonWhite"   style="font-size:1em;">
-											<a id="id_href_origTxt" href="" style="text-decoration: none;" target="_blank"  onclick="fun_pauseVid()" >
+										<button id="id_call_origTxt" class="h_buttonWhite"  >
+											<a id="id_href_origTxt" href="" style="color:black; text-decoration: none;" 
+												target="_blank"  onclick="fun_pauseVid()" >
 												<span class="msg" id="m303" style="min-width:100%;">Testo Originale</span>
 											</a>     
 									   </button>                    	   
@@ -248,35 +250,39 @@
 							</colgroup>		
 							<tr>
 								<td id="id_subOnLeftVideo" >
-									<button class="h_buttonWhite" onclick='onclickOnOff("id_sub_div", "block")'>
+									<button class="h_buttonWhite" style="color::black; text-decoration: none;width:100%;" 
+										onclick='onclickOnOff("id_sub_div", "block")'>
 										<span class="msg" id="m111">Subtitles</span>
 									</button>
 								</td>
 								<td>
-									<button class="h_buttonWhite"  id="id_chg_color" onclick="onclick_show_color()">
-										<span class="msg" id="m201" style="min-width:100%;">Colors</span>
+									<button class="h_buttonWhite"  id="id_chg_color" style="color:black; text-decoration: none;width:100%;"
+										onclick="onclick_show_color()">
+										<span class="msg" id="m201" >Colors</span>
 									</button> 
 								</td>
 								<td >                  
-									<button class="h_buttonWhite">
-										<a id="gotoHelp0"  style="width:100%;" 	href="../DOC/DOC_English/doc_en.html">
-											<span class="msg" id="m201X" style="min-width:100%;">HELP</span>
-										</a>   
+									
+									<button class="h_buttonWhite" style="visibility:hidden;" onclick="onclick_show_statist()">
+										<span class="msg" id="m213">Statistics</span>
 									</button>	
 								</td>
 								
 							</tr>
 							<tr>
 								<td id="id_subOnLeftSync">							
-									<button id="id_check_sync" class="h_buttonWhite" 
+									<button id="id_check_sync" class="h_buttonWhite" style="color:black; text-decoration: none;width:100%;"
 											onclick="onclick_show_syncstaff(  document.getElementById('id_central') )" >
 										<span class="msg" id="m110">Synchronization</span> 
 									</button>	
 								</td>
 								<td >
-									<button class="h_buttonWhite" style="visibility:hidden;" onclick="onclick_show_statist()">
-										<span class="msg" id="m213">Statistics</span>
-									</button>									
+										<button class="h_buttonWhite">
+										<a id="gotoHelp0"  style="color:black; text-decoration: none;width:100%;" 
+											href="../DOC/DOC_English/doc_en.html">
+											<span class="msg" id="m201X" style="min-width:100%;">HELP</span>
+										</a>   
+									</button>								
 								</td>
 								<td >
 									<button class="h_buttonWhite" style="visibility:hidden;" onclick="onclick_reset_storage()">
