@@ -1760,7 +1760,9 @@ function build_fake_sub_entries( f_line ) {
 		
 		document.getElementById("id_subOnLeftSync" ),   // initial show/hide subtitles setting button (on left of video) 
 		document.getElementById("id_subOnLeftVideo"),   // initial show/hide subtitles setting button (on left of video) 
-		document.getElementById("id_div_words"     )    // words button (on left of video) 
+		document.getElementById("id_div_words"     ),   // words button (on left of video) 
+		document.getElementById("id_div_biling"    ),   // words button (on left of video) 
+		document.getElementById("id_div_origText"  )    // words button (on left of video) 
 		];  
 	fun_collapse(  list1_collapse_ele, list1_hide_ele, 1/3 ) ;	
 	
