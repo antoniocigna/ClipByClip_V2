@@ -42,11 +42,6 @@ td {
     border: 0 solid #000;
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    opacity: 1
-}
-
 
 div {
 	margin: auto;
