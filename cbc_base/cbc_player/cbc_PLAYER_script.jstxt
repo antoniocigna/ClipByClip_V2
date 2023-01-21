@@ -1454,9 +1454,7 @@ function fun_makeTextVisible(element,wh, nn) {
 	
 	
 	element.style.display = "block"; 
-	//var eleTr1 = element.parentElement.parentElement;
-	//if (eleTr1) { eleTr1.style.backgroundColor = "yellow"; }
-	// to use the class color again ==>  element.style.color = null
+	
 }
 
 //----------------------------------------------
@@ -2475,12 +2473,12 @@ let clip_legend = `<hr>
 //--------------------------------------------
 			
 	let string_tr_fant = `
-		<tr id="idtr_§1§_m2"  style="display:none;background-color:yellow;height:0.5em;" > 
+		<tr id="idtr_§1§_m2"  style="display:none;background-color:white;height:1.5em;" > 
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			<td></td><td></td><td></td><td></td><td></td><td></td>
 		</tr> \n 		
 
-		<tr id="idtr_§1§_m1"  class="playBut1" style="display:none;background-color:yellow;">
+		<tr id="idtr_§1§_m1"  class="playBut1" style="display:none;background-color:grey; border-style: inset;">
 			<td></td>
 			<td></td>		
 			<td class="playBut1"><button class="buttonTD2" id="idb_§1§_m" onclick="onclick_OneClipRow_showHide_sub( this, true)">
