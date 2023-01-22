@@ -3716,8 +3716,11 @@ function collapse_cols() {
 		];  	
 				
 	fun_collapse(  list1_collapse_ele, list1_hide_ele, 0 ) ;	
-		
-	ele_time_video.innerHTML = '<span style="font-size:2em; font-weight:bold;">' + document.getElementById("mc88").innerHTML + "</span>";//bilingue   		
+	if (NO_VIDEO_AUDIO_FILE) {
+		ele_time_video.innerHTML = '<span style="font-size:2em; font-weight:bold;">' + "</span>";
+	} else {	
+		ele_time_video.innerHTML = '<span style="font-size:2em; font-weight:bold;">' + document.getElementById("mc88").innerHTML + "</span>";//bilingue   	
+	}	
 	innerHTML_from_innerHTML("m224", "m324"); // Text Lines 
 	innerHTML_from_innerHTML("m891", "m791"); // Original Text 
 	innerHTML_from_innerHTML("m892", "m792"); // Translated Text 
