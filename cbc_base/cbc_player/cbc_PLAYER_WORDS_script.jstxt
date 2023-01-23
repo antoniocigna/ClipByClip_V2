@@ -483,6 +483,8 @@ function paroleElab() {
 
     var lineperc = "";
     var percX = 0;
+	var rowConst = ' ' + document.getElementById("m515").innerHTML ; 
+	var rowConst1= ' ' + document.getElementById("m516").innerHTML ; 
 
     for (var i2 = 0; i2 < list_parole.length; i2++) {
         numwords = i2 + 1;
@@ -510,14 +512,15 @@ function paroleElab() {
 			ppc4 = c4;
 			col4_x += c4 + " " ; 
 		} 	
-
+		var nnrow;
+		if (num_num == 1) { nnrow = '<span class="tooltiptext"> ' + num_num + rowConst1 + '</span>';}
+		else {nnrow = '<span class="tooltiptext"> ' + num_num + rowConst + '</span>';}
+		
         var butt2 = '  <button class="tooltip" onclick="funParola(this)" ' +
             '>' + col1[2] +
             '<span style="display:none;">' + numwords + ":" +
             num_num + ":" + percSingle + ":" + perc2 + ":" +
-            col4_x +
-            '</span> ' +
-            '<span class="tooltiptext"> ' + num_num + ' righe</span>' +
+            col4_x + '</span> ' + nnrow +
             '</button>   \n';
 
         //word_button += butt1;  	
