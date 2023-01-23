@@ -254,7 +254,7 @@ function get_messages() {
 		<Bm303>Printable Text</Bm303>	
 		<Bm324>Text Lines</Bm324> 
 		<Bmd01>Play all Subtitles</Bmd01>		
-		<Bm711>Lines</Bm711>
+		<Bm711>Text Lines</Bm711>
 		<Bm715>show all lines</Bm715>
 		<Bm716>hide all lines</Bm716>
 		<Bm717>list all lines</Bm717>		
