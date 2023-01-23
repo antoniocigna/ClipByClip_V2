@@ -342,6 +342,8 @@ function get_messages() {
 		<Cm512>Show Original Subtitles</Cm512>
 		<Cm513>Show Translated Subtitles</Cm513>
 		<Cm514>Repeat endlessly<br>line</Cm514>		
+		<Cm515>rows</Cm515>		
+		<Cm516>row</Cm516>		
 		<Cm604>All the words of the text are listed as buttons here on the right in reverse order of frequency, from most to least referenced.</Cm604>
 		<Cm605>By clicking on a button showing a word it is possible to read all the lines that contain it</Cm605>	
 		<Cm609>The word is found in the lines identified by the numbers listed below it<br>
@@ -672,6 +674,8 @@ function get_messages() {
 		<Cm512>Mostra Sottotitoli Originali</Cm512>
 		<Cm513>Mostra Sottotitoli Tradotti</Cm513>	
 		<Cm514>Ripeti infinit.<br>riga</Cm514>	
+		<Cm515>righe</Cm515>
+		<Cm516>riga</Cm516>
 		<Cm604>Tutte le parole del testo sono elencate come pulsanti qui a destra in ordine inverso di frequenza, dal più al meno referenziato.</Cm604>
 		<Cm605>Cliccando su un pulsante che riporta una parola è possibile leggere tutte le righe che la contengono</Cm605>		
 		<Cm609>La parola si trova nelle righe identificate dai numeri listati sotto di essa<br>
