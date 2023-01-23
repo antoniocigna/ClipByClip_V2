@@ -1,17 +1,24 @@
 
-Clip By Clip
+Clip per clip
 ------------
+Questa applicazione (che funziona soltanto su desktop) si propone come uno strumento per migliorare la comprensione di una lingua straniera.
+  
+Permette di guardare un video o ascoltare un audio in piccoli pezzi con o senza sottotitoli.
+  
+E' possibile riprodurre e ripetere anche all'infinito una riga alla volta con sottotitoli visibili o invisibili a richiesta.
+  
+Ci si può esercitare anche con una parola per volta, per ogni parola vengono proposte tutte le righe che la contengono.
 
-Questa applicazione (che funziona soltanto su desktop) si propone come strumento per migliorare la comprensione di una lingua straniera.
+E' possibile ottenere e stampare un testo interlineare bilingue utilizzando i sottotitoli. 
+ 
+Se manca un file video o audio, è possibile sfruttare le possibilità offerte dal solo testo (stampa bilingue, focalizzarsi su una parola per volta esercitandosi su tutte le righe che la contengono).
 
-Permette di visionare un video o ascoltare un audio a pezzettini delle dimensioni desiderate con o senza sottotitoli.
-
-![](4_it_select_only_1_line.png)
-
-L'applicazione comprende due parti: costruzione (**builder**) e utilizzo (**player**).  
-La prima (builder) serve a costruire due file personalizzati che insieme costituiscono il player e che servono per riprodurre il video o audio prescelto.  
-I file video o audio ed i file di sottotitoli (di tipo **.srt**) devono trovarsi su una cartella del proprio computer.  
-Il file di sottotitoli tradotti può essere ottenuto da quelli in lingua originale usando un traduttore automatico (attenti al limite di dimensione, per es. Google traduce 5000 caratteri per volta).
+Se non ci sono sottotitoli, si può usare il file video/audio per esercitarsi in pezzettini piccoli fino ad appena un secondo di durata.
+  
+L'applicazione comprende due parti: costruzione (**builder**) e uso (**player**).
+Il primo (builder) serve per costruire due file personalizzati che insieme compongono il player e che servono per riprodurre il video o l'audio prescelto.
+I file video o audio ei file dei sottotitoli (di tipo **.srt**) devono trovarsi in una cartella del computer.
+Il file dei sottotitoli tradotto può essere ottenuto da quelli in lingua originale utilizzando un traduttore automatico (attenzione al limite di dimensione, ad esempio Google traduce 5000 caratteri alla volta).
 
 _Attenzione questa applicazione non crea sottotitoli e non esegue nessuna traduzione._
 

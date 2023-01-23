@@ -1,17 +1,24 @@
   
 Clip By Clip
 ------------
+This application (which works only on the desktop) is proposed as a tool to improve the understanding of a foreign language.  
+  
+Allows you to watch a video or listen to an audio in small pieces with or without subtitles.  
+  
+You can play and even repeat endlessly one line at a time with subtitles visible or invisible on demand.  
+  
+You can practice one word at a time, for each word all the lines containing it, are proposed.  
 
-This application (which works only on the desktop) is proposed as a tool to improve the understanding of a foreign language.
+Bilingual interlinear text can be obtained and printed using the available subtitles. 
+ 
+If a video or audio file is missing, you can take advantage of the possibilities offered by text only (bilingual printing, practice each word by practicing all the lines that refer to it).  
 
-Allows you to watch a video or listen to an audio in small pieces with or without subtitles.
-
-![](4_en_select_only_1_line.png)
-
+If there are no subtitles, you can use the video/audio file to practice in blocks of duration as small as one second.
+  
 The application includes two parts: construction (**builder**) and use (**player**).  
 The first (builder) is used to build two customized files which together make up the player and which are used to play the chosen video or audio.  
 Video or audio files and subtitle files (of type **.srt**) must be located in a folder on your computer.  
-The translated subtitle file can be obtained from the original language ones using an automatic translator (beware of the size limit, eg Google translates 5000 characters at a time).
+The translated subtitle file can be obtained from the original language ones using an automatic translator (beware of the size limit, eg Google translates 5000 characters at a time).  
 
 _Warning this application does not create subtitles and does not perform any translation._
 
