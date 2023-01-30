@@ -72,7 +72,7 @@ function execParser() {
 						replace(/\'/g      , "&apos;"     ).
 						replace(/\"/g      , "&quot;"     );
 	
-	console.log( xml_text);
+	//console.log( xml_text);
 	
 	parser = new DOMParser();
 	
