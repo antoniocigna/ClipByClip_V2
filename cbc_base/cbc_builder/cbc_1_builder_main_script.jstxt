@@ -1081,7 +1081,7 @@ function fun_after_drop_uno() {
     vid = vid00; //   document.getElementById("myVideo");
     vid.src = vid00.src;
 
-    console.log("fun_after_drop_uno()     vid.src=" + vid.src);
+    //console.log("fun_after_drop_uno()     vid.src=" + vid.src);
 
     document.getElementById("id_video1").style.display = "block";
 
@@ -1197,7 +1197,7 @@ function get_titleTWO() {
     HTML_TITLE = out_title;
 
     const d = new Date();
-    INTRAFN = (HTML_TITLE + "_" + d.toJSON()).replaceAll(":", "_").replaceAll(".", "_");
+    INTRAFN = (HTML_TITLE + "_" + d.toJSON()).replaceAll("-", "_").replaceAll(":", "_").replaceAll(".", "_");
 
     out_html_file = "CBC_1_" + INTRAFN + ".html";
     script_lev2_fn = "CBC_2_" + INTRAFN + ".jstxt";
@@ -1297,9 +1297,12 @@ function fun_html_file_download() {
     //  function fun_html_file_download()    used in  html
 
     html_fn_download = "CBC_1_" + INTRAFN + ".html";
+	
+	html_fn_download   = correctFileName(  html_fn_download   );    
+	script_fn_download = correctFileName(  script_fn_download );    
 
     // function second_level_html() is in file cbc_1_builder_3_lev2_html_model.jsHTML
-
+	
     var text1 = second_level_html(HTML_TITLE, LS_video_path, video_filename, this_cbc_base, html_fn_download, script_fn_download);
 
     console.log("write_html3()  download " + html_fn_download);
@@ -1623,6 +1626,8 @@ function write_script3(intrafn, TXTorig, TXTtran) {
 
     //var script_sub_fn = "CBC_2_" + intrafn +  ".jstxt"; 
     var script_sub_fn = "CBC_1_" + intrafn + ".jstxt";
+	
+	script_sub_fn = correctFileName( script_sub_fn );    
 
     download(script_sub_fn, dwn_msg + text1);
 
@@ -1811,6 +1816,8 @@ function h1_write_html() {
 
     document.title = save_title;
     var downfilename = out_html_file + ".html";
+	downfilename = correctFileName(  downfilename ); 
+	
     download(downfilename, htmltext);
     return downfilename;
 }
@@ -1986,8 +1993,22 @@ function list_localStorageItems() {
 } // end of list_localStorageItems()
 //-------------------------------------------------
 //list_localStorageItems();
-//---------------------------------------------
 
-// end of part3 (main) 
+//---------------------------------------------
+function correctFileName( str1 ) {
+
+	var toAvoid = "#%&{}\<>*?/$!";  
+		toAvoid += " "; 
+		toAvoid += "\'\"\`"; 
+		toAvoid += ":@+"; 
+		toAvoid += "|="; 
+	var str2 = str1;	
+	
+	for(var g=0; g<toAvoid.length; g++) {
+		str2 = str2.replaceAll( toAvoid.charAt(g),"_"); 
+	}  		
+   return str2; 
+
+} // end of correctFileName() 
 
 //==================================================================
