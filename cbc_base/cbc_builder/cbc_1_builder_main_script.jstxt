@@ -344,6 +344,7 @@ function get_subtitle_strdata(inpsub, origTran) {
     //---
     function close_previous_group() {
         // the previous line should be a number 
+		preline = preline.replace("°","");  // character ° is wrongly inserted by translate.google 
         num = list_ix_end.length - 2;
         if (list_ix_beg[num] >= 0) {
             if (isNaN(preline)) {
