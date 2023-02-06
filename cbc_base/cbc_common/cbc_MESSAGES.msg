@@ -267,7 +267,10 @@ function get_messages() {
 		<Bm801>Click here to download<br>the complete source of this HTML page<br>(if you are not a developer, ignore) </Bm801>									
 		<Bm846>Skip</Bm846>									
 		<Bm891>Subtitles in original language</Bm891>									
-		<Bm892>Translated subtitles</Bm892>									
+		<Bm892>Translated subtitles</Bm892>			
+		<Bm893>The translated line should <br>only serve to get an idea of the meaning.<br>
+			<b>Line-by-line translation is generally unreliable.</b>
+		</Bm893>						
 		<Bma06>Confirm</Bma06>									
 		<Bma10>Press to download</Bma10>									
 		<Bma12>title</Bma12>			
@@ -601,6 +604,9 @@ function get_messages() {
 		<Bm846>Salta</Bm846>		
 		<Bm891>Sottotitoli in lingua originale</Bm891>
 		<Bm892>Sottotitoli tradotti</Bm892>
+		<Bm893>La riga tradotta dovrebbe servire <br>solo per avere un'idea del significato.<br>
+			<b>La traduzione riga per riga è generalmente inaffidabile.</b>
+		</Bm893>
 		<Bma06>Conferma</Bma06>
 		<Bma10>Premi per scaricare</Bma10>
 		<Bma12>titolo</Bma12>
