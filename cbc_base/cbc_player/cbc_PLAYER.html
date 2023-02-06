@@ -102,7 +102,15 @@
 			background-color:grey;
 			*/
 		}
-		 
+		.hideMsg {
+		  display: none; 
+		}
+		.uVideoTranDiv:hover + .hideMsg {
+		  display: block;
+		  background-color:white; 
+		  color: red;
+		}
+
       </style>
    </head>
    <body id="id_body" style="width: 100%; background-color: rgb(243, 200, 157); color: rgb(0, 0, 0);">
@@ -195,12 +203,7 @@
 											<a id="id_href_parole" style="color:blue; text-decoration: none;" 
 													target="_blank"  onclick="fun_pauseVid()">
 												<span class="msg" id="m300" style="min-width:100%;">Words</span><br>
-												<!--
-												<span class="msg" id="m301" 
-														style="min-width:100%;font-size:0.5em; line-height:1.1;">
-														in reverse<br>order of use
-												</span>
-												-->
+												
 											</a>  
 										</button>                           							
 									</td>
@@ -600,16 +603,27 @@
                               <button class="button" style="font-size:1em; width:8em;" onclick="onclick_skipThisPiece()">
                               <span class="msg" id="m846">Skip</span></button>                                         
                            </div>
-                           <div id="id_underVideoTran" style="display:flex; width:100%;">
+					
+                           <div id="id_underVideoTran" class="uVideoTranDiv"  style="display:flex; width:100%;">
                               <div style="padding-right:1em;">
                                  <button class="buttonTD2" id="idbT_xx" style="min-width:3em;width:3em;padding-right: 0.5em;text-align:center;" onclick="onclick_22OneClipRow_showHide_sub(this, document.getElementById('id_subTranText2'))">
                                  <span style="display:none;font-size:2em;height:1.4em; "><span style="position:relative;">&nbsp;<span style="position:absolute; top:0.1em;right:-0.2em;font-weight:bold;">T</span></span></span>
                                  <span style="display:block;font-size:2em;height:1.4em;"><span style="position:relative;">&nbsp;?<span style="position:absolute;top:-0.0em;left:-0.2em;font-weight:bold;width:1em;">t</span></span></span>							
                                  </button>
-                              </div>
-                              <div id="id_subTranText2" class="trad_txt" style="display: block; text-align: left; background-color: lightgrey; min-width: 95%; visibility: hidden;"></div>
-                           </div>
+                              </div>		
+
+                              <div id="id_subTranText2" class="trad_txt" 
+									style="display: block; text-align: left; background-color: lightgrey; min-width: 95%; visibility: hidden;">
+							  </div>
+                           </div>		  
+						   <div id="m893" class="hideMsg">
+								The translated line should only serve to get an idea of the meaning.<br>
+								<b>Line-by-line translation is generally unreliable.</b>
+						   </div>
+						   
                         </div>
+						
+						
                         <div style="width:100%;">
                            <div style="display:flex; width:100%;">
                               <div style="padding-right:1em;vertical-align:top;  min-width:5%;">	
