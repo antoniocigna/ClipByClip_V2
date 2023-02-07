@@ -1783,13 +1783,12 @@ function build_fake_sub_entries( f_line ) {
 
 //-------------------------------------------
 function get_lines_from_file_sub() {
-	
+	 
 	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX get_lines_from_file_sub() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n");  
 
     inp_text_orig = document.getElementById("id_txta_orig_sub").innerHTML;
     inp_text_tran = document.getElementById("id_txta_tran_sub").innerHTML;
-
-		
+    
 	inp_text_orig = inp_text_orig.replaceAll('"', '"').replaceAll("'", "'").replaceAll("\n", " "); // from level1 
     inp_text_tran = inp_text_tran.replaceAll('"', '"').replaceAll("'", "'").replaceAll("\n", " "); // from level1 
 	
@@ -1806,11 +1805,13 @@ function get_lines_from_file_sub() {
 		if (len1 == 8) { if (inp_text_orig == "<br><br>") { inp_text_orig=""; len1=0; } }
         if (inp_text_orig.substring(len1 - 4) == "<br>") { len1 = len1 - 4; }
         inp_row_orig = inp_text_orig.substring(0, len1).split("<br>");
+		add_999entry(inp_row_orig); 
     }
     if (len2 > 0) {
 		if (len2 == 8) { if (inp_text_tran == "<br><br>") { inp_text_tran=""; len2=0; } }
         if (inp_text_tran.substring(len2 - 4) == "<br>") { len2 = len2 - 4;  }
         inp_row_tran = inp_text_tran.substring(0, len2).split("<br>");
+		add_999entry(inp_row_tran); 
     }
 	
 	
@@ -1840,7 +1841,20 @@ function get_lines_from_file_sub() {
 function fun_text_norm( str1 ) {
 	return str1.trim().replaceAll(" <br>","<br>").replaceAll("<br> ","<br>"); 
 } 
-
+//---------------------------
+function add_999entry( list1 ) {
+	var row="";
+	var i=0;
+	for (i = list1.length-1;  i>( list1.length-10); i--) {				
+		row = list1[i].trim();
+		if (row == "") { continue; }
+		break; 
+	}
+	var rowcol = (row + "::::").split("::");
+    var to1 = parseFloat(rowcol[1] );
+	var end999 = rowcol[1] + "::" + "9999.99" + "...";   
+	list1.push( end999 ); 
+}
 
 //-------------------------------------------
 
