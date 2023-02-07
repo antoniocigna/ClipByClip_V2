@@ -611,20 +611,23 @@ function get_tran_subtitle_text() {
         break;
     }
 
-    let pre_from, pre_to1;
+    let pre_from, pre_to1, rowtext;
     from1 = 0;
     to1 = -1;
     //-------------------------
     for (i = 0; i <= lastix; i++) {
-        row = inp_row_tran[i].trim();
-        if (row == "") {
+        row = inp_row_tran[i].trim();		
+		if (row == "") {
             continue;
         }
-
         pre_from = from1;
         pre_to1 = to1;
-
-        rowcol = (row + "::::").split("::");
+        rowcol = (row + "::::").split("::");		
+		rowtext = fun_text_norm( rowcol[2] );		
+		if ( (rowtext == "") || (rowtext == "<br>") || (rowtext == "_.") ) {
+			console.log("\t skipped \t" + rowtext);
+            continue;
+        }
         from1 = parseFloat(rowcol[0]);
 
         if (from1 < pre_from) {
@@ -647,7 +650,7 @@ function get_tran_subtitle_text() {
         line_list_t_to1.push(to1);
         line_list_t_maxto1.push(max_to1);
 
-        line_list_tran_text.push(fun_text_norm(rowcol[2]));
+        line_list_tran_text.push(rowtext);
     }
 
 } // end of get_tran_subtitle_text() 
@@ -657,10 +660,7 @@ function get_tran_subtitle_text() {
 function fun_text_norm(str1) {
     return str1.trim().replaceAll(" <br>", "<br>").replaceAll("<br> ", "<br>");
 }
-
-//---------------------------------------------
-
-//-------------------------------------------
+//-----------------------------------------
 
 function get_orig_subtitle_text() {
 
@@ -691,6 +691,7 @@ function get_orig_subtitle_text() {
     let ixmax = 0;
     let tran_len = line_list_t_from1.length;
     //-------------------------
+	
     let pre_from = 0;
     let pre_to1 = 0;
 
@@ -708,20 +709,26 @@ function get_orig_subtitle_text() {
     to1 = -1;
     let x1 = 0;
     let x2 = 0;
-
+	//-----------
+	
     number_of_subtitle_endsentence = 0;
     number_of_subtitle_time_overlap = 0;
-
+	let rowtext;
     for (i = 0; i <= lastix; i++) {
         row = inp_row_orig[i].trim();
+		//console.log("i="+i + " => " + row);
         if (row == "") {
             continue;
         }
-
         pre_from = from1;
         pre_to1 = to1;
-
-        rowcol = (row + "::::").split("::");
+        rowcol = (row + "::::").split("::");		
+		rowtext = rowcol[2].trim();		
+		if ( (rowtext == "") || (rowtext == "<br>") || (rowtext == "_.") ) {
+			console.log("\t skipped \t" + rowtext);
+            continue;
+        }
+		
         from1 = parseFloat(rowcol[0]);
 
         if (from1 < pre_from) {
@@ -730,7 +737,6 @@ function get_orig_subtitle_text() {
         }
 
         if (from1 == pre_to1) { // to avoid that in the same moment there be 2 subtitles lines actives when actualy one is the following of the other  (upd 2022_03_16)
-
             from1 += 0.0004;
         }
         to1 = parseFloat(rowcol[1]);
@@ -750,7 +756,6 @@ function get_orig_subtitle_text() {
         line_list_o_to1.push(to1);
         line_list_o_maxto1.push(max_to1);
 
-        let rowtext = rowcol[2].trim();
         let lastchar = rowtext.substring(rowtext.length - 1);
         if ((".?!").indexOf(lastchar) >= 0) {
             number_of_subtitle_endsentence++;
@@ -761,8 +766,6 @@ function get_orig_subtitle_text() {
 
 
         x1 = ixmin;
-
-        //console.log("\nxxxxxxxx indice=" +(line_list_o_from1.length-1) ); 
 
         for (x1 = x1; x1 <= tran_len; x1++) {
             if (from1 >= line_list_t_from1[x1]) {
@@ -783,7 +786,7 @@ function get_orig_subtitle_text() {
         line_list_o_tran_ixmax.push(ixmax);
         //console.log("orig " + (line_list_o_from1.length-1) + " from=" + from1 + " \tto=" + to1 + " \t" +  rowcol[2] + 
         //			"\n\t  tran min=" + ixmin + " \tmax=" + ixmax  + " \t" + line_list_tran_text[ ixmin ] );  	
-    }
+    } // end of for i  
 
 
 } // end of get_orig_subtitle_text() 
@@ -865,6 +868,7 @@ function fun_build_all_clip() {
     for (let z3 = clipFromRow; z3 <= clipToRow; z3++) {
         
         txt1 = line_list_orig_text[z3];
+		if ((z3 < 4) && (txt1=="")) continue; 
 
         if (txt1.indexOf(sayNODIALOG) >= 0) {
             // ignore this line if it's a no_dialog and there is some other subtitle  

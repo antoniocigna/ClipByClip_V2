@@ -51,7 +51,7 @@ console.log("LOADED file SCRIPT " + currScript.substring( 1+Math.max(bar1,bar2) 
 
 
 //------------------------------------------
-var swdebug=false; 
+var swdebug = false; 
 
 const NO_VIDEO_AUDIO_FILE = "noVIDEO_noAUDIO".toLowerCase(); 
 var sw_is_no_videoaudio = false;
@@ -73,6 +73,7 @@ let breakwords_symb      = "/|/" ;
 let Clip_startTime = 0;
 let Clip_stopTime  = 0; 
 let clipFromRow    = 0;
+let clipFromRow_min = 0;
 let clipToRow      = 0;
 let clip_play_time_interrupt = 0;	
 
@@ -2471,7 +2472,7 @@ let clip_legend = `<hr>
 //	document.getElementById("id_symb_meaning").innerHTML = clip_legend;			
 //
 //--------------------------------------------
-			
+		
 	let string_tr_fant = `
 		<tr id="idtr_§1§_m2"  style="display:none;background-color:white;height:1.5em;" > 
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
@@ -2504,7 +2505,7 @@ let clip_legend = `<hr>
 		`; // 		
 		
 		//-------------------------
-		
+
 	let string_tr_allclip = ` 
 		<tr id="idtr_§1§" style="background-color: lightgrey;width:100%;"> 	
 			<td class="arrow12"><button class="buttonFromToIx" id="b1_§1§" onclick="onclick_arrowFromIx(this, §1§)">
@@ -2628,32 +2629,36 @@ function fun_build_all_clip() {
 	//document.getElementById("id_div_showclip").style.backgroundColor = "lightgrey";	
 	console.log("1vid=" + vid); 
 	//console.log("12vid.duration=" + vid.duration + "<=="); 
-	
-		clipFromRow = 0 ;
-		clipToRow   = line_list_orig_text.length-1;
-		sw_CLIP_play   = true; 
-		Clip_startTime = 0;
-		
-		if (sw_is_no_videoaudio == false) {
-			Clip_stopTime  = vid.duration;
-		}
-	
-	
-	//clipSub_showTxt = '<table  style="width:100%;"> \n' ; 
-	//clipSub_showTxt = '<table> \n' ; 
-	//--------------------------
-	begix = clipFromRow; 
-	endix = clipToRow;
-	
-	
-	
 
+	clipFromRow = 0 ;
+	clipToRow   = line_list_orig_text.length-1;
+	sw_CLIP_play   = true; 
+	Clip_startTime = 0;
 	
-	//num_word_id = 0; // defined in file 'cbc_3_player_3_b_01_break_words_precision.jstxt' 
+	if (sw_is_no_videoaudio == false) {
+		Clip_stopTime  = vid.duration;
+	}
+	 
+	//--------------------------	
+	var z3Beg = 0;  
+	for(let z3 = clipFromRow; z3 <= clipToRow; z3++) {			
+			txt1 = line_list_orig_text[z3].trim();
+			if (txt1 == "") { continue; }
+			if (txt1 == "_.") { continue; }
+			z3Beg=z3; 
+			break;
+	}	
+	if (z3Beg > clipFromRow) { 
+		clipFromRow = z3Beg; 
+		clipFromRow_min = clipFromRow; 
+	}	
+	console.log("clipFromRow=" +  clipFromRow + "  clipToRow=" +clipToRow);
+
+ 	begix = clipFromRow; 
+	endix = clipToRow;	
 	
-	
-		clipSub_showTxt = "\n"; 
-	for(let z3 = clipFromRow; z3 <= clipToRow; z3++) {
+	clipSub_showTxt = "\n"; 
+	for(let z3 =  clipFromRow; z3 <= clipToRow; z3++) {
 			let txt1_fromtime  = line_list_o_from1[z3];
 			let hhmmssFrom = fun_N_secs_to_hhmmssmmm(  txt1_fromtime ) ; 
 			let txt1_totime  = line_list_o_to1[z3];
@@ -2686,7 +2691,7 @@ function fun_build_all_clip() {
 
 			clipSub_showTxt += rowclip + "\n"  ; 	
 			
-    }
+    } // end of for z3
 
 	//clipSub_showTxt += "</table>\n" ; 
 	
@@ -2721,7 +2726,7 @@ function fun_build_all_clip() {
 	let eleT = document.getElementById("b2_" + clipToRow)   ;	
 
 	
-	onclick_arrowFromIx( eleF, clipFromRow  ) ; 
+	onclick_arrowFromIx( eleF, clipFromRow ,1 ) ; 
 	onclick_arrowToIx(   eleT, clipToRow    ) ; 
 	
 
@@ -2787,7 +2792,7 @@ function former_onclick_ClipSub_All(this1) {
 	//this1.parentElement.style.backgroundColor = "black";	
 	
 	if (sw_all) {
-		clipFromRow = 0 ;
+		clipFromRow = clipFromRow_min;
 		clipToRow   = line_list_orig_text.length-1;
 		sw_CLIP_play   = true; 
 		Clip_startTime = 0;
@@ -2806,13 +2811,11 @@ function former_onclick_ClipSub_All(this1) {
 	
 	//  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  now html elements for clip section are ready xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-	
-	
 	let eleF = document.getElementById("b1_" + clipFromRow) ;
 	let eleT = document.getElementById("b2_" + clipToRow)   ;	
 
 	
-	onclick_arrowFromIx( eleF, clipFromRow ) ; 
+	onclick_arrowFromIx( eleF, clipFromRow, 2) ; 
 	onclick_arrowToIx(   eleT, clipToRow   ) ; 
 	
 
@@ -2878,7 +2881,7 @@ function TOGLIonclick_ClipSub_All(this1) {
 	this1.parentElement.style.backgroundColor = "black";	
 	
 	if (sw_all) {
-		clipFromRow = 0 ;
+		clipFromRow = clipFromRow_min;
 		clipToRow   = line_list_orig_text.length-1;
 		sw_CLIP_play   = true; 
 		Clip_startTime = 0;
@@ -2903,7 +2906,7 @@ function TOGLIonclick_ClipSub_All(this1) {
 	let eleT = document.getElementById("b2_" + clipToRow)   ;	
 
 	
-	onclick_arrowFromIx( eleF, clipFromRow ) ; 
+	onclick_arrowFromIx( eleF, clipFromRow, 3) ; 
 	onclick_arrowToIx(   eleT, clipToRow   ) ; 
 	
 
@@ -3216,7 +3219,7 @@ function onclick_OneClipRow_showHide_sub( this1, sw_allSel, swAllAll) {
 	inBeg      = begix;
 	inEnd      = endix; 
 	if (swAllAll) {
-		inBeg=0;
+		inBeg= clipFromRow_min;
 		inEnd= line_list_o_from1.length-1; 
 	}
 
@@ -3482,7 +3485,7 @@ function fun_clip_or_row_play( this1,begix, endix, swLoop ) {
 	
 	set_PlayIxFromToTime(begix, endix, swLoop);
 	
-	fun_scroll_tr_toTop(this1.parentElement.parentElement); 	
+	fun_scroll_tr_toTop(this1.parentElement.parentElement, false); 	
 	
 	vid.currentTime =  lastPlayRowFromTime; 
 	
@@ -3516,24 +3519,28 @@ function fun_invisible_prev_fromto() {
 //------------------------------------------
 
 function fun_copy_openClose_to_tr_m1(z3) {
-
+	
 	var i_eleSubO = document.getElementById("idb_"  + z3);        // from button id="idb_§1§"    onclick_show_row()
 	var i_eleSubT = document.getElementById("idbT_" + z3);        // from button id="idbT_§1§"   onclick_show_row() 
 	var o_eleSubO = document.getElementById("idb_"  + z3 + "_m"); // to   button id="idb_§1§_m"  onclick_OneClipRow_showHide_sub()
 	var o_eleSubT = document.getElementById("idbT_" + z3 + "_m"); // to   button id="idbT_§1§_m" onclick_OneClipRow_showHide_tran()		
-	
-	o_eleSubO.children[0].style.display = i_eleSubO.children[0].style.display ;    // ${openbook_symb}
-	o_eleSubO.children[1].style.display = i_eleSubO.children[1].style.display ;    // ${closedbook_symb}
-	o_eleSubT.children[0].style.display = i_eleSubT.children[0].style.display ;    // ${show_translation_symb}
-	o_eleSubT.children[1].style.display = i_eleSubT.children[1].style.display ;    // ${hide_translation_symb}
-
+	try{	
+		o_eleSubO.children[0].style.display = i_eleSubO.children[0].style.display ;    // ${openbook_symb}
+		o_eleSubO.children[1].style.display = i_eleSubO.children[1].style.display ;    // ${closedbook_symb}
+		o_eleSubT.children[0].style.display = i_eleSubT.children[0].style.display ;    // ${show_translation_symb}
+		o_eleSubT.children[1].style.display = i_eleSubT.children[1].style.display ;    // ${hide_translation_symb}
+    } catch(e1) {
+		console.log("error in 'fun_copy_openClose_to_tr_m1(z3=" + z3 +")'" ); 
+		console.log(e1);
+	}
 } // end of fun_copy_openClose_to_tr_m1() 
 //---------------------------------------
 
-function onclick_arrowFromIx( this1, z3) {
+function onclick_arrowFromIx( this1, z3, wh) {
 	//------------------------------------------
 	// button from ( --> ) has been clicked 
 	//------------------------------------------
+	if (z3==0) { console.log(" onclick_arrowFromIx( this1, z3=" +z3 + ", wh=" + wh); } 
 	
 	fun_invisible_prev_fromto();
 	
@@ -6251,7 +6258,7 @@ function subtitle_row_length() {
 	fun_set_localStorage_item_from_vars(); 
 	
 	
-	var ele1 = document.getElementById("idb_0_m"); 
+	var ele1 = document.getElementById("idb_" + clipFromRow_min + "_m"); 
 	if (openBookChecked) {
 		console.log("force all subtitles visible"); 
 		ele1.children[0].style.display="block";        
