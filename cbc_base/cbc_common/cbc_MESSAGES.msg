@@ -268,9 +268,14 @@ function get_messages() {
 		<Bm846>Skip</Bm846>									
 		<Bm891>Subtitles in original language</Bm891>									
 		<Bm892>Translated subtitles</Bm892>			
-		<Bm893>The translated line should <br>only serve to get an idea of the meaning.<br>
+		<Bm893>The translated line should only serve to get an idea of the meaning.<br>
 			<b>Line-by-line translation is generally unreliable.</b>
-		</Bm893>						
+		</Bm893>
+		<Bm894>Click on <b>t?</b> button to read the subtitles	</Bm894>	
+		<Bm895>Practice<br>by listening and reading<br>a subtitle line at time or a group of them</Bm895>
+		<Bm896>Practice<br>by listening<br>one second or a group of seconds at a time</Bm896>
+		<Bm897>Practice<br>by reading <br>a subtitle line at time or a group of them</Bm897>
+		<Bm900>Wait a moment, please<br></Bm900> 
 		<Bma06>Confirm</Bma06>									
 		<Bma10>Press to download</Bma10>									
 		<Bma12>title</Bma12>			
@@ -357,7 +362,7 @@ function get_messages() {
 		<Cm611>Show<br>line</Cm611>
 		<Cm612>Show Original Text Line</Cm612>
 		<Cm613>Show Translated Text Line</Cm613>		
-			
+		<Dm100> </Dm100>	
 		<Hfile>doc/helpxx.html</Hfile>
 		<Hm800><b>ClipByClip</b> is a tool to practice the comprehension of a language.</Hm800>
 		<Hm820>It can be used in active mode by listening, reading and repeating 
@@ -607,6 +612,11 @@ function get_messages() {
 		<Bm893>La riga tradotta dovrebbe servire <br>solo per avere un'idea del significato.<br>
 			<b>La traduzione riga per riga è generalmente inaffidabile.</b>
 		</Bm893>
+		<Bm894>Clic sul pulsante <b>t?</b> per leggere i sottotitoli</Bm894>	
+		<Bm895>Esercitati<br>ascoltando e leggendo<br>una riga o un gruppo di sottotitoli alla volta</Bm895>
+		<Bm896>Esercitati<br>ascoltando<br>un secondo o un gruppo di secondi alla volta</Bm896>
+		<Bm897>Esercitati<br>leggendo <br>una riga o un gruppo di sottotitoli alla volta</Bm897>
+		<Bm900>Aspetta un momento, per piacere <br></Bm900> 
 		<Bma06>Conferma</Bma06>
 		<Bma10>Premi per scaricare</Bma10>
 		<Bma12>titolo</Bma12>
@@ -692,6 +702,7 @@ function get_messages() {
 		<Cm611>Mostra<br>linea</Cm611>
 		<Cm612>Mostra riga di testo originale</Cm612>
 		<Cm613>Mostra riga di testo tradotta</Cm613>	
+		<Dm100>Testo Bilingue ottenuto dai sottotitoli</Dm100>
 		
 		<Hfile>doc/helpxx.html</Hfile>
 		<Hm800><b>ClipByClip</b> è uno strumento per esercitarsi nella comprensione di una lingua.</Hm800>

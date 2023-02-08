@@ -534,6 +534,7 @@ div.fixed_bottom {
 .top {
     vertical-align: top
 }
+/***
 .nw-resize {cursor: nw-resize;}
 .resize {
     background-color: rgb(0 142 255/52%);
@@ -548,11 +549,9 @@ div.fixed_bottom {
     border: 2px solid red;
     background: blue; 
     display: block;
-	/**
-    width: 150px!important;
-    height: 150px!important
-	*/
+	
 }
+***/
 
 .tooltip {
   position: relative;

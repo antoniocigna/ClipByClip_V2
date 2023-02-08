@@ -276,6 +276,8 @@ let	ele_showTranText2_open;
 let	ele_showTranText2_close; 
 let ele_subOrigSilent;
 let ele_subOrigSilentH;
+let ele_main_subt = document.getElementById("id_main_subt");  
+
 let list_elemSub =["",""];
 let list_elemSub_display = [false,false];
 
@@ -357,6 +359,9 @@ let t_swMove = true;
 getUrlData2(); 	
 
 window.dispatchEvent(new Event('resize'));
+document.getElementById('id_practice').style.visibility = "hidden";
+
+//assign_practice_msg();
 
 //-----------------------------------------------------------------------  
 if (sw_sub_onfile == false) {
@@ -539,8 +544,8 @@ function getUrlData2() {
 					lastBG_rgb_color = 	fun_hexToRgb( hex_defaultColorBG ) ; 
 					if (sw_is_no_videoaudio) {
 						FAKE_onloaded_fun(); 
-					}
-					
+						ready_to_Begin();
+					}					
 				}
 	);
 	//--------------------------------
@@ -909,8 +914,6 @@ function fun_player_beginning() {
         }       
     
 	
-	//fun_build_all_clip() ; 
-	// document.getElementById("id_inpshowclipA").checked = true;
 	 
 	former_onclick_ClipSub_All();                    //  ...ClipSub_All(document.getElementById("id_inpshowclipA") ); 
 	
@@ -1745,6 +1748,9 @@ function build_fake_sub_entries( f_line ) {
 	
 	var col1 = f_line.split("::"); 
 	sw_the_are_no_subtitles = true; 
+	
+	//assign_practice_msg();
+	
 	document.getElementById("id_spee").style.left="85%"; 
 
 	var list1_collapse_ele = [
@@ -2559,9 +2565,10 @@ let clip_legend = `<hr>
 			<td class="timerow2">§2from§</td>
 			<td class="timerow2">§3to§</td>
 			
-			<td style="padding:0 2px;text-align:right; color:black; font-size:0.5em;vertical-align:middle;">
+			<td style="padding:0 2px;text-align:right; color:black; font-size:0.5em;vertical-align:middle;min-width:5em;">
 				<span class="big">±</span> 
-				<input type="number" value="1.0" step="0.1" onchange="onchangeMaxMinDelta(this)" style="width:4em;display:inline;text-align:right;" id="id_max_delta_§1§">
+				<input type="number" value="1.0" step="0.1" onchange="onchangeMaxMinDelta(this)" 
+				style="width:4em;display:block-inline;text-align:right;" id="id_max_delta_§1§">
 			</td>  	
 			<td style="width:4em; text-align:center;"> 
 				<input type="range" min="-4" max="4" value="0.0" step="0.01" 
@@ -2769,7 +2776,6 @@ function fun_build_all_clip() {
 	clip_reset_BG_color = get_backgroundColor(elediv20);
 	eleTabSub.style.backgroundColor =  clip_reset_BG_color;     
 	ele_clip_subtext.style.backgroundColor =  clip_reset_BG_color;     
-	
 
 } // end of fun_build_all_clip();  
 
@@ -2801,7 +2807,7 @@ function former_onclick_ClipSub_All(this1) {
 	console.log("\tonclick_ClipSub_All() call fun_build_all_clip() " ) ;
 	
 	
-	fun_build_all_clip(); 
+	fun_build_all_clip();
 	
 	//this1.parentElement.style.backgroundColor = "black";	
 	
@@ -2865,100 +2871,6 @@ function former_onclick_ClipSub_All(this1) {
 	ele_clip_subtext.style.backgroundColor =  clip_reset_BG_color;     
 	
 }  // end of former_onclick_ClipSub_All()
-//-------------------------------------
-
-function TOGLIonclick_ClipSub_All(this1) {	
-	console.log("\nXXXXXXXXXXXXXXXXXXXXXXXXXX\nX onclick_ClipSub_All() \nXXXXXXXXXXXXXXXXXXXXXXXXXX\n"); 
-	console.log("\tonclick_ClipSub_All() this1.id=" + this1.id + " checked=" + this1.checked ) 
-	
-	var sw_all = true; 
-	ele_sub_filler.innerHTML = "";
-	if (sw_sub_onfile== false) { return;  }
-	if (sw_sub_orig  == false) { return;  }
-	
-	save_last_oneOnlyRow = ""; 
-	save_last_oneOnly_idtr = ""; 
-	
-	ele_last_tran_line = null; 
-	
-	if (this1.checked == false) { 		
-		fun_checked_false_goBack(this1) ;	
-		console.log("\tonclick_ClipSub_All() return " ) 
-		return; 
-	}
-	
-	console.log("\tonclick_ClipSub_All() call fun_build_all_clip() " ) ;
-	
-	
-	fun_build_all_clip(); 
-	
-	this1.parentElement.style.backgroundColor = "black";	
-	
-	if (sw_all) {
-		clipFromRow = clipFromRow_min;
-		clipToRow   = line_list_orig_text.length-1;
-		sw_CLIP_play   = true; 
-		Clip_startTime = 0;
-		if (sw_is_no_videoaudio == false) {
-			Clip_stopTime  = vid.duration;
-		}
-	} else {
-		clipFromRow = parseInt( ele_replayVa_from_row_value );
-		clipToRow   = parseInt( ele_replayVa_to_row_value   );
-		sw_CLIP_play   = true; 
-		Clip_startTime = parseFloat(ele_replay_from_secs_innerHTML  );
-		Clip_stopTime  = parseFloat(ele_replay_to_secs_innerHTML    ) ;
-	}
-	
-	
-	
-	//  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  now html elements for clip section are ready xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-	
-	
-	let eleF = document.getElementById("b1_" + clipFromRow) ;
-	let eleT = document.getElementById("b2_" + clipToRow)   ;	
-
-	
-	onclick_arrowFromIx( eleF, clipFromRow, 3) ; 
-	onclick_arrowToIx(   eleT, clipToRow   ) ; 
-	
-
-	
-    ele_clip_subtext.style.display = "block";    
-	
-        
-    //document.getElementById("id_central"     ).style.display = "none"; 
-    document.getElementById("id_td_suborig2" ).style.display = "none"; 
-	document.getElementById("id_td_subtra2"  ).style.display = "none"; 
-	/**
-	let ele1 = document.getElementById("rad_csubAll");
-	ele1.checked = true;
-	//onclick_ClipSub_HideShow(ele1,'rad_csubClick');  
-	**/
-	
-	//-------------------
-	//set new dimension to be the almost the body dimension 
-	
-		//let new_eleTabSub_clientWidth = parseInt(elebody.clientWidth  * 0.95);		
-		//let new_eleTabSub_clientHeight= parseInt(elebody.clientHeight * 0.80);	
-		let new_eleTabSub_clientWidth   = eleTabSub.clientWidth; 
-		let new_eleTabSub_clientHeight  = eleTabSub.clientHeight; 
-		//--- translate to style width/height
-		eleTabSub.style.width = (new_eleTabSub_clientWidth - eleTabSub_diff_clientW) + "px";   // set  new dimension			
-		eleTabSub.style.height= (new_eleTabSub_clientHeight- eleTabSub_diff_clientH) + "px";   // set  new dimension
-	//----------------
-	
-	var elediv20 = document.getElementById("id_div20");
-
-	clip_reset_BG_color = get_backgroundColor(elediv20);
-	eleTabSub.style.backgroundColor =  clip_reset_BG_color;     
-	ele_clip_subtext.style.backgroundColor =  clip_reset_BG_color;     
-	
-	
-	
-} // end of TOGLIonclick_ClipSub_All()
-
 
 //---------------------------------------------
 
@@ -3841,7 +3753,7 @@ function onloaded_fun() {
     vid.onpause = function() {
         isPlaying = false;
         runningButton = false;
-        ele_subOrigSilentH.style.display = "none";
+        silentH_none();
     };
 
     //-------------------------------------
@@ -3860,16 +3772,26 @@ function onloaded_fun() {
 	document.getElementById("idbT_xx").children[1].innerHTML = hide_translation_symb;  
 	
 	set_initial_force_sub_visibility() ; 
-
+	
+	ready_to_Begin();
+	
 } // end of onloaded_fun()
 //----------------------
-
+function silentH_none() {
+	ele_subOrigSilentH.style.display = "none";   
+	ele_main_subt.style.display      = "block";  
+}
+function silentH_block() {
+	ele_subOrigSilentH.style.display = "block";   
+	ele_main_subt.style.display      = "none";  
+}
+//--------------------------------
 function set_initial_force_sub_visibility() {
 	var eleOpen  = document.getElementById("id_forceSubOpen");
 	var eleClose = document.getElementById("id_forceSubClose");
 	eleOpen.checked  = LS_sub_force_visible; 
 	eleClose.checked = (LS_sub_force_visible== false);
-	onclick_OneClipRow_showHide_AllSub( eleOpen.checked); 
+	//onclick_OneClipRow_showHide_AllSub( eleOpen.checked); 
 } // end of set_initial_force_sub_visibility()	
 
 //------------------------------------------------------------
@@ -4658,14 +4580,15 @@ function fun_display_subtitles_lineclip_NO_DIALOG(time_secs, origTextX_diag, tra
             ele_subOrigSilent.innerHTML = tranTextX_diag;
         } else {
             ele_subOrigSilent.innerHTML = "";
-            ele_subOrigSilentH.style.display = "none";
+            silentH_none();
         }
     }
     if (document.getElementById(idc11_diag)) {		
 		document.getElementById(idc11_diag).innerHTML = origTextX_diag;
 	}
 
-    ele_subOrigSilentH.style.display = "block";
+    silentH_block(); 
+	
     ele_subOrigText2.style.visibility = "hidden"; 
     ele_subTranText2.style.visibility = "hidden"; 
     ele_sub_filler.style.visibility = "hidden"; 
@@ -4673,7 +4596,7 @@ function fun_display_subtitles_lineclip_NO_DIALOG(time_secs, origTextX_diag, tra
     ele_subTranText2.innerHTML = "";
 
     if (time_secs >= PLAYCLIP_TO_TIME) {
-        ele_subOrigSilentH.style.display = "none";
+        silentH_none();
     }
 
 } // end of fun_display_subtitles_lineclip_NO_DIALOG() 
@@ -4703,7 +4626,7 @@ function fun_display_subtitles_lineclip_o_t(time_secs, fromIxZero_o, toIxZero_o,
 	
     //------------------------------
     if (origTextX_ret.indexOf(sayNODIALOG) < 0) {
-        ele_subOrigSilentH.style.display = "none";		
+        silentH_none();		
         return;
     }	
     //-----------------------------------------------
@@ -5142,10 +5065,7 @@ function onclick_show_syncstaff(this1) {
 	console.log("onclick_show_syncstaff()"); 
 	ele_sub_filler.style.border = null; 
 	ele_sub_filler.innerHTML = "";
-    /***
-	let msg244 = document.getElementById("m244").innerHTML;//To synchronize the subtitles to speech enter the sync value in <b>Diff.Sync</b>field or           
-    let msg245 = document.getElementById("m245").innerHTML; // Press the <b>Play/Stop</b> button and <br>press it as soon as a subtitle has been fully spoken
-    ***/
+   
 	document.getElementById("id_NO_clip00").style.display = "block";  
     let this2 = document.getElementById("id_td_sync1");
 	console.log("this2.id=" + this2.id); 
@@ -5286,7 +5206,7 @@ function fun_show_difference_table(time_secs, ixClip1) {
 
 //--------------------------------------------
 function fun_setOrigText(txt1) {
-	ele_subOrigText2.innerHTML = txt1;
+	ele_subOrigText2.innerHTML = txt1.trim();
 	if (ele_showOrigText2_open.style.display == "block") {
 		ele_subOrigText2.style.visibility = "visible";
 	} else {
@@ -5383,11 +5303,11 @@ function fun_setting_subtitles_of_group4_o_t(time_secs, fromIxZero_o, toIxZero_o
                 ele_subOrigSilent.innerHTML = tranTextX;
             } else {
                 ele_subOrigSilent.innerHTML = "";
-				ele_subOrigSilentH.style.display = "none";
-            }
+				silentH_none();            }
         }
 
-        ele_subOrigSilentH.style.display = "block";
+        silentH_block();
+		
 		ele_subOrigText2.style.visibility = "hidden"; 	 
 		ele_subTranText2.style.visibility = "hidden"; 
         ele_sub_filler.style.display = "none";
@@ -5396,11 +5316,11 @@ function fun_setting_subtitles_of_group4_o_t(time_secs, fromIxZero_o, toIxZero_o
 
     
         if (time_secs >= (endTime - 1)) {
-            ele_subOrigSilentH.style.display = "none";
+			silentH_none();
         }
         return;
     } else {
-        ele_subOrigSilentH.style.display = "none";
+        silentH_none();
     }
 
 } // end of fun_setting_subtitles_of_group4_o_t(
@@ -6285,4 +6205,41 @@ function subtitle_row_length() {
 	onclick_OneClipRow_showHide_sub( ele1, true, true ); 
 	
  } // end of onclick_OneClipRow_showHide_AllSub()
- //----------------------------------------
+//----------------------------------------
+function show_practice(this1) {
+	console.log("show_practice()");
+	var ele_practice = document.getElementById('id_practice');
+	ele_practice.style.visibility = "visible";
+	this1.style.marginBottom = "1em";
+	this1.scrollIntoView();
+}
+//-------------------------------------------	
+function assign_practice_msg() {
+	console.log("assign_practice_msg() sw_the_are_no_subtitles=" + sw_the_are_no_subtitles + "  sw_is_no_videoaudios=" + sw_is_no_videoaudio); 
+	document.getElementById('m895_897').innerHTML = document.getElementById('m895').innerHTML ;	
+	
+	document.getElementById("id_time_video").style.display = "block";
+	document.getElementById("id_toric"     ).style.display = "flex";
+	
+	if (sw_the_are_no_subtitles) {	
+		console.log("sw_the_are_no_subtitles=" + sw_the_are_no_subtitles); 
+		document.getElementById('m895_897').innerHTML = document.getElementById('m896').innerHTML ;	
+		document.getElementById("id_main_subt").style.display = "none";		
+	}	
+	if (sw_is_no_videoaudio) {
+		console.log("sw_is_no_videoaudios=" + sw_is_no_videoaudio); 
+		document.getElementById('m895_897').innerHTML = document.getElementById('m897').innerHTML ;	
+		document.getElementById("id_main_subt" ).style.display = "none";
+		document.getElementById("id_toric"     ).style.display = "none";
+		document.getElementById("id_time_video").style.display = "none";
+	}	
+}
+//--------------------------
+function ready_to_Begin() {
+
+	document.getElementById("id_ready"     ).style.display = "none";
+	document.getElementById("id_butt_pract").style.display = "block";
+	document.getElementById("id_main_subt" ).style.display = "block";
+	assign_practice_msg();
+} // end of ready_to_Begin()
+//--------------------		
