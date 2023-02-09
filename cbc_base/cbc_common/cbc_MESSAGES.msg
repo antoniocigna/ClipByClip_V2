@@ -272,9 +272,9 @@ function get_messages() {
 			<b>Line-by-line translation is generally unreliable.</b>
 		</Bm893>
 		<Bm894>Click on <b>t?</b> button to read the subtitles	</Bm894>	
-		<Bm895>Practice<br>by listening and reading<br>a subtitle line at time or a group of them</Bm895>
-		<Bm896>Practice<br>by listening<br>one second or a group of seconds at a time</Bm896>
-		<Bm897>Practice<br>by reading <br>a subtitle line at time or a group of them</Bm897>
+		<Bm895>Practice<br>by listening and reading<br>only a few subtitle lines at time</Bm895>
+		<Bm896>Practice<br>by listening<br>only a few seconds at a time</Bm896>
+		<Bm897>Practice<br>by reading <br>only a few text lines at time</Bm897>
 		<Bm900>Wait a moment, please<br></Bm900> 
 		<Bma06>Confirm</Bma06>									
 		<Bma10>Press to download</Bma10>									
@@ -612,10 +612,10 @@ function get_messages() {
 		<Bm893>La riga tradotta dovrebbe servire <br>solo per avere un'idea del significato.<br>
 			<b>La traduzione riga per riga è generalmente inaffidabile.</b>
 		</Bm893>
-		<Bm894>Clic sul pulsante <b>t?</b> per leggere i sottotitoli</Bm894>	
-		<Bm895>Esercitati<br>ascoltando e leggendo<br>una riga o un gruppo di sottotitoli alla volta</Bm895>
-		<Bm896>Esercitati<br>ascoltando<br>un secondo o un gruppo di secondi alla volta</Bm896>
-		<Bm897>Esercitati<br>leggendo <br>una riga o un gruppo di sottotitoli alla volta</Bm897>
+		<Bm894>Clic sul pulsante <b>t?</b> per leggere i sottotitoli</Bm894>			
+		<Bm895>Esercitati<br>ascoltando e leggendo<br>solo poche righe di sottotitoli alla volta</Bm895>
+		<Bm896>Esercitati<br>ascoltando<br>solo pochi secondi alla volta</Bm896>
+		<Bm897>Esercitati<br>leggendo <br>solo poche righe di testo alla volta</Bm897>	
 		<Bm900>Aspetta un momento, per piacere <br></Bm900> 
 		<Bma06>Conferma</Bma06>
 		<Bma10>Premi per scaricare</Bma10>
