@@ -99,7 +99,8 @@ let last_ixClip=-1;
 
 let ele_last_tran_line; 
 
-
+let ele_tts = document.getElementById("id_tts"); // synthetic voce  <div >...</div>
+let sw_tts = false; 
 
 
 //
@@ -152,6 +153,7 @@ let radio_type4_LINES           = "d";
 
 let CLIP_dur_line_TYPES =  radio_type4_LINES; 
 
+let LS_voice_index = -1;
 
 
 
@@ -179,6 +181,8 @@ let LS_colorTx       = "black";
 let LS_sub_beg_delta  = 0; 
 let LS_sub_end_delta  = 0;
 let LS_sub_force_visible = true;
+
+
 let sw_end_dialog_sentence = true;  
 let sw_end_dialog_overlap  = true;
 
@@ -382,10 +386,11 @@ if (document.getElementById("id_playNext2_line_row") ) {
 
 //================================================
 function assign_params_for_word_html_file(wh) {
-	console.log("assign_params_for_word_html_file(wh=" + wh+")" )
-
+	//console.log("assign_params_for_word_html_file(wh=" + wh+")" )
+	
 	var params = html_parms_queryString; 	
 	params += "&p_subDeltaTime="  +  LS_subDeltaTime; 	// add parameter to html_parms_queryString (the input parameter) 
+	params += "&p_voice_index="   +  LS_voice_index; 
 	//--------------------------
 	
 	let html2call  = "cbc_PLAYER_WORDS.html";  
@@ -404,23 +409,7 @@ function assign_params_for_word_html_file(wh) {
 }
 
 //================================================
-function XXassign_params_for_word_html_file() {
-	var params = html_parms_queryString; 	
-	params += "&p_subDeltaTime="  +  LS_subDeltaTime; 	// add parameter to html_parms_queryString (the input parameter) 
-	
-	let html2call  = "cbc_PLAYER_WORDS.html";  
-	var assign_parms =  html2call + params.replace("p_title=","p_title=words_"); 
-	document.getElementById("id_href_parole").href =  assign_parms; 
-	console.log("\nassign_params_for_word_html_file() " + ' "id_href_parole").href =  ' + assign_parms + "\n");
-	
-	//--------------------------
-	
-	let html2call2  = "cbc_PLAYER_BILINGUAL.html";  
-	var assign_parms2 =  html2call2 + params.replace("p_title=","p_title=bilingual_"); 
-	document.getElementById("id_href_biling").href =  assign_parms2; 
-	console.log("\nassign_params_for_bilingual_html_file() " + ' "id_href_biling").href =  ' + assign_parms2 +"\n");	
-}
-//-------------------------------
+
 
 function getUrlData2() {
 	
@@ -466,6 +455,7 @@ function getUrlData2() {
 
 	
 	let script_sub_path = decodeURI( urlParams.get("p_scr_sub1") );  
+	console.log("script_sub_path=" + script_sub_path); 
 
 	document.getElementById("id_hardsub"     ).innerHTML = decodeURI( urlParams.get("p_hardsub"     ) );   
 	document.getElementById("id_file_suborig").innerHTML = decodeURI( urlParams.get("p_file_suborig") );   
@@ -630,16 +620,15 @@ function fun_start_logon_ctr() {
 } // end of fun_start_logon_ctr()
 //=========================================================================
 
-function fun_initial_from_localStorage_values() {
-
+function fun_initial_from_localStorage_values(wh) {
+	
 	//----------------------
 	// the LS_ ... default values are replaced by the those of the previous session ( if they exist)
 
 
 	
 	let stored_cbc_localStor = JSON.parse(localStorage.getItem( cbc_LOCALSTOR_key )); //get them back
-	if (stored_cbc_localStor) {
-		
+	if (stored_cbc_localStor) {		
 		
 		if (sw_reset_storage) {
 			fun_set_localStorage_item_from_vars(); 
@@ -658,9 +647,11 @@ function fun_initial_from_localStorage_values() {
 			LS_colorTx                  ,          
 			LS_sub_beg_delta            ,  
 			LS_sub_end_delta            ,
-			LS_sub_force_visible
+			LS_sub_force_visible        ,
+			LS_voice_index              	
 			]  =  stored_cbc_localStor; 
-		}
+			if (LS_voice_index== undefined) {  LS_voice_index=-1;}			
+		}	
 	} else { 
 		fun_set_localStorage_item_from_vars(); 
 	}
@@ -942,9 +933,14 @@ function fun_set_localStorage_item_from_vars() {
 		LS_colorTx                  , 	
 		LS_sub_beg_delta            ,  
 		LS_sub_end_delta            ,
-		LS_sub_force_visible
+		LS_sub_force_visible        ,
+		LS_voice_index
 	]; 
 	localStorage.setItem( cbc_LOCALSTOR_key, JSON.stringify( cbc_LOCALSTOR_val_list )); 	
+	
+	
+	assign_params_for_word_html_file(3);
+	
 }
 //-----------------------------------------------
 function fun_timeStr( millsecs) {	
@@ -1039,6 +1035,7 @@ function fun_zero_LS_storage_var() {
 		LS_sub_beg_delta  = 0; 
 		LS_sub_end_delta  = 0;
 		LS_sub_force_visible  = true;
+		LS_voice_index = -1;
 		sw_end_dialog_sentence = true;  
 		sw_end_dialog_overlap  = true;
 
@@ -1055,7 +1052,7 @@ function fun_zero_LS_storage_var() {
 		LS_CTR_10run_num_lines  = 0;   // num.of subtitle lines 
 		LS_CTR_11run_num_words  = 0;   // num.of subtitle words 
 		LS_CTR_12logon_num_lines = 0;  // num.of subtitle lines 
-		LS_CTR_13logon_num_words = 0;  // num.of subtitle words 
+		LS_CTR_13logon_num_words = 0;  // num.of subtitle words 	
 
 } // end of fun_zero_LS_storage_var(); 
 //------------------------------------
@@ -1203,7 +1200,8 @@ function fun_list_localStorageItems() {
 			"\n\t LS_colorTx                  , " +         
 			"\n\t LS_sub_beg_delta            , " + 
 			"\n\t LS_sub_end_delta            , " +
-			"\n\t LS_sub_force_visible "	);  
+			"\n\t LS_sub_force_visible        , " +
+			"\n\t LS_voice_index		      ");  
 	console.log("---------------------------------\ncbc_LOCALSTOR_ctrkey"); 
 	try{ 
 		for(let i=0, len=localStorage.length; i<len; i++) {
@@ -1254,8 +1252,8 @@ function fun_update_html_with_last_session_values() {
 	
 	let p_list = LS_stor_playnext_replay.split(";;");
 	
-	console.log("file _a_ ... LS_stor_playnext_replay =" + LS_stor_playnext_replay);
-	console.log("file _a_ ... p_list = "+ p_list);
+	//console.log("file _a_ ... LS_stor_playnext_replay =" + LS_stor_playnext_replay);
+	//console.log("file _a_ ... p_list = "+ p_list);
 	
 	ele_playNextVa_from_hhmmss_value = p_list[0] ;
 	ele_replayVa_from_hhmmss_value   = p_list[1] ; 
@@ -1374,7 +1372,7 @@ function fun_add_delta_time_to_localStor(deltaTime) {
 	
 	fun_set_localStorage_item_from_vars(); 
 	
-	assign_params_for_word_html_file(3);
+	//assign_params_for_word_html_file(3);
 	
 
     return newval;
@@ -2720,6 +2718,7 @@ function fun_build_all_clip() {
 	
 	if (sw_is_no_videoaudio) {
 		console.log("XXXXXXXXXXXX  video/audio missing") 
+		sw_tts = true;
 		collapse_cols(); 
 	}	
 	
@@ -2948,66 +2947,74 @@ function show_hideTRAN(z3) {
 //-----------------------------------------------------
 
 function onclick_show_row(this1, z3) {
-		if (this1 == false) { return; }	
-		
-		if (this1.children[0].style.display == "none") {  // no openbook   
-			this1.children[0].style.display = "block";                         // show opened book image  
-			this1.children[1].style.display = "none";						  // hide closed book image 	
-		} else {
-			this1.children[0].style.display = "none";                          //  hide opened book image  
-			this1.children[1].style.display = "block";						  //  show closed book image 	
-		}
-		show_hideORIG(z3);
-		show_hideTRAN(z3);
+	removeLastBold(); 
+	if (this1 == false) { return; }	
+	
+	if (this1.children[0].style.display == "none") {  // no openbook   
+		this1.children[0].style.display = "block";                         // show opened book image  
+		this1.children[1].style.display = "none";						  // hide closed book image 	
+	} else {
+		this1.children[0].style.display = "none";                          //  hide opened book image  
+		this1.children[1].style.display = "block";						  //  show closed book image 	
+	}
+	show_hideORIG(z3);
+	show_hideTRAN(z3);
 }	
 
 //------------------------------------------------
 function highlightRow(ele1) {	
-	if (last_BoldRow) {
-		//console.log("remove last bold " + last_BoldRow.innerHTML); 
-		last_BoldRow.classList.remove("boldLine");
-		last_BoldRow.style.backgroundColor = null; 
-		last_BoldRow.parentElement.style.border = null; 
-	}
+	removeLastBold();
+	
 	ele1.classList.add("boldLine"); 
 	ele1.style.backgroundColor = "yellow";
 	ele1.parentElement.style.border = "1px solid black"; 
 	
 	last_BoldRow = ele1; 
 }
+//-------------------------
+function removeLastBold() {
+	if (last_BoldRow) {
+		console.log("removeLastBold() " + last_BoldRow.id);  
+		
+		last_BoldRow.classList.remove("boldLine");
+		last_BoldRow.style.backgroundColor = null; 
+		last_BoldRow.parentElement.style.border = null; 
+		var last_ele1_tr = last_BoldRow.parentElement.parentElement ;
+		last_ele1_tr.style.backgroundColor = "lightgrey"; 
+	}	
+	if (sw_tts) tts_remove_last_bold();  
+}
 //-------------------------------------------
 function fun_oneClipRow_showHide_ORIG_if_book_opened( ele1, ele_to_test , z3) {
+	
+	console.log("fun_oneClipRow_showHide_ORIG_if_book_opened( z3=" + z3 + " to_test=" + ele_to_test.id + " ele1=" +ele1.id );
 	
 	var ele1_tr = ele1.parentElement.parentElement ;
 
 	var last_tr; 
-	if (last_BoldRow) {
-		last_BoldRow.classList.remove("boldLine");
-		last_BoldRow.style.backgroundColor = null; 
-		last_BoldRow.parentElement.style.border = null; 
-		if (sw_is_no_videoaudio == false) {
-			last_tr = last_BoldRow.parentElement.parentElement ;	
-			last_tr.style.backgroundColor = "lightgrey";	
-		}
-	}
+	removeLastBold(); 
+	console.log(" fun_oneClipRow_showHide_ORIG_if_book_opened() " + ele1.id); 
 	if (ele1 == null) {return;}	
+	
+	last_BoldRow = ele1; 
 	
 	if (ele_to_test.children[0].style.display == "block") {  // openbook ==> show 
 		ele1.style.visibility = "visible"; 
 		ele1.classList.add("boldLine"); 
 		ele1.style.backgroundColor = "yellow";			
 		ele1.parentElement.style.border = null;
-		if (sw_is_no_videoaudio == false) ele1_tr.style.backgroundColor = "yellow";			
-		
+		//feb if (sw_is_no_videoaudio == false) ele1_tr.style.backgroundColor = "yellow";			
+		ele1_tr.style.backgroundColor = "yellow";	//feb 		
 	} else {	                                      // closebook  ==> hide 
 		ele1.style.visibility = "hidden"; 	
 		ele1.classList.remove("boldLine");
 		ele1.style.backgroundColor = null; 
 		ele1.parentElement.style.border = "1px solid red"; 
-		if (sw_is_no_videoaudio == false) ele1_tr.style.backgroundColor = "yellow";			
+		//feb if (sw_is_no_videoaudio == false) ele1_tr.style.backgroundColor = "yellow";		
+		//ele1_tr.style.backgroundColor = "yellow";	//feb	  
 	}	
 	
-	last_BoldRow = ele1; 
+	//last_BoldRow = ele1; 
 		
 } // end of fun_oneClipRow_showHide_ORIG_if_book_opened() 
 
@@ -3357,12 +3364,41 @@ function set_PlayIxFromToTime( begix, endix, swLoop) {
 	
 } // end of set_PlayIxFromToTime() 
 //--------------
-
+function play_or_cancel(this1) {
+	
+	if (isPlaying) {
+	   //	console.log("\t isplaying on is still running ==> cancel it and exit");
+	   if (ele_last_play) 	ele_last_play.style.backgroundColor = null;
+	   
+	   onclick_speech_cancel(); 
+	   end_speech();
+	   if (this1 == ele_last_play) {  // click on the same line which is running ==> it means ==> I just want to stop it   
+			return -1; 
+	   }
+	   // click not on the sameline running ==> I wanted to stop the last line e start a new one 
+	   
+	}
+	
+	this1.style.backgroundColor = "red";
+	ele_last_play = this1; 
+	return 0; 
+}
 //---------------------
 function onclick_OneClipRow_play_Loop3(this1,  z3 , swLoop) {
-
+	removeLastBold();
+	fun_invisible_prev_fromto(z3);
+	if (sw_tts) {  // TTS 
+		if (TTS_LOOP_swLoop) {TTS_LOOP_swLoop = false; return; }
+		if (play_or_cancel(this1) < 0) {
+			return;
+		}
+		isPlaying = true; 		
+		onclick_text_to_speech_ix(z3,swLoop,this1); 
+		return;
+	}
+	
 	lastPlayTrigger = playTRIGGER_clip; 	
-	//console.log("onclick_OneClipRow_play_Loop3(this1.id=" + this1.id + ", z3=" + z3 + " ) " + " ==> fun_clip_or_row_play()"); 	
+	
 	fun_clip_or_row_play( this1, z3, z3, swLoop ) ;	
 	
 }// end of onclick_OneClipRow_play_Loop3()	
@@ -3374,7 +3410,16 @@ function onclick_ClipSub_Play3(this1, swLoop) {
 	lastPlayTrigger = playTRIGGER_clip; 
 	var begix, endix; 
 	[begix, endix] = fromIxToIxLimit;	
-		//console.log("onclick_ClipSub_Play3(this1.id=" + this1.id + ", swLoop) " + " begix=" + begix + " endix=" + endix); 
+	
+	if (sw_tts) { // TTS 
+		if (TTS_LOOP_swLoop) {TTS_LOOP_swLoop = false; return; }
+		if (play_or_cancel(this1) < 0) {
+			return;
+		}
+		onclick_text_to_speech_from_to(begix, endix, swLoop); 
+		return; 
+	}
+	
 	fun_clip_or_row_play( this1, begix, endix, swLoop ) ;	
 
 } // end of onclick_ClipSub_Play3()
@@ -3383,7 +3428,7 @@ function onclick_ClipSub_Play3(this1, swLoop) {
 	
 function fun_clip_or_row_play( this1,begix, endix, swLoop ) { 	
 	
-	//console.log("fun_clip_or_row_play() begix=" + begix + ", endix=" + endix );    
+	
 	if (isPlaying) {
 		if (ele_last_play) 	ele_last_play.style.backgroundColor = null;
 		lastPlayRowToIx = -1; 
@@ -3422,9 +3467,12 @@ function fun_clip_or_row_play( this1,begix, endix, swLoop ) {
 } // end of fun_clip_or_row_play()  
 
 //---------------------------------------
-function fun_invisible_prev_fromto() {
+function fun_invisible_prev_fromto( interX ) {
+	// eliminate bold of the  previous group of lines, unless this is a line in them  
 	[begix, endix] =  fromIxToIxLimit;  // previously set 
-		
+	if ((interX >= begix) && (interX <= endix)) {
+		return; 
+	} 
 	var id_pre_tr_beg_space  = "idtr_" + begix + "_m2" ; 
 	var id_pre_tr_head       = "idtr_" + begix + "_m1" ;   
 	var id_post_tr_end_space = "idtr_" + (endix+1) + "_m2" ; 
@@ -3467,8 +3515,8 @@ function onclick_arrowFromIx( this1, z3, wh) {
 	// button from ( --> ) has been clicked 
 	//------------------------------------------
 	if (z3==0) { console.log(" onclick_arrowFromIx( this1, z3=" +z3 + ", wh=" + wh); } 
-	
-	fun_invisible_prev_fromto();
+	removeLastBold(); 
+	fun_invisible_prev_fromto(-1);
 	
 	fromIxToIxLimit = [z3 ,-1]; 
 	[begix, endix] =  fromIxToIxLimit;
@@ -3573,7 +3621,11 @@ function get_backgroundColor(ele0) {
 
 //--------------------------------------------------------------	
 
-function onclick_changeVideoSpeed(this1) {
+function onclick_changeVideoSpeed(this1) {	
+	if (sw_tts) {  // TTS 
+		onclick_change_synth_rate(this1); 
+		return; 
+	}
 	var speed =  parseFloat( this1.value ) ; 
 	if (speed  < 0.25) { 
 		speed = 0.25; 
@@ -3586,7 +3638,6 @@ function onclick_changeVideoSpeed(this1) {
 //===================
 
 function fun_collapse( list_collapse_ele, list_hide_ele , ratio ) {	
-	console.log("ZZZZZZZZ   ZZZZZZZZZ  fun_collapse() list_collapse_ele=" + list_collapse_ele + "  list_hide_ele=" +  list_hide_ele); 	
 		
 	var ele_filler_nosub    = document.getElementById("id_filler"); 	
 	
@@ -3638,11 +3689,12 @@ function innerHTML_from_innerHTML(id_to, id_from) {
 function collapse_cols() {
 
 	var list1_collapse_ele = [
-		document.getElementById("col_6_7"), 
+		//document.getElementById("col_6_7"),    // x TTS 
 		document.getElementById("col_9_13")
 		] ;
 	var list1_hide_ele = [
-		document.getElementById("id_spee"    ),  // arrow right-left, change speed, stop/continus buttons ( on the right of video place)
+		//document.getElementById("id_spee"    ),  // arrow right-left, change speed, stop/continus buttons ( on the right of video place)
+		document.getElementById("id_bRigthLeft"    ),  // arrow right-left, 
 		document.getElementById("id_central" ),  // video/audio zone (video, cursor, show/hide original/translated subtitles button) 
 		document.getElementById("id_subOnLeftSync")   // sync button on left of video zone 
 		//ele_time_video                           // seconds and clips progress ( at top just after the video title 
@@ -3655,33 +3707,17 @@ function collapse_cols() {
 		ele_time_video.innerHTML = '<span style="font-size:2em; font-weight:bold;">' + document.getElementById("mc88").innerHTML + "</span>";//bilingue   	
 	}	
 	innerHTML_from_innerHTML("m224", "m324"); // Text Lines 
-	innerHTML_from_innerHTML("m891", "m791"); // Original Text 
-	innerHTML_from_innerHTML("m892", "m792"); // Translated Text 
+	//innerHTML_from_innerHTML("m891", "m791"); // Original Text 
+	//innerHTML_from_innerHTML("m892", "m792"); // Translated Text 
 	innerHTML_from_innerHTML("m111", "m711"); // Lines 
 	innerHTML_from_innerHTML("m115", "m715"); // show all subtitles  / lines	
 	innerHTML_from_innerHTML("m116", "m716"); // hide all subtitles  / lines 									
-	innerHTML_from_innerHTML("m117", "m717"); // list of all subtitles / lines
-	innerHTML_from_innerHTML("m031", "m731"); // goto beginning of original subtitles / lines
-	innerHTML_from_innerHTML("m032", "m732"); // goto beginning of translated subtitles / lines
+	//innerHTML_from_innerHTML("m117", "m717"); // list of all subtitles / lines
+	//innerHTML_from_innerHTML("m031", "m731"); // goto beginning of original subtitles / lines
+	//innerHTML_from_innerHTML("m032", "m732"); // goto beginning of translated subtitles / lines
 }
 
-//---------------
-function TOGLIcollapse_colsORIG() {
-	/**	
-						'   <col id="col_1_4"       span="2"> \n' +
-						'	<col id="id_c_textCol"  span="1" style="text-align:left;"> \n' +
-						'   <col id="col_6_7"       span="2"> \n' +
-						'   <col id="col_8"         span="1"> \n' +
-						'   <col id="col_9-13"      span="5"> \n' +		
-	**/
-	
-	document.getElementById("col_6_7" ).style.visibility  = "collapse"; 
-	document.getElementById("col_9_13").style.visibility = "collapse"; 
-	document.getElementById("id_section_row").style.width = "74%"; 
-	document.getElementById("id_tabSub").style.minWidth = "100%"; 
-	document.getElementById("id_c_textCol").style.width = "100%"; 
-	
-}  
+
 
 //-----------------------------------------------------------------
 function FAKE_onloaded_fun() {
@@ -3849,9 +3885,19 @@ function onclick_skipThisPiece() {
 
 function onclick_pauseContinue(this1,isClip=false) {
 	
-	//???? (swLoop == false) serve un segnalore che è (stop/continua) è in stop allora continua altrimenti se continua allora start 
-	
-	console.log("onclick_pauseContinue(this1,isClip) this1.id=" + this1.id + " isClip=" + isClip + " sw_CLIP_play=" +sw_CLIP_play +"  isPlaying=" + isPlaying);
+	if (sw_tts) { // TTS 
+		if (sw_pause) {
+			this1.style.backgroundColor = null;	
+			this1.style.color = null;
+			onclick_speech_resume();
+		} else {
+			this1.style.backgroundColor = "black";		
+			this1.style.color = "white";			
+			onclick_speech_pause();			
+		}
+		return; 
+	}
+	//----------------------
 
 	if (isClip) {
 		if (sw_CLIP_play) { 			
@@ -6136,9 +6182,6 @@ function subtitle_row_length() {
 //---------------------------------------- 
 
 
- //onclick_scroll_right( document.getElementById("id_bRigthLeft") ) ; 
-
-
     function onclick_scroll_right(this1) {
 		var rightArrow = '<span style="font-weight:bold; font-size:2em;"> &xrArr; </span>'; 
 		var leftArrow  = '<span style="font-weight:bold; font-size:2em;"> &xlArr; </span>'; 
@@ -6207,7 +6250,7 @@ function subtitle_row_length() {
  } // end of onclick_OneClipRow_showHide_AllSub()
 //----------------------------------------
 function show_practice(this1) {
-	console.log("show_practice()");
+	//console.log("show_practice()");
 	var ele_practice = document.getElementById('id_practice');
 	ele_practice.style.visibility = "visible";
 	this1.style.marginBottom = "1em";
@@ -6215,7 +6258,9 @@ function show_practice(this1) {
 }
 //-------------------------------------------	
 function assign_practice_msg() {
-	console.log("assign_practice_msg() sw_the_are_no_subtitles=" + sw_the_are_no_subtitles + "  sw_is_no_videoaudios=" + sw_is_no_videoaudio); 
+	
+	//console.log("assign_practice_msg() sw_the_are_no_subtitles=" + sw_the_are_no_subtitles + "  sw_is_no_videoaudios=" + sw_is_no_videoaudio); 
+	
 	document.getElementById('m895_897').innerHTML = document.getElementById('m895').innerHTML ;	
 	
 	document.getElementById("id_time_video").style.display = "block";
@@ -6241,5 +6286,23 @@ function ready_to_Begin() {
 	document.getElementById("id_butt_pract").style.display = "block";
 	document.getElementById("id_main_subt" ).style.display = "block";
 	assign_practice_msg();
+	if (sw_tts) {
+		ele_tts.style.display = "flex"; 
+	} else {
+		ele_tts.style.display = "none"; 
+	}
 } // end of ready_to_Begin()
 //--------------------		
+function end_speech() {
+	if (isPlaying) isPlaying = false ; 
+	if (ele_last_play) {
+		if (TTS_LOOP_swLoop == false) { 
+			ele_last_play.style.backgroundColor = null;
+		}
+	}
+	end_speech_calculation();  
+} // end of end_speech()
+
+//-------------------------------------------
+
+

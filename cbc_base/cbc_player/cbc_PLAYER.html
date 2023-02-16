@@ -135,7 +135,7 @@
                      <div style="display:flex;width:100%">
                         <div style="width:0.5em;">&nbsp;</div>
                         <div style="width:100%;">
-                           <input type="range" min="0.25" max="2.00" value="1.00" step="0.25" id="id_setSpeedy" onchange="onclick_changeVideoSpeed(this)" style="width:100%;">
+                           <input type="range" min="0.00" max="2.00" value="1.00" step="0.25" id="id_setSpeedy" onchange="onclick_changeVideoSpeed(this)" style="width:100%;">
                         </div>
                         <div style="width:0.5em;">&nbsp;</div>
                      </div>
@@ -640,6 +640,39 @@
                               <span class="msg" id="m846">Skip</span></button>                                         
                            </div>
                         </div>
+						<!--   TTS text to speech  --> 	
+						<div id="id_tts" style="display:none; justify-content:center; border:0px solid red; text-align:center; height:100%;margin-bottom:1em;">
+							<div style="text-align:left; border:1px solid black; padding:1em;">
+								<div style="width:100%;text-align:center;"><span id="mt01" class="msg bold" >Text to speech</span></div> 
+								<br>
+								<span id="mt02" class="msg" >Select Voice</span>
+								<select id="id_voices" onchange="onclick_change_voice(this)">	
+								</select>
+								<br>	<br>			
+								<table  style="border:0px solid black;padding:0.1em;">
+									<tr>
+										<td id="mt03" class="msg" >Volume</td>
+										<td id="volume-label" style="width:1em;">1</td>
+										<td ><input id="volume" type="range" min="0.0" max="1.0" value="1.0" step="0.1"></td>									
+									</tr>
+									<tr>
+										<td  id="mt04" class="msg" >Rate</td>
+										<td id="rate-label"  style="width:1em;">1</td>
+										<td><input id="id_syncRate1" type="range" min="0.0" max="2.00" value="1.00" step="0.25" 
+												onchange="onclick_change_synth_rate(this)">
+										</td>								
+									</tr>
+									<tr>
+										<td  id="mt05" class="msg" >Pitch</td>
+										<td id="pitch-label" style="width:1em;">1</td>
+										<td><input type="range" min="0.0" max="2.0" value="1.0" step="0.1" id="pitch"></td>									
+									</tr>
+								</table>								
+							</div>	
+						</div>
+						<!--             xx   -->
+					
+						
                         <div style="width:100%;">
                            <div style="display:flex; width:100%;">
                               <div style="padding-right:1em;vertical-align:top;  min-width:5%;">	
@@ -992,6 +1025,8 @@
       </div>
       <div id="host_level4_0">
          <div id="id_msg_depot" style="display:none">
+			<span class="msg" id="file">cbc_player.html</span>
+			<span class="msg" id="m501">DOC/shared/cbc_4_HELP.html</span>
             <span class="msg" id="m001">ERROR</span>      
             <span class="msg" id="m002">This html file has no parameters to use.</span>   
             <span class="msg" id="m003">It appears to have been started by clicking on it 
@@ -1003,7 +1038,6 @@
             <span class="msg" id="m022">seconds and sentence completion</span>  
             <span class="msg" id="m023">seconds and to the end of any overlapping entries</span> 
             <span class="msg" id="m024">Play the entire clip</span> 
-            <span class="msg" id="m025">Stop / Continue</span> 
             <span class="msg" id="m026">Translation of the line being played</span>              
             <span class="msg" id="m033">Hide the clip's subtitles</span>      
             <span class="msg" id="m034">Play the entire clip</span>     
@@ -1096,7 +1130,9 @@
          }         
       </script>	
       <script src="../cbc_common/cbc_MESSAGE_manager.jstxt"  onload="messageMain('B')"></script> 		  
-      <script src="./cbc_PLAYER_script.jstxt"  defer ></script> 
+      <script src="./cbc_PLAYER_script.jstxt"         ></script> 
+	  <script src="./cbc_PLAYER_text_to_speech.jstxt" ></script> 
+	  <script src="./cbc_PLAYER_break_text.jstxt"     ></script>     
       <script>				
          document.getElementById("gotoHelp0").href = document.getElementById("mh00");
       </script>

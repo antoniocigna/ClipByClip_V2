@@ -29,11 +29,14 @@ let cbc_LOCALSTOR_key = "";
 //  all this value are put in a list and saved in one variable the name of which contains the title of the page (each page has its own values)  
 let LS_subWord_beg_delta = 0;
 let LS_subWord_end_delta = 0;
+let LS_voice_index = -1;
 //-------------------------------------------------------------
 
 
 const NO_VIDEO_AUDIO_FILE = "noVIDEO_noAUDIO".toLowerCase();
 var sw_is_no_videoaudio = false;
+var sw_tts = false; 
+let ele_tts = document.getElementById("id_tts"); // synthetic voce  <div >...</div>
 
 var list_ix_line = [];
 
@@ -186,14 +189,14 @@ function FAKE_onloaded_fun() {
     player_beginning();
 
 	document.getElementById("id_ctrVideo"   ).style.display = "none";
-	document.getElementById("id_but_repeat" ).style.display = "none";
-	document.getElementById("id_but_loop"   ).style.display = "none";
+	//document.getElementById("id_but_repeat" ).style.display = "none";
+	//document.getElementById("id_but_loop"   ).style.display = "none";
 		
 	innerHTML_from_innerHTML("m504", "m604"); // All the words of the text are listed ... in reverse order of frequency 		
 	innerHTML_from_innerHTML("m505", "m605"); // by clicking on a button showing a word it is possible to read all the lines that contain it	
 	innerHTML_from_innerHTML("m509", "m609"); // The word is in the lines identified by the numbers listed below it ...  
-	innerHTML_from_innerHTML("m510", "m610"); // Show + <br>line
-	innerHTML_from_innerHTML("m511", "m611"); // Show<br>line
+	//innerHTML_from_innerHTML("m510", "m610"); // Show + <br>line
+	//innerHTML_from_innerHTML("m511", "m611"); // Show<br>line
 	innerHTML_from_innerHTML("m512", "m612"); // Show Original Text Line
 	innerHTML_from_innerHTML("m513", "m613"); // Show Translated Text Line
 	
@@ -881,6 +884,9 @@ function getUrlData2word() {
 	 
     var script_sub_path = myGet_parmFrom_URI("", urlParams, "p_scr_sub1");
 
+	LS_voice_index = myGet_parmFrom_URI(0, urlParams, "p_voice_index");
+	console.log("PARAMS  LS_voice_index = " + LS_voice_index );   
+	
 	parm_subDeltaTime = myGet_parmFrom_URI(0, urlParams, "p_subDeltaTime");
 	
     parm_subDeltaTime = parseInt(parm_subDeltaTime * 1000) / 1000;
@@ -889,7 +895,6 @@ function getUrlData2word() {
     //LS_subWord_end_delta = parm_subDeltaTime; 
 
     set_localStorage_var();
-
 
     document.getElementById("id_hardsub"      ).innerHTML = myGet_parmFrom_URI("", urlParams, "p_hardsub"      );
     document.getElementById("id_file_suborig" ).innerHTML = myGet_parmFrom_URI("", urlParams, "p_file_suborig" );
@@ -1008,8 +1013,11 @@ function fun_initial_from_localStorage_values() {
         } else {
             [
                 LS_subWord_beg_delta,
-                LS_subWord_end_delta
+                LS_subWord_end_delta,
+				LS_voice_index
             ] = stored_cbc_localStor;
+			console.log("initial local storage var:   LS_voice_index=" + LS_voice_index); 
+			console.log("initial local storage var:   " + stored_cbc_localStor ); 
         }
     } else {
         set_localStorage_var();
@@ -1108,9 +1116,13 @@ function player_beginning() {
 
     LIMIT_MIN_TIME_CLIP = 0.100; // if time too near ( difference <  LIMIT_MIN_TIME_CLIP) to toTimeClip than use next clip number 
 
-    if (sw_is_no_videoaudio == false) {
+    if (sw_is_no_videoaudio == false) {		
+		ele_tts.style.display = "none";  
         replace_video_src();
-    }
+    } else {		
+		sw_tts = true; 
+		ele_tts.style.display = "flex";  
+	}
 
     separe_time_sub();
 
@@ -1138,7 +1150,8 @@ function set_localStorage_var() {
 
     var cbc_LOCALSTOR_val_list = [
         LS_subWord_beg_delta,
-        LS_subWord_end_delta
+        LS_subWord_end_delta,
+		LS_voice_index
     ];
     localStorage.setItem(cbc_LOCALSTOR_key, JSON.stringify(cbc_LOCALSTOR_val_list));
 
@@ -1395,9 +1408,7 @@ function choose_1_row(this1, ixRow, g_ix_of_ixRow, g2_ix_of_ixNextRow,wh) {
 function cleanText(ixRow) {
 
     var frase = funFontColor(line_inprow_orig_text[ixRow]);
-    //var frase =	 funFontColor( ixRow + " " + line_inprow_orig_from[ixRow] + " " + line_inprow_orig_text[ixRow] ) ;
-
-    //frase = frase.replaceAll(oneword, "<b>" + oneword + "</b>").replaceAll(onewordUp, "<b>" + onewordUp + "</b>");
+	
     frase = frase.replaceAll('&quot;', '"').replaceAll("&apos;", "'").replaceAll("\n", "  ");
     frase = replace_quotation_and_ampersand(frase);
 
@@ -1480,8 +1491,20 @@ function assignOnRow_OrigTranText(ixRow) {
 //------------------------------------------------
 
 function onclick_replay3() {
-	if (sw_is_no_videoaudio) return; 
+	
+	
 	var ixRow = parseInt( document.getElementById("id_num_rigaRepeat").innerHTML ); 
+	
+	
+	if (sw_tts) {  // TTS 		
+		var frase = funFontColor(line_inprow_orig_text[ixRow]);	
+		frase = frase.replaceAll('&quot;', '"').replaceAll("&apos;", "'").replaceAll("\n", "  ");
+		frase = replace_quotation_and_ampersand(frase);		
+		
+		onclick_text_to_speech( frase ); 
+		return;
+	}
+	
     lastPlayRowLoop = false;
     if (ele_last_play) ele_last_play.style.backgroundColor = null;
 
@@ -1538,11 +1561,12 @@ function fun_next_ix_toShow() {
 //-----------------------------------
 
 function onclick_playNextClip3() {
-	
+	/***
 	if (sw_is_no_videoaudio) {
 		fun_next_ix_toShow(); 
 		return;  
 	}
+	***/
 
 	/**
 		<span id="m510" class="msg"> Vai alla riga 8</span>
@@ -1550,10 +1574,7 @@ function onclick_playNextClip3() {
 							<span id="id_ix_of_ixRowThis" style="display:block;">0</span>
 							<span id="id_ix_of_ixRowNext" style="display:block;">1</span>
 	**/
-	/**
-	se clicco:  8 (ixRow=1)  deve diventare la riga attiva 
-	lastRadioIx = 
-	**/
+	
 	var ix_of_ixRow =  parseInt( document.getElementById("id_ix_of_ixRowNext").innerHTML );
 	if (ix_of_ixRow >= list_ix_line.length) ix_of_ixRow = 0; 
 	var ix_of_ixNext=  ix_of_ixRow + 1;
@@ -1773,3 +1794,7 @@ function fun_updateVideo_CheckStop(timeFrom, timeTo) {
 } // end of fun_updateVideo_CheckStop()
 
 //-------------------------------------------------------
+function fun_set_localStorage_item_from_vars() {
+	set_localStorage_var();
+}
+//----------------------------------------------

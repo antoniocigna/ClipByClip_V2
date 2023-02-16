@@ -152,13 +152,18 @@ function fromText_to_srt(inpsub) {
     var noVideoTime = 0;
     var noVideoHHMM = sec2time(noVideoTime).replace(".", ",");
     var noVideo_hh1;
-
+	var punto2;
+	var ix1=0; 
     for (i = 0; i < subline.length; i++) {
         line = subline[i].trim();
         if (line == "") {
             continue;
         }
-
+		if (line.substring(0,2) == "::") {
+			punto2 = line.split("::"); 
+			noVideoTime = parseInt(punto2[1]); 
+			line = punto2[2].trim();
+		}
         list_time_from.push(noVideoTime);
 
         noVideo_hh1 = noVideoHHMM;

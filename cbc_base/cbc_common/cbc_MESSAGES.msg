@@ -156,15 +156,8 @@ function get_messages() {
 		<Bm021>the dialogue ends with</Bm021>									
 		<Bm022>seconds and sentence completion</Bm022>									
 		<Bm023>seconds and to the end of any overlapping entries</Bm023>									
-		<Bm024>Play the entire clip</Bm024>									
-		<Bm025>Stop / Continue</Bm025>									
+		<Bm024>Play the entire clip</Bm024>								
 		<Bm026>Translation of the line being played</Bm026>									
-		<Bm027>returns to the beginning</Bm027>									
-		<Bm028>go to start of Original Subtitles</Bm028>									
-		<Bm029>go to start of Translated Subtitles</Bm029>									
-		<Bm030>return to the beginning</Bm030>									
-		<Bm031>go to start of Original Subtitles</Bm031>									
-		<Bm032>go to start of Translated Subtitles</Bm032>									
 		<Bm033>Hide the clip&apos;s subtitles</Bm033>									
 		<Bm034>Play the entire clip</Bm034>									
 		<Bm035>Show all subtitles</Bm035>									
@@ -172,8 +165,7 @@ function get_messages() {
 		<Bm037>show</Bm037>									
 		<Bm038>hide</Bm038>									
 		<Bm039>translation of the last line</Bm039>	
-		<Bm040>Change the speed</Bm040>			
-		<Bm506>Change the Speed</Bm506>									
+		<Bm040>Change the speed</Bm040>									
 		<Bm100>Specify clip type and duration</Bm100>									
 		<Bm101>Change the duration of the clips</Bm101>									
 		<Bm103>seconds</Bm103>									
@@ -187,19 +179,16 @@ function get_messages() {
 		<Bm111>Subtitles</Bm111>									
 		<Bm112>Change<br>duration</Bm112>									
 		<Bm113>Reset</Bm113>									
-		<Bm114>Stop<br>Continue</Bm114>									
+		<Bm114>Pause<br>Continue</Bm114>									
 		<Bm115>show all subtitles</Bm115>									
-		<Bm116>hide all subtitles</Bm116>									
-		<Bm117>list of all subtitles</Bm117>									
+		<Bm116>hide all subtitles</Bm116>										
 		<Bm218>Meaning of the buttons</Bm218>									
 		<Bm119>press to establish start of row selection</Bm119>									
 		<Bm120>press to establish end of row selection</Bm120>									
 		<Bm121>press to play</Bm121>									
-		<Bm122>press to play and then repeat indefinitely</Bm122>									
-		<Bm123>Stop/Continue</Bm123>									
+		<Bm122>press to play and then repeat indefinitely</Bm122>			
 		<Bm126>Duration of a Clip</Bm126>									
-		<Bm501>DOC/shared/cbc_4_HELP.html?language=en</Bm501>									
-		<Bm135>Type and Duration of a Clip</Bm135>									
+		<Bm501>DOC/shared/cbc_4_HELP.html?language=en</Bm501>						
 		<Bm145>reset</Bm145>									
 		<Bm146>restores the initial text and background colors</Bm146>									
 		<Bm147>choose the background color</Bm147>									
@@ -248,12 +237,10 @@ function get_messages() {
 			it will remain active in subsequent sessions (even after restarting the computer).
 			</li><li>To close this window press the <b>Sync.OK</b> button. </li></ul>
 		</Bm245>
-		<Bm300>Words</Bm300>									
-		<Bm301>in reverse order of use</Bm301>	
+		<Bm300>Words</Bm300>	
 		<Bm302>Printable Bilingual</Bm302>		
 		<Bm303>Printable Text</Bm303>	
-		<Bm324>Text Lines</Bm324> 
-		<Bmd01>Play all Subtitles</Bmd01>		
+		<Bm324>Text Lines</Bm324> 	
 		<Bm711>Text Lines</Bm711>
 		<Bm715>show all lines</Bm715>
 		<Bm716>hide all lines</Bm716>
@@ -263,18 +250,15 @@ function get_messages() {
 		<Bm782>Show the <b>Subtitles</b>of the line being played</Bm782>									
 		<Bm783>Show the <b>Translation</b>of the line being played</Bm783>			
 		<Bm791>Original text</Bm791>
-		<Bm792>Translated text</Bm792>	
-		<Bm801>Click here to download<br>the complete source of this HTML page<br>(if you are not a developer, ignore) </Bm801>									
-		<Bm846>Skip</Bm846>									
-		<Bm891>Subtitles in original language</Bm891>									
-		<Bm892>Translated subtitles</Bm892>			
+		<Bm792>Translated text</Bm792>							
+		<Bm846>Skip</Bm846>					
 		<Bm893>The translated line should only serve to get an idea of the meaning.<br>
 			<b>Line-by-line translation is generally unreliable.</b>
 		</Bm893>
 		<Bm894>Click on <b>t?</b> button to read the subtitles	</Bm894>	
 		<Bm895>Practice<br>by listening and reading<br>only a few subtitle lines at time</Bm895>
 		<Bm896>Practice<br>by listening<br>only a few seconds at a time</Bm896>
-		<Bm897>Practice<br>by reading <br>only a few text lines at time</Bm897>
+		<Bm897>Practice<br>by listening (synthetic voice) and reading <br>only a few text lines at time</Bm897>
 		<Bm900>Wait a moment, please<br></Bm900> 
 		<Bma06>Confirm</Bma06>									
 		<Bma10>Press to download</Bma10>									
@@ -324,7 +308,11 @@ function get_messages() {
 		<Bmc86>increased by</Bmc86>									
 		<Bmc87>decreased by</Bmc87>	
 		<Bmc88>Bilingual Text</Bmc88> 	
-			
+		<Bmt01>Text to speech</Bmt01>	
+		<Bmt02>Select Voice</Bmt02>	 
+		<Bmt03>Volume</Bmt03>	
+		<Bmt04>Rate	</Bmt04>		
+		<Bmt05>Pitch</Bmt05>		
 		<Cfile>cbc_Player_Words_ClipByClip.html</Cfile>
 		<Cm001>ERROR</Cm001>
 		<Cm002>This html file has no parameters to use.</Cm002>
@@ -338,7 +326,6 @@ function get_messages() {
 		<Cm503>This word is found in $numlines$ lines (Click on the yellow button to execute the first line)</Cm503>
 		<Cm504>All subtitle words are listed as buttons here on the right in reverse order of frequency, from most to least referenced.</Cm504>
 		<Cm505>By clicking on a button that contains a word, it is possible to reproduce all the lines of subtitles that contain it</Cm505>
-		<Cm506>Change the Speed</Cm506>
 		<Cm507>change begin time</Cm507>
 		<Cm508>change end time</Cm508>
 		<Cm509>The word is in the lines identified by the numbers listed below it<br>
@@ -361,7 +348,12 @@ function get_messages() {
 		<Cm610>Go to <br>line</Cm610>
 		<Cm611>Show<br>line</Cm611>
 		<Cm612>Show Original Text Line</Cm612>
-		<Cm613>Show Translated Text Line</Cm613>		
+		<Cm613>Show Translated Text Line</Cm613>	
+		<Cmt01>Text to speech</Cmt01>	
+		<Cmt02>Select Voice</Cmt02>	 
+		<Cmt03>Volume</Cmt03>	
+		<Cmt04>Rate	</Cmt04>		
+		<Cmt05>Pitch</Cmt05>		
 		<Dm100> </Dm100>	
 		<Hfile>doc/helpxx.html</Hfile>
 		<Hm800><b>ClipByClip</b> is a tool to practice the comprehension of a language.</Hm800>
@@ -496,14 +488,8 @@ function get_messages() {
 		<Bm022>secondi e completamento della frase</Bm022>
 		<Bm023>secondi e fino alla fine di eventuali sovrapposioni di voci</Bm023>
 		<Bm024>Play tutta la clip</Bm024>
-		<Bm025>Stop / Continua</Bm025>
 		<Bm026>Traduzione della riga in riproduzione</Bm026>
-		<Bm027>ritorna all&apos;inizio</Bm027>
-		<Bm028>vai a inizio dei Sottotitoli Originali</Bm028>
-		<Bm029>vai a inizio dei Sottotitoli Tradotti</Bm029>
-		<Bm030>ritorna all&apos;inizio</Bm030>
-		<Bm031>vai a inizio dei Sottotitoli Originali</Bm031>
-		<Bm032>vai a inizio dei Sottotitoli Tradotti</Bm032>
+		
 		<Bm033>Nascondi i sottotitoli della clip</Bm033>
 		<Bm034>Play tutta la clip</Bm034>
 		<Bm035>Mostra tutti i sottotitoli</Bm035>
@@ -511,8 +497,7 @@ function get_messages() {
 		<Bm037>mostra</Bm037>
 		<Bm038>nascondi</Bm038>
 		<Bm039>traduzione dell&apos;ultima riga</Bm039>
-		<Bm040>Cambia la velocit&agrave;</Bm040>		
-		<Bm506>Cambia la Velocità</Bm506>
+		<Bm040>Cambia la velocit&agrave;</Bm040>
 		<Bm100>Specifica tipo e durata delle clip</Bm100>
 		<Bm101>Modifica la durata delle clip</Bm101>
 		<Bm103>secondi</Bm103>
@@ -526,19 +511,16 @@ function get_messages() {
 		<Bm111>Sottotitoli</Bm111>
 		<Bm112>Cambia<br>durata</Bm112>
 		<Bm113>Reset</Bm113>
-		<Bm114>Stop<br>Continua</Bm114>
+		<Bm114>Pausa<br>Continua</Bm114>
 		<Bm115>mostra tutti i sottotitoli</Bm115>
 		<Bm116>nascondi tutti i sottotitoli</Bm116>
-		<Bm117>lista di tutti i sottotitoli</Bm117>
 		<Bm218>Significato dei pulsanti</Bm218>
 		<Bm119>premi per stabilire l&apos;inizio delle selezione delle righe</Bm119>
 		<Bm120>premi per stabilire la fine della selezione delle righe</Bm120>
 		<Bm121>premi per riprodurre</Bm121>
 		<Bm122>premi per riprodurre e poi ripetere all&apos;infinito</Bm122>
-		<Bm123>Stop/Continua</Bm123>
 		<Bm126>Durata di una Clip</Bm126>
 		<Bm501>DOC/shared/cbc_4_HELP.html?language=it</Bm501>
-		<Bm135>Tipo e Durata di una Clip</Bm135>
 		<Bm145>reset</Bm145>
 		<Bm146>ripristina i colori iniziali di testo e sfondo</Bm146>
 		<Bm147>scegli il colore dello sfondo</Bm147>
@@ -589,11 +571,9 @@ function get_messages() {
 		</li><li>Per chiudere questa finestra premi il tasto <b>Sync.OK</b>. </li></ul>
 		</Bm245>
 		<Bm300>Parole</Bm300>
-		<Bm301>in ordine inverso<br>di utilizzo</Bm301>
 		<Bm302>Bilingue Stampabile</Bm302>		
 		<Bm303>Testo Stampabile</Bm303>	
 		<Bm324>Testo</Bm324> 
-		<Bmd01>Play tutti i Sottotitoli</Bmd01>
 		<Bm711>Righe</Bm711>	
 		
 		<Bm715>mostra tutte le righe</Bm715>
@@ -605,17 +585,14 @@ function get_messages() {
 		<Bm783>Mostra la <b>Traduzione</b>della riga in riproduzione</Bm783>
 		<Bm791>Testo in lingua originale</Bm791>
 		<Bm792>Testo tradotto</Bm792>
-		<Bm801>Clicca qui per scaricare<br>il sorgente completo di questa pagina HTML<br>(se non sei uno sviluppatore, ignora)	</Bm801>		
 		<Bm846>Salta</Bm846>		
-		<Bm891>Sottotitoli in lingua originale</Bm891>
-		<Bm892>Sottotitoli tradotti</Bm892>
 		<Bm893>La riga tradotta dovrebbe servire <br>solo per avere un'idea del significato.<br>
 			<b>La traduzione riga per riga è generalmente inaffidabile.</b>
 		</Bm893>
 		<Bm894>Clic sul pulsante <b>t?</b> per leggere i sottotitoli</Bm894>			
 		<Bm895>Esercitati<br>ascoltando e leggendo<br>solo poche righe di sottotitoli alla volta</Bm895>
 		<Bm896>Esercitati<br>ascoltando<br>solo pochi secondi alla volta</Bm896>
-		<Bm897>Esercitati<br>leggendo <br>solo poche righe di testo alla volta</Bm897>	
+		<Bm897>Esercitati<br><small>ascoltando (voce sintetica) e leggendo </small><br>solo poche righe di testo alla volta</Bm897>	
 		<Bm900>Aspetta un momento, per piacere <br></Bm900> 
 		<Bma06>Conferma</Bma06>
 		<Bma10>Premi per scaricare</Bma10>
@@ -663,8 +640,12 @@ function get_messages() {
 		<Bmc85>riga sottotitolo</Bmc85>
 		<Bmc86>aumentato di</Bmc86>
 		<Bmc87>diminuito di</Bmc87>			
-		<Bmc88>Testo Bilingue</Bmc88>   	
-		
+		<Bmc88>Testo Bilingue</Bmc88>   
+		<Bmt01>Sintesi vocale</Bmt01>
+		<Bmt02>Seleziona la voce</Bmt02>
+		<Bmt03>Volume</Bmt03>
+		<Bmt04>Velocità</Bmt04>
+		<Bmt05>Tono</Bmt05>	
 		<Cfile>cbc_Player_Words_ClipByClip.html</Cfile>
 		<Cm001>ERRORE</Cm001>
 		<Cm002>Questo file html non ha parametri da usare.</Cm002>
@@ -678,7 +659,6 @@ function get_messages() {
 		<Cm503>Questa parola si trova in $numrighe$ righe (Clicca sul pulsante in giallo per eseguire la prima riga)</Cm503>		
 		<Cm504>Tutte le parole dei sottotitoli sono elencate come pulsanti qui a destra in ordine inverso di frequenza, dal più al meno referenziato.</Cm504>
 		<Cm505>Cliccando su un pulsante che riporta una parola è possibile riprodurre tutte le righe di sottotitoli che la contengono</Cm505>
-		<Cm506>Cambia la Velocità</Cm506>		
 		<Cm507>modifica tempo di inizio</Cm507>
 		<Cm508>modifica tempo di fine</Cm508>
 		<Cm509>La parola si trova nelle righe identificate dai numeri listati sotto di essa<br>
@@ -702,6 +682,11 @@ function get_messages() {
 		<Cm611>Mostra<br>linea</Cm611>
 		<Cm612>Mostra riga di testo originale</Cm612>
 		<Cm613>Mostra riga di testo tradotta</Cm613>	
+		<Cmt01>Sintesi vocale</Cmt01>
+		<Cmt02>Seleziona la voce</Cmt02>
+		<Cmt03>Volume</Cmt03>
+		<Cmt04>Velocità</Cmt04>
+		<Cmt05>Tono</Cmt05>
 		<Dm100>Testo Bilingue ottenuto dai sottotitoli</Dm100>
 		
 		<Hfile>doc/helpxx.html</Hfile>

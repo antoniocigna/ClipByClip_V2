@@ -141,6 +141,36 @@
 	 
 	  <div  style="position: relative;margin:auto; text-align:center;border:0px solid red; height:48%;width:100%; padding:0;  ">
          <div style="position:absolute; top:2%; left:0%; width:50%;height:100%; margin:auto; text-align:center; vertical-align: top; border:0px solid green; ">
+						<!--   TTS text to speech  --> 	
+						<div id="id_tts" style="display:none; justify-content:center; border:0px solid red; text-align:center; height:100%;">
+							<div style="text-align:left; border:1px solid black; padding:1em;">
+								<div style="width:100%;text-align:center;"><span id="mt01" class="msg bold" >Text to speech</span></div> 
+								<br>
+								<span id="mt02" class="msg" >Select Voice</span>
+								<select id="id_voices" onchange="onclick_change_voice(this)">	
+								</select>
+								<br>	<br>			
+								<table  style="border:0px solid black;padding:0.1em;">
+									<tr>
+										<td id="mt03" class="msg" >Volume</td>
+										<td id="volume-label" style="width:1em;">1</td>
+										<td ><input type="range" min="0.0" max="1.0" value="1.0" step="0.1" id="volume"></td>									
+									</tr>
+									<tr>
+										<td  id="mt04" class="msg" >Rate</td>
+										<td id="rate-label"  style="width:1em;">1</td>
+										<td><input type="range" min="0.0" max="2.00" value="1.00" id="rate" step="0.25" ></td>									
+									</tr>
+									<tr>
+										<td  id="mt05" class="msg" >Pitch</td>
+										<td id="pitch-label" style="width:1em;">1</td>
+										<td><input type="range" min="0.0" max="2.0" value="1.0" step="0.1" id="pitch"></td>									
+									</tr>
+								</table>								
+							</div>	
+						</div>
+						<!--             xx   -->
+						
             <div id="id_ctrVideo" class="centerFlex" 
                style=" width:100%; height:90%; 
                padding:0.5em;margin:0;
@@ -325,7 +355,8 @@
       </script>	
       <script src="../cbc_common/cbc_MESSAGE_manager.jstxt"  onload="messageMain('C')"></script> 		  
 	
-      <script src="./cbc_PLAYER_WORDS_script.jstxt"  	defer ></script>	
-         
+      <script src="./cbc_PLAYER_WORDS_script.jstxt"    defer ></script>	
+      <script src="./cbc_PLAYER_text_to_speech.jstxt"  defer ></script> 
+	  <script src="./cbc_PLAYER_break_text.jstxt"            ></script>     
 </body>
 </html>
