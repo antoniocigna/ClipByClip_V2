@@ -47,6 +47,7 @@ This script file is executed onload by the html file: eg.
 //==============================
 var parser, xmlDoc;
 var DEFAULT_language_test =  "_antonio_test_"; 
+var myLocalLanguage = "";  
 //---------------------------------------
 
 function execParser() {
@@ -92,7 +93,14 @@ function update_HtmlEle_MsgById(parm_pgm_ABCH, id_language) {
 	if ( window.location.pathname.toLowerCase().indexOf( DEFAULT_language_test ) >= 0) {
 		id_language = "xx";   
 	}
-		
+	try{ 
+		if (testDefault) id_language = "xx";  
+	} catch(e1) {		
+	}
+	console.log("id_language=" + id_language); 
+
+	myLocalLanguage = id_language; 
+	
 	var langKey = 'lang_' + id_language; 
 	
 	let list_msg_id_val; 
@@ -184,4 +192,29 @@ function messageMain( parm_pgm_ABCH, parm_lang00) {
 	update_HtmlEle_MsgById(parm_pgm_ABCH, parm_lang); 
 	
 }
-//----------------------------------
+//------------------------------------
+function get_languageName( en_GB ) {
+	
+	var la =  (en_GB+"--").replaceAll("_","-").split("-");	
+	var id_lang    = la[0];
+	var id_country = la[1]; 
+	
+	if (myLocalLanguage == "xx") {
+		myLocalLanguage = "en";
+	}
+	id_lang    = (""+id_lang).trim().toLowerCase();
+	id_country = (""+id_country).trim().toUpperCase();
+	const countryExt  = new Intl.DisplayNames([ myLocalLanguage ], { type: 'region'   } );
+	const languageExt = new Intl.DisplayNames([ myLocalLanguage ], { type: 'language' } ); 
+	var r_lang = ""; var r_country=""; 
+	
+	if (id_lang != "")    r_lang    = languageExt.of( id_lang    ); 
+	if (id_country != "") r_country = countryExt.of(  id_country );  
+	
+	r_lang    = r_lang.substr(0,1).toUpperCase()    + r_lang.substr(1); 
+	r_country = r_country.substr(0,1).toUpperCase() + r_country.substr(1); 
+	
+	return r_lang + " - " + r_country;  
+	
+}
+//-----------------------------------------		

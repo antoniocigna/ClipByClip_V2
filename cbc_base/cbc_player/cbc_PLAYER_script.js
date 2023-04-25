@@ -34,7 +34,7 @@ license MIT: you can share and modify the software, but you must include the lic
 /*  used in html   onclick_downloadThis_HTML */
 
 //=============================================    								
-// 1 beg. former file player_2_a_1_var_only.jstxt             								
+// 1 beg. former file player_2_a_1_var_only.js             								
 
 /**
 Javascript ES6 - ECMAScript 2015 was the second major revision to JavaScript. ECMAScript 2015 is also known as ES6 and ECMAScript 6.
@@ -579,7 +579,7 @@ function get_last_start_colors() {
 //=======================================================
 
 
- //  end former file player_2_a_2_customization_script.jstxt 								
+ //  end former file player_2_a_2_customization_script.js 								
 //=============================================    	
 
 
@@ -959,8 +959,8 @@ function fun_timeStr( millsecs) {
 		//console.log(" timeStr millsecs=" + millsecs + " text" + text + " timex =" + timex);  
 		return timex;
 	} catch(e1) {
-		console.log("error in ..a_var_def_init.jstxt fun_timeStr(millsecs=" + millsecs + " ERROR = " + e1); 
-		//alert("error in ..a_var_def_init.jstxt fun_timeStr(millsecs=" + millsecs + " ERROR = " + e1); 
+		console.log("error in ..a_var_def_init.js fun_timeStr(millsecs=" + millsecs + " ERROR = " + e1); 
+		//alert("error in ..a_var_def_init.js fun_timeStr(millsecs=" + millsecs + " ERROR = " + e1); 
 		return "00:00:00.000"; 
 	}
 } // end of timeStr	
@@ -1385,11 +1385,11 @@ function fun_add_delta_time_to_localStor(deltaTime) {
 //-------------------------------------------------------
 
 
-//  end former file player_3_a_var_def_init.jstxt 										
+//  end former file player_3_a_var_def_init.js 										
 //=============================================    	
 
 //=============================================    								
-// 4 beg. former file player_3_b_beginning.jstxt    	 	  								
+// 4 beg. former file player_3_b_beginning.js    	 	  								
 
 //---------------------------------------------------------
 // CONTENT: 
@@ -1400,17 +1400,17 @@ function fun_add_delta_time_to_localStor(deltaTime) {
 //-------------------------------------------
 /*
 undefined variables  and the files where they are defined  	
-	sw_HARD_subtitle     // file: cbc_3_player_3_a_var_def_init.jstxt   
-	sw_sub_orig          // file: cbc_3_player_3_a_var_def_init.jstxt   
-	sw_sub_tran          // file: cbc_3_player_3_a_var_def_init.jstxt   
-	sw_sub_onfile        // file: cbc_3_player_3_a_var_def_init.jstxt   
-	sw_no_subtitle       // file: cbc_3_player_3_a_var_def_init.jstxt   
-	begin_td_width       // file: cbc_3_player_3_a_var_def_init.jstxt   
-	begin_td_height      // file: cbc_3_player_3_a_var_def_init.jstxt   
-	begin_video_h_max    // file: cbc_3_player_3_a_var_def_init.jstxt   
-	begin_video_h_w_ratio // file: cbc_3_player_3_a_var_def_init.jstxt   
-	line_list_o_from1      // file: cbc_3_player_3_a_var_def_init.jstxt   
-	line_list_o_to1        // file: cbc_3_player_3_a_var_def_init.jstxt  
+	sw_HARD_subtitle     // file: cbc_3_player_3_a_var_def_init.js   
+	sw_sub_orig          // file: cbc_3_player_3_a_var_def_init.js   
+	sw_sub_tran          // file: cbc_3_player_3_a_var_def_init.js   
+	sw_sub_onfile        // file: cbc_3_player_3_a_var_def_init.js   
+	sw_no_subtitle       // file: cbc_3_player_3_a_var_def_init.js   
+	begin_td_width       // file: cbc_3_player_3_a_var_def_init.js   
+	begin_td_height      // file: cbc_3_player_3_a_var_def_init.js   
+	begin_video_h_max    // file: cbc_3_player_3_a_var_def_init.js   
+	begin_video_h_w_ratio // file: cbc_3_player_3_a_var_def_init.js   
+	line_list_o_from1      // file: cbc_3_player_3_a_var_def_init.js   
+	line_list_o_to1        // file: cbc_3_player_3_a_var_def_init.js  
 */
 //--------------------------------------
 //---------------
@@ -3612,11 +3612,11 @@ function get_backgroundColor(ele0) {
 }
 
 // ===================================================================
-//  end former file player_3_b_12_on_clip_routines_vers2.jstxt 	  								
+//  end former file player_3_b_12_on_clip_routines_vers2.js 	  								
 //=============================================    
 		
 //=============================================    								
-// 6 beg. former file player_3_b_29_on_routines.jstxt 								
+// 6 beg. former file player_3_b_29_on_routines.js 								
 
 
 //--------------------------------------------------------------	
@@ -3935,7 +3935,7 @@ function onclick_pauseContinue(this1,isClip=false) {
         //document.getElementById("id_t5").style.backgroundColor = null;
 		this1.style.backgroundColor = null;	
 		this1.style.color = null;		
-        fun_playVideo("onclick_pauseContinue() file ..29_on_routines.jstxt");
+        fun_playVideo("onclick_pauseContinue() file ..29_on_routines.js");
     }
 } // end of onclick_pauseContinue()
 
@@ -4275,8 +4275,8 @@ function fun_update_ctr_stat() {
 			}
 		} catch(e1) { 
 			return; 
-			//console.log("error in ..playfromto.jstxt update_ctr_stat  text0=" + txt0 + "<==   error=" + e1); 
-			//alert("error in ..playfromto.jstxt update_ctr_stat  text0=" + txt0 + "<==   error=" + e1); 
+			//console.log("error in ..playfromto.js update_ctr_stat  text0=" + txt0 + "<==   error=" + e1); 
+			//alert("error in ..playfromto.js update_ctr_stat  text0=" + txt0 + "<==   error=" + e1); 
 		} 	
 	}	
 	//c_onsole.log("UPDATE CTR STAT time: from=" + PLAYCLIP_FROM_TIME + " to=" +  PLAYCLIP_TO_TIME + " line: from="+PLAYCLIP_FROM_LINE + " to=" + PLAYCLIP_TO_LINE + 
@@ -4326,11 +4326,11 @@ function fun_set_local_storage_playnext() {
 
 
 //---------------------
-//  end former file player_3_e_playfromto.jstxt   										
+//  end former file player_3_e_playfromto.js   										
 //=============================================    	
 
 //=============================================    								
-// 10 beg. former file player_3_f_video_and_subtitles.jstxt  	  
+// 10 beg. former file player_3_f_video_and_subtitles.js  	  
 								
 //-----------------------------
 var currScript = document.currentScript.src;
@@ -5619,11 +5619,11 @@ function onclick_downloadThis_HTML(t) {
 //--------------------------------------------------------
 /*
 undefined variables  and the files where they are defined  		
-	LS_colorBG	                 // file: cbc_3_player_3_a_var_def_init.jstxt    
-	LS_colorTx	                 // file: cbc_3_player_3_a_var_def_init.jstxt 
-	set_localStorage_var         // file: cbc_3_player_3_a_var_def_init.jstxt  	
+	LS_colorBG	                 // file: cbc_3_player_3_a_var_def_init.js    
+	LS_colorTx	                 // file: cbc_3_player_3_a_var_def_init.js 
+	set_localStorage_var         // file: cbc_3_player_3_a_var_def_init.js  	
 	
-	get_last_start_colors        // file: cbc_3_player_3_h_color1_script.jstxt  
+	get_last_start_colors        // file: cbc_3_player_3_h_color1_script.js  
 */
 
 	//---------------------------------------------------------
@@ -5631,7 +5631,7 @@ undefined variables  and the files where they are defined
     code about luminosity, contrast, colors  copied or adapted from the original in  https://app.contrast-finder.org/?lang=en
     */
 	//---------------------------------------------------------
-	//these variables are updated in the 'cbc_3_player_2_customization_script.jstxt' file  
+	//these variables are updated in the 'cbc_3_player_2_customization_script.js' file  
  	let hex_defaultColorBG  = INITIAL_hex_BG_color;
 	let hex_defaultColorTx  = INITIAL_hex_FG_color;  	
 	let hex_current_ColorBG ;

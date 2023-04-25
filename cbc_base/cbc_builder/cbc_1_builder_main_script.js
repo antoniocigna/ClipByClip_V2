@@ -1206,9 +1206,9 @@ function get_titleTWO() {
     INTRAFN = (HTML_TITLE + "_" + d.toJSON()).replaceAll("-", "_").replaceAll(":", "_").replaceAll(".", "_");
 
     out_html_file = "CBC_1_" + INTRAFN + ".html";
-    script_lev2_fn = "CBC_2_" + INTRAFN + ".jstxt";
+    script_lev2_fn = "CBC_2_" + INTRAFN + ".js";
     //
-    //ClipByClip_" + HTML_TITLE + ".sub.jstxt";
+    //ClipByClip_" + HTML_TITLE + ".sub.js";
 
     //document.getElementById("id_titolo").innerHTML = HTML_TITLE;
     //document.getElementById("id_title15").innerHTML = HTML_TITLE;
@@ -1630,8 +1630,8 @@ function write_script3(intrafn, TXTorig, TXTtran) {
         "// end of script ";
 
 
-    //var script_sub_fn = "CBC_2_" + intrafn +  ".jstxt"; 
-    var script_sub_fn = "CBC_1_" + intrafn + ".jstxt";
+    //var script_sub_fn = "CBC_2_" + intrafn +  ".js"; 
+    var script_sub_fn = "CBC_1_" + intrafn + ".js";
 	
 	script_sub_fn = correctFileName( script_sub_fn );    
 

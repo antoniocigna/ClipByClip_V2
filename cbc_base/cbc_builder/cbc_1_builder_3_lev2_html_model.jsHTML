@@ -37,7 +37,7 @@ function second_level_html( HTML_TITLE, video_path2, video_filename, this_root, 
 	This html file passes the control to another html which is the actual html page you will see
 	a few parameters are passed together with the control:
 	the more important ones are the video (id_vidpath,id_vidfile) 
-	and the address of the script file  (cbc_2_...title....jstxt) which containts the subtitles 
+	and the address of the script file  (cbc_2_...title....js) which containts the subtitles 
 	-->		
 	<script> 	
 		var time_limit =  parseInt(x_bldtime) + 10000; 	
